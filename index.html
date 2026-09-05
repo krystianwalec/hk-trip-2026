@@ -92,6 +92,24 @@
   }
   .notice strong { color: var(--accent); }
 
+  .callout-climb {
+    margin: 1.25rem 0 0;
+    background: linear-gradient(135deg, var(--climb-soft), var(--family-soft));
+    border: 1px solid #c5d9c9;
+    border-left: 4px solid var(--climb);
+    padding: 1rem 1.25rem;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    box-shadow: var(--shadow);
+  }
+  .callout-climb h3 {
+    margin: 0 0 .45rem;
+    font-size: 1.05rem;
+    color: var(--climb);
+  }
+  .callout-climb ul { margin: .4rem 0 0; padding-left: 1.15rem; }
+  .callout-climb li { margin: .3rem 0; font-size: .92rem; }
+  .callout-climb strong { color: var(--family); }
+
   /* Nav */
   .toc {
     position: sticky; top: 0; z-index: 50;
@@ -370,11 +388,11 @@
         <span class="chip flight">✈ HKG → SEA · 2 XI 13:30 → 09:10</span>
         <span class="chip wedding">💍 Wesele · 1 XI · Sha Tin</span>
         <span class="chip climb">🧗 2–3 dni wspinaczki</span>
-        <span class="chip family">👨‍👩‍👧‍👦 Guilin · plan rodziny (opcjonalny)</span>
+        <span class="chip family">👨‍👩‍👧‍👦 Guilin · 29–31 X · plan rodziny</span>
       </div>
       <div class="notice">
         <strong>Uwaga:</strong> ten dokument jest narzędziem porównawczym.
-        Plan Guilin to propozycja rodziny (~1142 RMB/os. dla 8 osób) — możecie dołączyć albo zostać w Hongkongu.
+        Plan Guilin to propozycja rodziny na <strong>29–31 X 2026</strong> (~1142 RMB/os. dla 8 osób) — możecie dołączyć albo zostać w Hongkongu.
         Mają guidebook wspinaczkowy; koniec października zwykle ma dobrą pogodę, ale sezon tajfunów jeszcze „dociąga” — sprawdzajcie HKO.
       </div>
     </header>
@@ -405,7 +423,7 @@
         <div class="legend-item"><span class="dot climb"></span> Dzień wspinaczkowy</div>
         <div class="legend-item"><span class="dot wedding"></span> Wesele (Sha Tin)</div>
         <div class="legend-item"><span class="dot family"></span> Plan rodziny · Guilin</div>
-        <div class="legend-item"><span class="dot conflict"></span> Konflikt dat (opcja B)</div>
+        <div class="legend-item"><span class="dot conflict"></span> Konflikt dat (Guilin 29–31 X)</div>
       </div>
     </section>
 
@@ -443,74 +461,72 @@
             </ul>
           </div>
         </article>
-        <article class="day-card">
+        <article class="day-card climb-day">
           <h3 class="day-date">26 października</h3>
           <div class="day-dow">poniedziałek</div>
           <div class="day-body">
+            <span class="pill climb">Wspinaczka</span>
             <span class="pill city">Miasto</span>
-            <span class="pill family">Okno Guilin?</span>
             <ul>
-              <li>Opcja A/C: Central, Peak, dim sum</li>
-              <li>Opcja B: możliwe wyjście na Guilin Dzień 1</li>
-            </ul>
-          </div>
-        </article>
-        <article class="day-card climb-day family-window">
-          <h3 class="day-date">27 października</h3>
-          <div class="day-dow">wtorek</div>
-          <div class="day-body">
-            <span class="pill climb">Wspinaczka</span>
-            <span class="pill family">Guilin D2?</span>
-            <ul>
-              <li>A/C: Lion Rock lub Kowloon Peak</li>
-              <li>B: Li River + Xingping (rodzina)</li>
-            </ul>
-          </div>
-        </article>
-        <article class="day-card climb-day family-window">
-          <h3 class="day-date">28 października</h3>
-          <div class="day-dow">środa</div>
-          <div class="day-body">
-            <span class="pill climb">Wspinaczka</span>
-            <span class="pill family">Guilin D3?</span>
-            <ul>
-              <li>A/C: Cape Collinson / Shek O / Clearwater Bay</li>
-              <li>B: Yulong + Moon Hill, powrót</li>
+              <li>A/C: start skały (Lion Rock) lub Central + Peak</li>
+              <li>B: wspinaczka / miasto <em>przed</em> Guilin</li>
             </ul>
           </div>
         </article>
         <article class="day-card climb-day">
-          <h3 class="day-date">29 października</h3>
-          <div class="day-dow">czwartek</div>
+          <h3 class="day-date">27 października</h3>
+          <div class="day-dow">wtorek</div>
           <div class="day-body">
             <span class="pill climb">Wspinaczka</span>
-            <span class="pill city">Buffer</span>
             <ul>
-              <li>Trzeci dzień skały (Tung Lung Chau / Fei Ngo Shan)</li>
-              <li>Lub odpoczynek + Kowloon po Guilin</li>
+              <li>A/C/B: Lion Rock lub Kowloon Peak / Fei Ngo Shan</li>
+              <li>Główne okno skały HK: <strong>26–28 X</strong></li>
             </ul>
           </div>
         </article>
-        <article class="day-card">
+        <article class="day-card climb-day">
+          <h3 class="day-date">28 października</h3>
+          <div class="day-dow">środa</div>
+          <div class="day-body">
+            <span class="pill climb">Wspinaczka</span>
+            <ul>
+              <li>A/C/B: Cape Collinson / Shek O / Clearwater Bay</li>
+              <li>Ostatni pełny dzień skały przed Guilin</li>
+            </ul>
+          </div>
+        </article>
+        <article class="day-card family-window">
+          <h3 class="day-date">29 października</h3>
+          <div class="day-dow">czwartek · Guilin Dzień 1</div>
+          <div class="day-body">
+            <span class="pill family">Guilin · Dzień 1</span>
+            <ul>
+              <li><strong>Plan rodziny:</strong> Guilin — Elephant Trunk, Hai Qinglan, pagody</li>
+              <li>Opcja A (tylko HK): Kowloon / buffer zamiast Guilin</li>
+            </ul>
+          </div>
+        </article>
+        <article class="day-card family-window">
           <h3 class="day-date">30 października</h3>
-          <div class="day-dow">piątek</div>
+          <div class="day-dow">piątek · Guilin Dzień 2</div>
           <div class="day-body">
-            <span class="pill city">HK / NT</span>
+            <span class="pill family">Guilin · Dzień 2</span>
             <ul>
-              <li>Islands (Lantau) lub New Territories</li>
-              <li>Opcja C: baza bliżej Sha Tin</li>
+              <li><strong>Plan rodziny:</strong> Li River + Xingping + Impression Liu Sanjie</li>
+              <li>Opcja A: Islands (Lantau) / NT / luz w HK</li>
             </ul>
           </div>
         </article>
-        <article class="day-card">
+        <article class="day-card family-window">
           <h3 class="day-date">31 października</h3>
-          <div class="day-dow">sobota</div>
+          <div class="day-dow">sobota · Guilin Dzień 3</div>
           <div class="day-body">
-            <span class="pill city">Luz</span>
+            <span class="pill family">Guilin · Dzień 3</span>
+            <span class="pill climb">Moon Hill</span>
             <ul>
-              <li>Shopping / street food / spa</li>
-              <li>Przygotowanie stroju na wesele</li>
-              <li>Eventualnie lekka skała rano</li>
+              <li><strong>Plan rodziny:</strong> Yulong + Moon Hill + powrót do HK</li>
+              <li>Jedyna realna skała w Guilin: <strong>Moon Hill (31 X)</strong></li>
+              <li>Opcja A: luz · shopping · przygotowanie na wesele</li>
             </ul>
           </div>
         </article>
@@ -551,48 +567,48 @@
 
       <div class="tabs" role="tablist">
         <button class="tab-btn active" data-tab="a" role="tab" aria-selected="true">Opcja A · tylko HK</button>
-        <button class="tab-btn" data-tab="b" role="tab" aria-selected="false">Opcja B · HK + okno Guilin</button>
+        <button class="tab-btn" data-tab="b" role="tab" aria-selected="false">Opcja B · HK + Guilin 29–31 X</button>
         <button class="tab-btn" data-tab="c" role="tab" aria-selected="false">Opcja C · wspinaczka + baza NT</button>
       </div>
 
       <div id="panel-a" class="option-panel active" role="tabpanel">
         <div class="option-card">
           <h3>Opcja A — Hongkong only</h3>
-          <p class="option-lead">25–27 miasto, 28–30 wspinanie, 31 luz, 1 ślub, 2 wylot. Bez Guilin — maksymalnie HK i guidebook.</p>
+          <p class="option-lead">Bez Guilin. Wspinaczka głównie <strong>26–28 X</strong> (przed oknem rodziny), potem 29–31 luz/HK, 1 XI wesele, 2 XI wylot.</p>
           <div class="option-grid">
             <div class="mini-day"><strong>25 X</strong><span>Przylot 16:45 · harbour · sen</span></div>
-            <div class="mini-day"><strong>26 X</strong><span>Central + Peak + dim sum (aklimatyzacja)</span></div>
-            <div class="mini-day"><strong>27 X</strong><span>🏙️ Kowloon · street food · harbour</span></div>
-            <div class="mini-day"><strong>28 X</strong><span>🧗 Lion Rock (MTR + dojście)</span></div>
-            <div class="mini-day"><strong>29 X</strong><span>🧗 Kowloon Peak / Fei Ngo Shan</span></div>
-            <div class="mini-day"><strong>30 X</strong><span>🧗 Cape Collinson / Shek O / Tung Lung</span></div>
+            <div class="mini-day"><strong>26 X</strong><span>🧗 Lion Rock · lub Central + Peak rano</span></div>
+            <div class="mini-day"><strong>27 X</strong><span>🧗 Kowloon Peak / Fei Ngo Shan</span></div>
+            <div class="mini-day"><strong>28 X</strong><span>🧗 Cape Collinson / Shek O / Tung Lung</span></div>
+            <div class="mini-day"><strong>29 X</strong><span>🏙️ Kowloon / buffer (nie Guilin)</span></div>
+            <div class="mini-day"><strong>30 X</strong><span>Islands (Lantau) lub New Territories</span></div>
             <div class="mini-day"><strong>31 X</strong><span>Luz · street food · przygotowanie</span></div>
             <div class="mini-day"><strong>1 XI</strong><span>💍 Regal Riverside · Sha Tin</span></div>
             <div class="mini-day"><strong>2 XI</strong><span>✈ Wylot 13:30</span></div>
           </div>
           <div class="pros">
-            <div>✅ Najmniej logistyki · pełne 3 dni skały · zero konfliktu z rodziną</div>
-            <div>✅ Pierwszy raz w Azji = więcej czasu na HK</div>
+            <div>✅ Najmniej logistyki · pełne 3 dni skały <strong>26–28 X</strong> · zero konfliktu z rodziną</div>
+            <div>✅ Pierwszy raz w Azji = więcej czasu na HK · 29–31 bez pośpiechu przed weselem</div>
           </div>
         </div>
       </div>
 
       <div id="panel-b" class="option-panel" role="tabpanel">
         <div class="option-card">
-          <h3>Opcja B — HK + okno na Guilin</h3>
-          <p class="option-lead">Zostawiacie 3 dni (28–30 X) jako okno: albo Wasze wspinanie w HK, albo dołączenie do planu rodziny Guilin D1–D3.</p>
+          <h3>Opcja B — HK + Guilin 29–31 X</h3>
+          <p class="option-lead">Plan rodziny Guilin jest <strong>stały: 29–31 października</strong> (D1–D3). Wspinaczkę w HK róbcie <strong>26–28 X</strong>; w Guilin jedyna realna skała to Moon Hill 31 X.</p>
           <div class="option-grid">
-            <div class="mini-day"><strong>25–27 X</strong><span>🏙️ Intro HK (jak w opcji A)</span></div>
-            <div class="mini-day" style="border-color:#e8b4ad;background:var(--conflict-soft)"><strong>28 X · KONFLIKT</strong><span>🧗 Wspinanie HK vs Guilin D1</span></div>
-            <div class="mini-day" style="border-color:#e8b4ad;background:var(--conflict-soft)"><strong>29 X · KONFLIKT</strong><span>🧗 Wspinanie vs Guilin D2 (Li River)</span></div>
-            <div class="mini-day" style="border-color:#e8b4ad;background:var(--conflict-soft)"><strong>30 X · KONFLIKT</strong><span>🧗 Wspinanie vs Guilin D3 + powrót</span></div>
-            <div class="mini-day"><strong>31 X</strong><span>Powrót / luz w HK</span></div>
+            <div class="mini-day"><strong>25 X</strong><span>Przylot · harbour · sen</span></div>
+            <div class="mini-day"><strong>26–28 X</strong><span>🧗 Wspinanie HK (przed Guilin)</span></div>
+            <div class="mini-day" style="border-color:#d4c0ea;background:var(--family-soft)"><strong>29 X · Guilin D1</strong><span>Elephant Trunk · Hai Qinglan · pagody</span></div>
+            <div class="mini-day" style="border-color:#d4c0ea;background:var(--family-soft)"><strong>30 X · Guilin D2</strong><span>Li River · Xingping · Liu Sanjie</span></div>
+            <div class="mini-day" style="border-color:#d4c0ea;background:var(--family-soft)"><strong>31 X · Guilin D3</strong><span>Yulong · 🧗 Moon Hill · powrót HK</span></div>
             <div class="mini-day"><strong>1 XI</strong><span>💍 Wesele Sha Tin</span></div>
             <div class="mini-day"><strong>2 XI</strong><span>✈ Wylot</span></div>
           </div>
           <div class="pros">
-            <div>✅ Widzicie Guilin z rodziną · unikalne krajobrazy</div>
-            <div class="warn">⚠️ Tylko ~1–2 dni wspinaczki zamiast 3 · loty/pociągi HK↔Guilin do dopięcia · zmęczenie przed weselem</div>
+            <div>✅ Widzicie Guilin z rodziną · unikalne krajobrazy · daty dopięte 29–31 X</div>
+            <div class="warn">⚠️ Skała HK tylko 26–28 X · w Guilin praktycznie tylko Moon Hill (31 X) · transfery HK↔Guilin + zmęczenie przed weselem</div>
           </div>
         </div>
       </div>
@@ -600,23 +616,32 @@
       <div id="panel-c" class="option-panel" role="tabpanel">
         <div class="option-card">
           <h3>Opcja C — wspinaczka-heavy + baza New Territories</h3>
-          <p class="option-lead">Hotel bliżej Sha Tin (Tai Wai / Sha Tin / Fo Tan). Szybszy dojazd na wesele i na skały wschodniego HK / NT. Mniej „turystyki miasta”, więcej guidebooka.</p>
+          <p class="option-lead">Hotel bliżej Sha Tin (Tai Wai / Sha Tin / Fo Tan). Główna skała <strong>26–28 X</strong> — przed oknem Guilin. Jeśli dołączycie do rodziny 29–31 X, te dni kolidują z dodatkową skałą w HK.</p>
           <div class="option-grid">
             <div class="mini-day"><strong>25 X</strong><span>Przylot → baza NT (np. Sha Tin)</span></div>
-            <div class="mini-day"><strong>26 X</strong><span>Krótki City Day (MTR do Central) + powrót</span></div>
-            <div class="mini-day"><strong>27 X</strong><span>🧗 Lion Rock (blisko NT)</span></div>
-            <div class="mini-day"><strong>28 X</strong><span>🧗 Kowloon Peak / Fei Ngo Shan</span></div>
-            <div class="mini-day"><strong>29 X</strong><span>🧗 Clearwater Bay lub Cape Collinson</span></div>
-            <div class="mini-day"><strong>30 X</strong><span>Opcjonalnie Tung Lung Chau (prom)</span></div>
-            <div class="mini-day"><strong>31 X</strong><span>Luz w NT · przygotowanie wesela</span></div>
+            <div class="mini-day"><strong>26 X</strong><span>🧗 Lion Rock (blisko NT) / krótki City Day</span></div>
+            <div class="mini-day"><strong>27 X</strong><span>🧗 Kowloon Peak / Fei Ngo Shan</span></div>
+            <div class="mini-day"><strong>28 X</strong><span>🧗 Clearwater Bay / Cape Collinson / Tung Lung</span></div>
+            <div class="mini-day" style="border-color:#e8b4ad;background:var(--conflict-soft)"><strong>29–31 X</strong><span>⚠️ Konflikt z Guilin D1–D3 — albo NT luz, albo rodzina</span></div>
             <div class="mini-day"><strong>1 XI</strong><span>💍 10–15 min do Regal Riverside</span></div>
             <div class="mini-day"><strong>2 XI</strong><span>✈ Airport Express z Kowloon/HK</span></div>
           </div>
           <div class="pros">
-            <div>✅ Najwięcej skały · idealne pod wesele w Sha Tin · mniej transient hotel hops</div>
-            <div>✅ Lion Rock / Kowloon Peak na wyciągnięcie ręki</div>
+            <div>✅ Najwięcej skały <strong>przed 29 X</strong> · idealne pod wesele w Sha Tin · mniej hotel hops</div>
+            <div class="warn">⚠️ 29–31 X = konflikt z planem rodziny Guilin — nie planujcie tu trzeciego/czwartego dnia skały w HK, jeśli jedziecie z rodziną</div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section id="wspin-vs-rodzina" aria-labelledby="callout-title">
+      <div class="callout-climb">
+        <h3 id="callout-title">🧗 Jeśli jedziecie z rodziną — jak ułożyć wspinaczkę?</h3>
+        <ul>
+          <li><strong>Najlepsza skała w HK:</strong> 26–28 października (przed Guilin).</li>
+          <li><strong>W samym Guilin:</strong> realnie tylko 31 X — Moon Hill (Dzień 3).</li>
+          <li><strong>Tylko 2 dni z rodziną?</strong> Wybierzcie raczej 30–31 X (Li River + Moon Hill) zamiast 29–30 X.</li>
+        </ul>
       </div>
     </section>
 
@@ -720,7 +745,7 @@
     <section id="guilin">
       <div class="family-banner">
         <h2>Plan rodziny · Guilin – Yangshuo</h2>
-        <p>Opcjonalny tor 3 dni / 2 noce dla 8 osób · ~1142 RMB/os. · Możecie dołączyć (opcja B) albo zostać w HK.</p>
+        <p><strong>Stałe daty: 29–31 października 2026</strong> · 3 dni / 2 noce dla 8 osób · ~1142 RMB/os. · Możecie dołączyć (opcja B) albo zostać w HK.</p>
         <div class="cost-bar">
           <span>Bilety 3720</span>
           <span>Hotele 2520</span>
@@ -733,7 +758,7 @@
       <div class="guilin-days">
         <article class="g-day">
           <div class="g-day-head">
-            <h3>Dzień 1 · Guilin</h3>
+            <h3>Dzień 1 · 29 X · Guilin</h3>
             <span class="pill family">Noc: Lijiang Yunduan Hotel</span>
           </div>
           <div class="g-day-body">
@@ -773,7 +798,7 @@
 
         <article class="g-day">
           <div class="g-day-head">
-            <h3>Dzień 2 · Li River → Yangshuo</h3>
+            <h3>Dzień 2 · 30 X · Li River → Yangshuo</h3>
             <span class="pill family">Noc: Langyun Garden Hotel</span>
           </div>
           <div class="g-day-body">
@@ -813,7 +838,7 @@
 
         <article class="g-day">
           <div class="g-day-head">
-            <h3>Dzień 3 · Yangshuo → powrót</h3>
+            <h3>Dzień 3 · 31 X · Yangshuo → powrót</h3>
             <span class="pill family">Transfer do domu / HK</span>
           </div>
           <div class="g-day-body">
@@ -844,8 +869,8 @@
                 <div class="stop-body">
                   <h4>Moon Hill</h4>
                   <div class="cn">月亮山</div>
-                  <p>Naturalny łuk w skale — wejście pod „księżyc”.</p>
-                  <span class="price">w planie dnia</span>
+                  <p>Naturalny łuk w skale — wejście pod „księżyc”. Jedyna realna okazja na skałę w oknie Guilin (31 X).</p>
+                  <span class="price">w planie dnia · 🧗</span>
                 </div>
               </div>
               <div class="stop">
