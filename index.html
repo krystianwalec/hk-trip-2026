@@ -349,6 +349,100 @@
     padding: .3rem .65rem; border-radius: 999px; margin-bottom: .75rem;
   }
 
+  /* Jetlag callout */
+  .callout-jetlag {
+    margin: 1.25rem 0 0;
+    background: linear-gradient(135deg, var(--flight-soft), #fff8ee);
+    border: 1px solid #b9cce6;
+    border-left: 4px solid var(--flight);
+    padding: .9rem 1.15rem;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    box-shadow: var(--shadow);
+    font-size: .92rem;
+  }
+  .callout-jetlag strong { color: var(--flight); }
+  .callout-jetlag p { margin: .35rem 0 0; color: var(--ink); }
+  .callout-jetlag p:first-of-type { margin-top: .15rem; }
+
+  /* Option tourist teasers */
+  .teaser-label {
+    margin: 1.1rem 0 .55rem;
+    font-size: .78rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .05em; color: var(--teal);
+  }
+  .teaser-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: .65rem;
+    margin-bottom: 1.15rem;
+  }
+  .teaser-row figure {
+    margin: 0; border-radius: 12px; overflow: hidden;
+    background: #fff; border: 1px solid var(--line);
+  }
+  .teaser-row img {
+    width: 100%; height: 110px; object-fit: cover; display: block; background: #eee;
+  }
+  .teaser-row figcaption {
+    padding: .4rem .55rem; font-size: .75rem; color: var(--muted); line-height: 1.35;
+  }
+  .climb-aside {
+    font-size: .86rem; color: var(--climb);
+    background: var(--climb-soft);
+    border-radius: 10px; padding: .55rem .75rem;
+    margin: 0 0 1rem;
+  }
+
+  /* Step-by-step day plans (like Guilin) */
+  .day-plans { display: grid; gap: 1rem; }
+  .plan-day {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: #faf7f1;
+    overflow: hidden;
+  }
+  .plan-day-head {
+    display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
+    gap: .5rem;
+    padding: .7rem .95rem;
+    background: var(--teal-soft);
+    border-bottom: 1px solid #c5e0e0;
+  }
+  .plan-day-head h4 { margin: 0; font-size: 1rem; color: var(--teal); font-family: "Fraunces", Georgia, serif; }
+  .plan-day-head .when { font-size: .82rem; color: var(--muted); }
+  .plan-day.family-tint .plan-day-head { background: var(--family-soft); border-color: #e5d6f5; }
+  .plan-day.family-tint .plan-day-head h4 { color: var(--family); }
+  .plan-day.wedding-tint .plan-day-head { background: var(--wedding-soft); border-color: #e4d39a; }
+  .plan-day.wedding-tint .plan-day-head h4 { color: #7a5c00; }
+  .plan-day.flight-tint .plan-day-head { background: var(--flight-soft); border-color: #b9cce6; }
+  .plan-day.flight-tint .plan-day-head h4 { color: var(--flight); }
+  .steps {
+    list-style: none; margin: 0; padding: .65rem .95rem .85rem;
+    display: grid; gap: .4rem;
+  }
+  .steps li {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr;
+    gap: .55rem;
+    font-size: .88rem;
+    padding: .35rem 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .steps li:last-child { border-bottom: 0; }
+  .steps .slot {
+    font-weight: 700; font-size: .72rem; text-transform: uppercase;
+    letter-spacing: .04em; color: var(--teal);
+    padding-top: .15rem;
+  }
+  .plan-day.family-tint .steps .slot { color: var(--family); }
+  .plan-day.wedding-tint .steps .slot { color: #7a5c00; }
+  .steps .act { color: var(--ink); }
+  .steps .act em { color: var(--muted); font-style: normal; font-size: .84rem; }
+  @media (max-width: 520px) {
+    .steps li { grid-template-columns: 1fr; gap: .15rem; }
+    .teaser-row img { height: 100px; }
+  }
+
   /* Photo gallery strip for HK */
   .photo-strip {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -394,6 +488,12 @@
         <strong>Uwaga:</strong> ten dokument jest narzędziem porównawczym.
         Plan Guilin to propozycja rodziny na <strong>29–31 X 2026</strong> (~1142 RMB/os. dla 8 osób) — możecie dołączyć albo zostać w Hongkongu.
         Mają guidebook wspinaczkowy; koniec października zwykle ma dobrą pogodę, ale sezon tajfunów jeszcze „dociąga” — sprawdzajcie HKO.
+      </div>
+      <div class="callout-jetlag" role="note">
+        <strong>⏱ Jet lag · Seattle → Hongkong</strong>
+        <p>HKG jest ~<strong>15 h</strong> do przodu względem Seattle (późny X, PDT); po końcu DST w USA ~<strong>16 h</strong>.</p>
+        <p>Lot na zachód SEA→HKG zwykle łatwiejszy. Rano wychodźcie na <strong>światło dzienne</strong> (outdoor) — pomaga przestawić zegar.</p>
+        <p>Przylot <strong>25 X ~16:45</strong>: zostańcie do wieczora HKT (nie idźcie spać od razu). Dni outdoor 26–28 X pomagają dogonić rytm.</p>
       </div>
     </header>
 
@@ -457,7 +557,7 @@
               <li>Przylot HKG <strong>16:45</strong></li>
               <li>Airport Express / taxi → hotel</li>
               <li>Lekki spacer: Victoria Harbour / Tsim Sha Tsui</li>
-              <li>Wczesny sen (jet lag)</li>
+              <li>Zostańcie do wieczora HKT (jet lag) · lekki spacer przy harbour</li>
             </ul>
           </div>
         </article>
@@ -468,8 +568,8 @@
             <span class="pill climb">Wspinaczka</span>
             <span class="pill city">Miasto</span>
             <ul>
-              <li>A/C: start skały (Lion Rock) lub Central + Peak</li>
-              <li>B: wspinaczka / miasto <em>przed</em> Guilin</li>
+              <li>Zwiedzanie: Central / Victoria Peak · albo dzień outdoor</li>
+              <li><em>Wspinanie — plan osobno</em> (okno 26–28 X)</li>
             </ul>
           </div>
         </article>
@@ -479,8 +579,8 @@
           <div class="day-body">
             <span class="pill climb">Wspinaczka</span>
             <ul>
-              <li>A/C/B: Lion Rock lub Kowloon Peak / Fei Ngo Shan</li>
-              <li>Główne okno skały HK: <strong>26–28 X</strong></li>
+              <li>Miasto: świątynie / Kowloon · albo outdoor</li>
+              <li><em>Wspinanie — plan osobno</em> · okno <strong>26–28 X</strong></li>
             </ul>
           </div>
         </article>
@@ -490,8 +590,8 @@
           <div class="day-body">
             <span class="pill climb">Wspinaczka</span>
             <ul>
-              <li>A/C/B: Cape Collinson / Shek O / Clearwater Bay</li>
-              <li>Ostatni pełny dzień skały przed Guilin</li>
+              <li>Harbour / Star Ferry / Shek O — albo outdoor</li>
+              <li><em>Wspinanie — plan osobno</em> · ostatni dzień przed Guilin</li>
             </ul>
           </div>
         </article>
@@ -561,34 +661,154 @@
         <div>
           <span class="tag ours">Porównanie</span>
           <h2>Nasze opcje itinerariów</h2>
-          <p>Trzy warianty do porównania — wszystkie z 2–3 dniami wspinaczki. Kliknij zakładkę.</p>
+          <p>Trzy warianty ze <strong>zwiedzaniem krok po kroku</strong>. Wspinaczka jest planowana osobno — tu tylko wzmianka. Kliknij zakładkę.</p>
         </div>
       </div>
 
       <div class="tabs" role="tablist">
         <button class="tab-btn active" data-tab="a" role="tab" aria-selected="true">Opcja A · tylko HK</button>
         <button class="tab-btn" data-tab="b" role="tab" aria-selected="false">Opcja B · HK + Guilin 29–31 X</button>
-        <button class="tab-btn" data-tab="c" role="tab" aria-selected="false">Opcja C · wspinaczka + baza NT</button>
+        <button class="tab-btn" data-tab="c" role="tab" aria-selected="false">Opcja C · baza NT + miasto</button>
       </div>
 
       <div id="panel-a" class="option-panel active" role="tabpanel">
         <div class="option-card">
           <h3>Opcja A — Hongkong only</h3>
-          <p class="option-lead">Bez Guilin. Wspinaczka głównie <strong>26–28 X</strong> (przed oknem rodziny), potem 29–31 luz/HK, 1 XI wesele, 2 XI wylot.</p>
-          <div class="option-grid">
-            <div class="mini-day"><strong>25 X</strong><span>Przylot 16:45 · harbour · sen</span></div>
-            <div class="mini-day"><strong>26 X</strong><span>🧗 Lion Rock · lub Central + Peak rano</span></div>
-            <div class="mini-day"><strong>27 X</strong><span>🧗 Kowloon Peak / Fei Ngo Shan</span></div>
-            <div class="mini-day"><strong>28 X</strong><span>🧗 Cape Collinson / Shek O / Tung Lung</span></div>
-            <div class="mini-day"><strong>29 X</strong><span>🏙️ Kowloon / buffer (nie Guilin)</span></div>
-            <div class="mini-day"><strong>30 X</strong><span>Islands (Lantau) lub New Territories</span></div>
-            <div class="mini-day"><strong>31 X</strong><span>Luz · street food · przygotowanie</span></div>
-            <div class="mini-day"><strong>1 XI</strong><span>💍 Regal Riverside · Sha Tin</span></div>
-            <div class="mini-day"><strong>2 XI</strong><span>✈ Wylot 13:30</span></div>
+          <p class="option-lead">Bez Guilin. Maksymalnie HK: Peak, harbour, Lantau, rynki, świątynie. 1 XI wesele w Sha Tin, 2 XI wylot.</p>
+          <p class="climb-aside">🧗 Wspinanie (okno 26–28 X) — <strong>plan osobno</strong>; poniżej fokus na atrakcje turystyczne.</p>
+
+          <div class="teaser-label">Teaser · atrakcje HK</div>
+          <div class="teaser-row">
+            <figure>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Hong_Kong_Skyline_Restitch_-_Dec_2007.jpg/960px-Hong_Kong_Skyline_Restitch_-_Dec_2007.jpg" alt="Victoria Peak / skyline" loading="lazy">
+              <figcaption>Victoria Peak · panorama miasta</figcaption>
+            </figure>
+            <figure>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Hong_Kong_Night_Skyline.jpg/960px-Hong_Kong_Night_Skyline.jpg" alt="Nocny skyline Hongkongu" loading="lazy">
+              <figcaption>Nocny skyline · Victoria Harbour</figcaption>
+            </figure>
+            <figure>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Star_Ferry_Victoria_Harbour.jpg/960px-Star_Ferry_Victoria_Harbour.jpg" alt="Star Ferry" loading="lazy"
+                   onerror="this.onerror=null;this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Hong_Kong_Star_Ferry.jpg/960px-Hong_Kong_Star_Ferry.jpg'">
+              <figcaption>Star Ferry · klimat harbour</figcaption>
+            </figure>
+            <figure>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Tian_Tan_Buddha_-_03.jpg/960px-Tian_Tan_Buddha_-_03.jpg" alt="Big Buddha Lantau" loading="lazy">
+              <figcaption>Tian Tan Buddha · Lantau / Ngong Ping</figcaption>
+            </figure>
+            <figure>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Man_Mo_Temple_Hong_Kong.jpg/960px-Man_Mo_Temple_Hong_Kong.jpg" alt="Man Mo Temple" loading="lazy">
+              <figcaption>Man Mo Temple · Sheung Wan</figcaption>
+            </figure>
           </div>
+
+          <div class="day-plans">
+            <article class="plan-day flight-tint">
+              <div class="plan-day-head">
+                <h4>25 X · niedziela</h4>
+                <span class="when">przylot HKG ~16:45</span>
+              </div>
+              <ol class="steps">
+                <li><span class="slot">Popołudnie</span><span class="act">Airport Express / taxi → hotel · check-in</span></li>
+                <li><span class="slot">Wieczór</span><span class="act">Lekki spacer Tsim Sha Tsui / promenada harbour · <em>zostańcie do wieczora HKT (jet lag)</em></span></li>
+                <li><span class="slot">Noc</span><span class="act">Kolacja w okolicy hotelu · sen o „normalnej” godzinie lokalnej</span></li>
+              </ol>
+            </article>
+            <article class="plan-day">
+              <div class="plan-day-head">
+                <h4>26 X · poniedziałek</h4>
+                <span class="when">Island · Peak</span>
+              </div>
+              <ol class="steps">
+                <li><span class="slot">Rano</span><span class="act">Central / Admiralty · kawa + outdoor light (jet lag)</span></li>
+                <li><span class="slot">Południe</span><span class="act">Victoria Peak (tramwaj lub bus 15) · panorama</span></li>
+                <li><span class="slot">Popołudnie</span><span class="act">Powrót do Central · Soho / Mid-Levels · <em>albo: wspinanie — plan osobno</em></span></li>
+                <li><span class="slot">Wieczór</span><span class="act">Harbour / Avenue of Stars · skyline po zmroku</span></li>
+              </ol>
+            </article>
+            <article class="plan-day">
+              <div class="plan-day-head">
+                <h4>27 X · wtorek</h4>
+                <span class="when">świątynie + Kowloon</span>
+              </div>
+              <ol class="steps">
+                <li><span class="slot">Rano</span><span class="act">Man Mo Temple (Sheung Wan) · Hollywood Road</span></li>
+                <li><span class="slot">Południe</span><span class="act">Star Ferry Central → TST · lunch nad harbour</span></li>
+                <li><span class="slot">Popołudnie</span><span class="act">Kowloon park / Nathan Rd · <em>albo: wspinanie — plan osobno</em></span></li>
+                <li><span class="slot">Wieczór</span><span class="act">Temple Street Night Market (Jordan) · street food</span></li>
+              </ol>
+            </article>
+            <article class="plan-day">
+              <div class="plan-day-head">
+                <h4>28 X · środa</h4>
+                <span class="when">harbour + luz / outdoor</span>
+              </div>
+              <ol class="steps">
+                <li><span class="slot">Rano</span><span class="act">Promenada TST lub Stanley Market (opcjonalnie)</span></li>
+                <li><span class="slot">Dzień</span><span class="act">Shek O / plaża · albo spokojne miasto · <em>albo: wspinanie — plan osobno</em></span></li>
+                <li><span class="slot">Wieczór</span><span class="act">Nocny skyline · dim sum / hotpot</span></li>
+              </ol>
+            </article>
+            <article class="plan-day">
+              <div class="plan-day-head">
+                <h4>29 X · czwartek</h4>
+                <span class="when">Kowloon · bez Guilin</span>
+              </div>
+              <ol class="steps">
+                <li><span class="slot">Rano</span><span class="act">Mong Kok · Ladies’ Market / flower &amp; bird markets</span></li>
+                <li><span class="slot">Popołudnie</span><span class="act">Yau Ma Tei · Jade Market · buffer / kawa</span></li>
+                <li><span class="slot">Wieczór</span><span class="act">Neon / street food Mong Kok · spokojniejszy wieczór</span></li>
+              </ol>
+            </article>
+            <article class="plan-day">
+              <div class="plan-day-head">
+                <h4>30 X · piątek</h4>
+                <span class="when">Lantau · Ngong Ping</span>
+              </div>
+              <ol class="steps">
+                <li><span class="slot">Rano</span><span class="act">MTR → Tung Chung · Ngong Ping 360 (kolejka)</span></li>
+                <li><span class="slot">Południe</span><span class="act">Tian Tan Buddha (Big Buddha) · Po Lin Monastery</span></li>
+                <li><span class="slot">Popołudnie</span><span class="act">Wioska Ngong Ping · herbata · powrót do miasta</span></li>
+                <li><span class="slot">Wieczór</span><span class="act">Luz w hotelu / lekka kolacja</span></li>
+              </ol>
+            </article>
+            <article class="plan-day">
+              <div class="plan-day-head">
+                <h4>31 X · sobota</h4>
+                <span class="when">luz przed weselem</span>
+              </div>
+              <ol class="steps">
+                <li><span class="slot">Rano</span><span class="act">Shopping / PMQ / Cat Street — bez pośpiechu</span></li>
+                <li><span class="slot">Popołudnie</span><span class="act">Przygotowanie ubrań · dojazd do Sha Tin (rekonesans MTR)</span></li>
+                <li><span class="slot">Wieczór</span><span class="act">Wczesna kolacja · sen przed weselem</span></li>
+              </ol>
+            </article>
+            <article class="plan-day wedding-tint">
+              <div class="plan-day-head">
+                <h4>1 XI · niedziela</h4>
+                <span class="when">wesele · Sha Tin</span>
+              </div>
+              <ol class="steps">
+                <li><span class="slot">Dzień</span><span class="act">Luz · dojazd MTR Sha Tin / City One (New Territories)</span></li>
+                <li><span class="slot">17:00</span><span class="act">Przyjęcie · Regal Riverside Hotel</span></li>
+                <li><span class="slot">20:00</span><span class="act">Kolacja weselna · powrót taxi/MTR</span></li>
+              </ol>
+            </article>
+            <article class="plan-day flight-tint">
+              <div class="plan-day-head">
+                <h4>2 XI · poniedziałek</h4>
+                <span class="when">wylot 13:30</span>
+              </div>
+              <ol class="steps">
+                <li><span class="slot">Rano</span><span class="act">Check-out · Airport Express → HKG</span></li>
+                <li><span class="slot">13:30</span><span class="act">Wylot HKG → SEA</span></li>
+              </ol>
+            </article>
+          </div>
+
           <div class="pros">
-            <div>✅ Najmniej logistyki · pełne 3 dni skały <strong>26–28 X</strong> · zero konfliktu z rodziną</div>
-            <div>✅ Pierwszy raz w Azji = więcej czasu na HK · 29–31 bez pośpiechu przed weselem</div>
+            <div>✅ Najmniej logistyki · pełne zwiedzanie HK · zero konfliktu z rodziną</div>
+            <div>✅ 29–31 X bez pośpiechu przed weselem · Lantau + rynki + Peak</div>
           </div>
         </div>
       </div>
@@ -596,39 +816,248 @@
       <div id="panel-b" class="option-panel" role="tabpanel">
         <div class="option-card">
           <h3>Opcja B — HK + Guilin 29–31 X</h3>
-          <p class="option-lead">Plan rodziny Guilin jest <strong>stały: 29–31 października</strong> (D1–D3). Wspinaczkę w HK róbcie <strong>26–28 X</strong>; w Guilin jedyna realna skała to Moon Hill 31 X.</p>
-          <div class="option-grid">
-            <div class="mini-day"><strong>25 X</strong><span>Przylot · harbour · sen</span></div>
-            <div class="mini-day"><strong>26–28 X</strong><span>🧗 Wspinanie HK (przed Guilin)</span></div>
-            <div class="mini-day" style="border-color:#d4c0ea;background:var(--family-soft)"><strong>29 X · Guilin D1</strong><span>Elephant Trunk · Hai Qinglan · pagody</span></div>
-            <div class="mini-day" style="border-color:#d4c0ea;background:var(--family-soft)"><strong>30 X · Guilin D2</strong><span>Li River · Xingping · Liu Sanjie</span></div>
-            <div class="mini-day" style="border-color:#d4c0ea;background:var(--family-soft)"><strong>31 X · Guilin D3</strong><span>Yulong · 🧗 Moon Hill · powrót HK</span></div>
-            <div class="mini-day"><strong>1 XI</strong><span>💍 Wesele Sha Tin</span></div>
-            <div class="mini-day"><strong>2 XI</strong><span>✈ Wylot</span></div>
+          <p class="option-lead">Najpierw 3 dni Hongkongu (harbour, Peak, rynki), potem stały plan rodziny Guilin <strong>29–31 X</strong>, powrót na wesele 1 XI. Zdjęcia Guilin — w sekcji rodziny poniżej.</p>
+          <p class="climb-aside">🧗 Wspinanie HK (26–28 X) — <strong>plan osobno</strong>; w Guilin ewentualnie Moon Hill 31 X w ramach dnia rodziny.</p>
+
+          <div class="teaser-label">Teaser · HK przed Guilin</div>
+          <div class="teaser-row">
+            <figure>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Hong_Kong_Skyline_Restitch_-_Dec_2007.jpg/960px-Hong_Kong_Skyline_Restitch_-_Dec_2007.jpg" alt="Victoria Peak / skyline" loading="lazy">
+              <figcaption>Victoria Peak · przed wyjazdem</figcaption>
+            </figure>
+            <figure>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Star_Ferry_Victoria_Harbour.jpg/960px-Star_Ferry_Victoria_Harbour.jpg" alt="Star Ferry" loading="lazy"
+                   onerror="this.onerror=null;this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Hong_Kong_Star_Ferry.jpg/960px-Hong_Kong_Star_Ferry.jpg'">
+              <figcaption>Star Ferry · harbour vibe</figcaption>
+            </figure>
+            <figure>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Man_Mo_Temple_Hong_Kong.jpg/960px-Man_Mo_Temple_Hong_Kong.jpg" alt="Man Mo Temple" loading="lazy">
+              <figcaption>Man Mo Temple · klasyczne HK</figcaption>
+            </figure>
+            <figure>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Neon_signs_in_Hong_Kong.jpg/960px-Neon_signs_in_Hong_Kong.jpg" alt="Neon Mong Kok" loading="lazy">
+              <figcaption>Neon / Mong Kok · wieczór w mieście</figcaption>
+            </figure>
+            <figure>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Hong_Kong_Night_Skyline.jpg/960px-Hong_Kong_Night_Skyline.jpg" alt="Nocny skyline" loading="lazy">
+              <figcaption>Nocny harbour · pożegnanie HK</figcaption>
+            </figure>
           </div>
+
+          <div class="day-plans">
+            <article class="plan-day flight-tint">
+              <div class="plan-day-head">
+                <h4>25 X · niedziela</h4>
+                <span class="when">przylot</span>
+              </div>
+              <ol class="steps">
+                <li><span class="slot">Popołudnie</span><span class="act">HKG 16:45 → hotel</span></li>
+                <li><span class="slot">Wieczór</span><span class="act">Harbour TST · zostańcie do wieczora (jet lag)</span></li>
+              </ol>
+            </article>
+            <article class="plan-day">
+              <div class="plan-day-head">
+                <h4>26 X · poniedziałek</h4>
+                <span class="when">Peak + Central</span>
+              </div>
+              <ol class="steps">
+                <li><span class="slot">Rano</span><span class="act">Central · światło dzienne (jet lag)</span></li>
+                <li><span class="slot">Południe</span><span class="act">Victoria Peak · widoki</span></li>
+                <li><span class="slot">Popołudnie</span><span class="act">Soho / Mid-Levels · <em>albo: wspinanie — plan osobno</em></span></li>
+                <li><span class="slot">Wieczór</span><span class="act">Skyline / Avenue of Stars</span></li>
+              </ol>
+            </article>
+            <article class="plan-day">
+              <div class="plan-day-head">
+                <h4>27 X · wtorek</h4>
+                <span class="when">świątynia + ferry</span>
+              </div>
+              <ol class="steps">
+                <li><span class="slot">Rano</span><span class="act">Man Mo Temple · Hollywood Road</span></li>
+                <li><span class="slot">Południe</span><span class="act">Star Ferry → TST · lunch</span></li>
+                <li><span class="slot">Popołudnie</span><span class="act">Muzeum / park Kowloon · <em>albo: wspinanie — plan osobno</em></span></li>
+                <li><span class="slot">Wieczór</span><span class="act">Temple Street Night Market</span></li>
+              </ol>
+            </article>
+            <article class="plan-day">
+              <div class="plan-day-head">
+                <h4>28 X · środa</h4>
+                <span class="when">rynki + packing</span>
+              </div>
+              <ol class="steps">
+                <li><span class="slot">Rano</span><span class="act">Mong Kok · neon / street markets</span></li>
+                <li><span class="slot">Popołudnie</span><span class="act">Luz / zakupy · <em>albo: wspinanie — plan osobno</em></span></li>
+                <li><span class="slot">Wieczór</span><span class="act">Pakowanie · wczesny sen przed Guilin</span></li>
+              </ol>
+            </article>
+            <article class="plan-day family-tint">
+              <div class="plan-day-head">
+                <h4>29 X · Guilin D1</h4>
+                <span class="when">plan rodziny</span>
+              </div>
+              <ol class="steps">
+                <li><span class="slot">Dzień</span><span class="act">Elephant Trunk · Hai Qinglan · pagody — <em>szczegóły w sekcji Guilin</em></span></li>
+                <li><span class="slot">Noc</span><span class="act">Hotel Guilin (Lijiang Yunduan)</span></li>
+              </ol>
+            </article>
+            <article class="plan-day family-tint">
+              <div class="plan-day-head">
+                <h4>30 X · Guilin D2</h4>
+                <span class="when">Li River</span>
+              </div>
+              <ol class="steps">
+                <li><span class="slot">Dzień</span><span class="act">Rejs Li River · Xingping · Impression Liu Sanjie</span></li>
+                <li><span class="slot">Noc</span><span class="act">Yangshuo (Langyun Garden)</span></li>
+              </ol>
+            </article>
+            <article class="plan-day family-tint">
+              <div class="plan-day-head">
+                <h4>31 X · Guilin D3</h4>
+                <span class="when">Yulong → powrót HK</span>
+              </div>
+              <ol class="steps">
+                <li><span class="slot">Rano</span><span class="act">Yulong River · Moon Hill (opcjonalnie skała w ramach dnia rodziny)</span></li>
+                <li><span class="slot">Wieczór</span><span class="act">Transfer powrotny do Hongkongu</span></li>
+              </ol>
+            </article>
+            <article class="plan-day wedding-tint">
+              <div class="plan-day-head">
+                <h4>1 XI · wesele</h4>
+                <span class="when">Sha Tin</span>
+              </div>
+              <ol class="steps">
+                <li><span class="slot">17:00 / 20:00</span><span class="act">Regal Riverside · przyjęcie + kolacja</span></li>
+              </ol>
+            </article>
+            <article class="plan-day flight-tint">
+              <div class="plan-day-head">
+                <h4>2 XI · wylot</h4>
+                <span class="when">13:30 HKG</span>
+              </div>
+              <ol class="steps">
+                <li><span class="slot">Rano</span><span class="act">Airport Express → wylot SEA</span></li>
+              </ol>
+            </article>
+          </div>
+
           <div class="pros">
-            <div>✅ Widzicie Guilin z rodziną · unikalne krajobrazy · daty dopięte 29–31 X</div>
-            <div class="warn">⚠️ Skała HK tylko 26–28 X · w Guilin praktycznie tylko Moon Hill (31 X) · transfery HK↔Guilin + zmęczenie przed weselem</div>
+            <div>✅ Guilin z rodziną · unikalne krajobrazy · HK „skondensowane” 26–28 X</div>
+            <div class="warn">⚠️ Transfery HK↔Guilin + zmęczenie przed weselem · mniej luzu w samym HK</div>
           </div>
         </div>
       </div>
 
       <div id="panel-c" class="option-panel" role="tabpanel">
         <div class="option-card">
-          <h3>Opcja C — wspinaczka-heavy + baza New Territories</h3>
-          <p class="option-lead">Hotel bliżej Sha Tin (Tai Wai / Sha Tin / Fo Tan). Główna skała <strong>26–28 X</strong> — przed oknem Guilin. Jeśli dołączycie do rodziny 29–31 X, te dni kolidują z dodatkową skałą w HK.</p>
-          <div class="option-grid">
-            <div class="mini-day"><strong>25 X</strong><span>Przylot → baza NT (np. Sha Tin)</span></div>
-            <div class="mini-day"><strong>26 X</strong><span>🧗 Lion Rock (blisko NT) / krótki City Day</span></div>
-            <div class="mini-day"><strong>27 X</strong><span>🧗 Kowloon Peak / Fei Ngo Shan</span></div>
-            <div class="mini-day"><strong>28 X</strong><span>🧗 Clearwater Bay / Cape Collinson / Tung Lung</span></div>
-            <div class="mini-day" style="border-color:#e8b4ad;background:var(--conflict-soft)"><strong>29–31 X</strong><span>⚠️ Konflikt z Guilin D1–D3 — albo NT luz, albo rodzina</span></div>
-            <div class="mini-day"><strong>1 XI</strong><span>💍 10–15 min do Regal Riverside</span></div>
-            <div class="mini-day"><strong>2 XI</strong><span>✈ Airport Express z Kowloon/HK</span></div>
+          <h3>Opcja C — baza New Territories + miasto</h3>
+          <p class="option-lead">Hotel bliżej Sha Tin (Tai Wai / Sha Tin / Fo Tan). Zwiedzanie HK dojazdami MTR; 1 XI blisko wesela. 29–31 X: albo luz w NT, albo Guilin z rodziną (konflikt dat).</p>
+          <p class="climb-aside">🧗 Wspinanie (26–28 X) — <strong>plan osobno</strong>; Lion Rock / sektory bliżej NT są wygodne z tej bazy.</p>
+
+          <div class="teaser-label">Teaser · miasto z bazy NT</div>
+          <div class="teaser-row">
+            <figure>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Hong_Kong_Skyline_Restitch_-_Dec_2007.jpg/960px-Hong_Kong_Skyline_Restitch_-_Dec_2007.jpg" alt="Victoria Peak / skyline" loading="lazy">
+              <figcaption>Peak · day-trip z NT (MTR)</figcaption>
+            </figure>
+            <figure>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Hong_Kong_Night_Skyline.jpg/960px-Hong_Kong_Night_Skyline.jpg" alt="Nocny skyline" loading="lazy">
+              <figcaption>Harbour nocą · po powrocie z miasta</figcaption>
+            </figure>
+            <figure>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Star_Ferry_Victoria_Harbour.jpg/960px-Star_Ferry_Victoria_Harbour.jpg" alt="Star Ferry" loading="lazy"
+                   onerror="this.onerror=null;this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Hong_Kong_Star_Ferry.jpg/960px-Hong_Kong_Star_Ferry.jpg'">
+              <figcaption>Star Ferry · klasyczny kurs</figcaption>
+            </figure>
+            <figure>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Neon_signs_in_Hong_Kong.jpg/960px-Neon_signs_in_Hong_Kong.jpg" alt="Neon Mong Kok" loading="lazy">
+              <figcaption>Mong Kok · po drodze z/do NT</figcaption>
+            </figure>
+            <figure>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Tian_Tan_Buddha_-_03.jpg/960px-Tian_Tan_Buddha_-_03.jpg" alt="Big Buddha" loading="lazy">
+              <figcaption>Lantau opcjonalnie · dzień 30 X</figcaption>
+            </figure>
           </div>
+          <p class="map-note" style="margin-top:-.4rem;margin-bottom:1rem">Sha Tin / okolice hotelu weselnego — bez osobnego zdjęcia; baza NT = krótki dojazd do Regal Riverside (Taxi Chung Kiu Rd).</p>
+
+          <div class="day-plans">
+            <article class="plan-day flight-tint">
+              <div class="plan-day-head">
+                <h4>25 X · niedziela</h4>
+                <span class="when">przylot → baza NT</span>
+              </div>
+              <ol class="steps">
+                <li><span class="slot">Popołudnie</span><span class="act">HKG → hotel Tai Wai / Sha Tin / Fo Tan (Airport Express + MTR)</span></li>
+                <li><span class="slot">Wieczór</span><span class="act">Krótki spacer po okolicy hotelu · zostańcie do wieczora HKT</span></li>
+              </ol>
+            </article>
+            <article class="plan-day">
+              <div class="plan-day-head">
+                <h4>26 X · poniedziałek</h4>
+                <span class="when">miasto Island</span>
+              </div>
+              <ol class="steps">
+                <li><span class="slot">Rano</span><span class="act">MTR → Central · Peak (tramwaj / bus)</span></li>
+                <li><span class="slot">Popołudnie</span><span class="act">Central / Soho · <em>albo: wspinanie — plan osobno</em> (np. Lion Rock blisko NT)</span></li>
+                <li><span class="slot">Wieczór</span><span class="act">Powrót MTR do bazy NT · kolacja lokalna</span></li>
+              </ol>
+            </article>
+            <article class="plan-day">
+              <div class="plan-day-head">
+                <h4>27 X · wtorek</h4>
+                <span class="when">świątynia + ferry</span>
+              </div>
+              <ol class="steps">
+                <li><span class="slot">Rano</span><span class="act">Man Mo Temple · Sheung Wan</span></li>
+                <li><span class="slot">Południe</span><span class="act">Star Ferry · TST promenade</span></li>
+                <li><span class="slot">Popołudnie</span><span class="act">Kowloon · <em>albo: wspinanie — plan osobno</em></span></li>
+                <li><span class="slot">Wieczór</span><span class="act">Mong Kok neon · MTR z powrotem do NT</span></li>
+              </ol>
+            </article>
+            <article class="plan-day">
+              <div class="plan-day-head">
+                <h4>28 X · środa</h4>
+                <span class="when">harbour / outdoor</span>
+              </div>
+              <ol class="steps">
+                <li><span class="slot">Rano</span><span class="act">Luz w NT lub day-trip Clearwater / Shek O</span></li>
+                <li><span class="slot">Dzień</span><span class="act">Zwiedzanie lub <em>wspinanie — plan osobno</em></span></li>
+                <li><span class="slot">Wieczór</span><span class="act">Nocny skyline (opcjonalnie) · powrót do bazy</span></li>
+              </ol>
+            </article>
+            <article class="plan-day">
+              <div class="plan-day-head">
+                <h4>29–31 X</h4>
+                <span class="when">NT luz <em>lub</em> Guilin</span>
+              </div>
+              <ol class="steps">
+                <li><span class="slot">Wariant NT</span><span class="act">29 X rynki Kowloon · 30 X Lantau / Big Buddha · 31 X luz + rekonesans Regal Riverside</span></li>
+                <li><span class="slot">Wariant rodzina</span><span class="act">Guilin D1–D3 (patrz sekcja rodziny) — koliduje z dodatkowym zwiedzaniem HK</span></li>
+              </ol>
+            </article>
+            <article class="plan-day wedding-tint">
+              <div class="plan-day-head">
+                <h4>1 XI · wesele</h4>
+                <span class="when">~10–15 min do hotelu</span>
+              </div>
+              <ol class="steps">
+                <li><span class="slot">Dzień</span><span class="act">Luz w bazie NT · zero długiego dojazdu</span></li>
+                <li><span class="slot">17:00 / 20:00</span><span class="act">Regal Riverside · przyjęcie + kolacja · spokojny powrót</span></li>
+              </ol>
+            </article>
+            <article class="plan-day flight-tint">
+              <div class="plan-day-head">
+                <h4>2 XI · wylot</h4>
+                <span class="when">13:30</span>
+              </div>
+              <ol class="steps">
+                <li><span class="slot">Rano</span><span class="act">MTR → Airport Express (Kowloon/HK) → HKG</span></li>
+              </ol>
+            </article>
+          </div>
+
           <div class="pros">
-            <div>✅ Najwięcej skały <strong>przed 29 X</strong> · idealne pod wesele w Sha Tin · mniej hotel hops</div>
-            <div class="warn">⚠️ 29–31 X = konflikt z planem rodziny Guilin — nie planujcie tu trzeciego/czwartego dnia skały w HK, jeśli jedziecie z rodziną</div>
+            <div>✅ Najbliżej wesela · wygodna baza NT · Peak/ferry/rynki jako day-trips</div>
+            <div class="warn">⚠️ 29–31 X = wybór: luz/NT/Lantau <em>albo</em> Guilin z rodziną — nie oba pełne plany</div>
           </div>
         </div>
       </div>
@@ -936,10 +1365,10 @@
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script>
-    // Tabs
-    document.querySelectorAll('.tab-btn').forEach(btn => {
+    // Tabs (only itinerary option tabs — not map zoom buttons)
+    document.querySelectorAll('.tabs[role="tablist"] .tab-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        document.querySelectorAll('.tab-btn').forEach(b => {
+        document.querySelectorAll('.tabs[role="tablist"] .tab-btn').forEach(b => {
           b.classList.remove('active');
           b.setAttribute('aria-selected', 'false');
         });

@@ -49,9 +49,9 @@ Nie trzeba builda ani Node — wystarczy statyczny HTML.
 
 ## Zawartość strony
 
-- Kalendarz 24 X – 2 XI 2026
-- Trzy opcje itinerariów (zakładki) z 2–3 dniami wspinaczki (głównie 26–28 X)
-- Sekcja wspinaczki HK (Lion Rock, Kowloon Peak, Cape Collinson, Shek O, Clearwater Bay, Tung Lung Chau)
+- Kalendarz 24 X – 2 XI 2026 + krótka notatka o jet lagu (SEA→HKG)
+- Trzy opcje itinerariów (A/B/C) ze zwiedzaniem krok po kroku (rano→wieczór) i teaserami zdjęć atrakcji
+- Wspinaczka: osobna sekcja / plan osobno — nie fokus wizualny opcji A/B/C
 - Wesele 1 XI · Regal Riverside Hotel, Sha Tin
 - Plan rodziny Guilin–Yangshuo **29–31 października 2026** (koszty, zdjęcia, dni)
 - Mapa Leaflet z markerami Guilin + HK
