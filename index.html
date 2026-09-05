@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hongkong 2026 — Planer podróży · Krystian &amp; żona</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<style>
+  :root {
+    --bg: #f4f0e8;
+    --bg-card: #fffcf7;
+    --ink: #1a1a1a;
+    --muted: #5c5a55;
+    --line: #e2d9c8;
+    --accent: #c45c26;
+    --accent-soft: #f3e0d4;
+    --teal: #0d6e6e;
+    --teal-soft: #d7efef;
+    --family: #6b3fa0;
+    --family-soft: #efe6f8;
+    --wedding: #b8860b;
+    --wedding-soft: #f7efd4;
+    --climb: #2d6a3e;
+    --climb-soft: #e2f0e6;
+    --flight: #1e4d8c;
+    --flight-soft: #dde8f5;
+    --conflict: #a33a2c;
+    --conflict-soft: #f8e4e1;
+    --radius: 16px;
+    --shadow: 0 8px 28px rgba(26,26,26,.08);
+    --max: 1100px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: "DM Sans", system-ui, sans-serif;
+    color: var(--ink);
+    background:
+      radial-gradient(1200px 600px at 10% -10%, #f7e6d4 0%, transparent 55%),
+      radial-gradient(900px 500px at 100% 0%, #d9ecec 0%, transparent 50%),
+      var(--bg);
+    line-height: 1.55;
+  }
+  h1, h2, h3, .display {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+  a { color: var(--teal); }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.25rem 4rem; }
+
+  /* Hero */
+  .hero {
+    position: relative;
+    padding: 3.5rem 0 2.5rem;
+    overflow: hidden;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: .5rem;
+    background: var(--accent-soft); color: var(--accent);
+    padding: .35rem .85rem; border-radius: 999px;
+    font-size: .85rem; font-weight: 600;
+  }
+  .hero h1 { font-size: clamp(2rem, 5vw, 3.1rem); margin: 1rem 0 .5rem; }
+  .hero-sub { color: var(--muted); font-size: 1.1rem; max-width: 42rem; }
+  .meta-row {
+    display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.5rem;
+  }
+  .chip {
+    display: inline-flex; align-items: center; gap: .4rem;
+    background: var(--bg-card); border: 1px solid var(--line);
+    padding: .45rem .8rem; border-radius: 999px; font-size: .9rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,.03);
+  }
+  .chip.flight { border-color: #b9cce6; background: var(--flight-soft); color: var(--flight); }
+  .chip.wedding { border-color: #e4d39a; background: var(--wedding-soft); color: #7a5c00; }
+  .chip.family { border-color: #d4c0ea; background: var(--family-soft); color: var(--family); }
+  .chip.climb { border-color: #b7d4bf; background: var(--climb-soft); color: var(--climb); }
+
+  .notice {
+    margin-top: 1.75rem;
+    background: var(--bg-card);
+    border-left: 4px solid var(--accent);
+    padding: 1rem 1.25rem;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    box-shadow: var(--shadow);
+  }
+  .notice strong { color: var(--accent); }
+
+  /* Nav */
+  .toc {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(244,240,232,.92); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+    margin: 0 -1.25rem; padding: .65rem 1.25rem;
+  }
+  .toc-inner {
+    max-width: var(--max); margin: 0 auto;
+    display: flex; gap: .5rem; overflow-x: auto; scrollbar-width: thin;
+  }
+  .toc a {
+    white-space: nowrap; text-decoration: none; color: var(--muted);
+    font-size: .88rem; font-weight: 500;
+    padding: .4rem .75rem; border-radius: 999px;
+  }
+  .toc a:hover { background: var(--accent-soft); color: var(--accent); }
+
+  section { margin-top: 3rem; }
+  .section-head {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: 1rem; flex-wrap: wrap; margin-bottom: 1.25rem;
+  }
+  .section-head h2 { margin: 0; font-size: clamp(1.5rem, 3vw, 2rem); }
+  .section-head p { margin: .35rem 0 0; color: var(--muted); max-width: 36rem; }
+  .tag {
+    font-size: .75rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .06em; padding: .3rem .6rem; border-radius: 6px;
+  }
+  .tag.family { background: var(--family-soft); color: var(--family); }
+  .tag.ours { background: var(--teal-soft); color: var(--teal); }
+  .tag.climb { background: var(--climb-soft); color: var(--climb); }
+
+  /* Legend */
+  .legend {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: .6rem; margin-bottom: 1.5rem;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: .55rem;
+    background: var(--bg-card); border: 1px solid var(--line);
+    padding: .55rem .75rem; border-radius: 12px; font-size: .88rem;
+  }
+  .dot {
+    width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0;
+  }
+  .dot.flight { background: var(--flight); }
+  .dot.city { background: var(--teal); }
+  .dot.climb { background: var(--climb); }
+  .dot.wedding { background: var(--wedding); }
+  .dot.family { background: var(--family); }
+  .dot.conflict { background: var(--conflict); }
+
+  /* Calendar */
+  .calendar {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+  .day-card {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.15rem 1.2rem;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+  }
+  .day-card::before {
+    content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px;
+    background: var(--teal);
+  }
+  .day-card.flight::before { background: var(--flight); }
+  .day-card.climb-day::before { background: var(--climb); }
+  .day-card.wedding-day::before { background: var(--wedding); }
+  .day-card.family-window::before { background: var(--family); }
+  .day-card.conflict-day::before { background: var(--conflict); }
+  .day-date {
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 1.15rem; margin: 0 0 .15rem;
+  }
+  .day-dow { color: var(--muted); font-size: .82rem; margin-bottom: .7rem; }
+  .day-body { font-size: .92rem; }
+  .day-body ul { margin: .4rem 0 0; padding-left: 1.1rem; }
+  .day-body li { margin: .25rem 0; }
+  .pill {
+    display: inline-block; font-size: .7rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .04em;
+    padding: .2rem .5rem; border-radius: 6px; margin: 0 .25rem .35rem 0;
+  }
+  .pill.flight { background: var(--flight-soft); color: var(--flight); }
+  .pill.city { background: var(--teal-soft); color: var(--teal); }
+  .pill.climb { background: var(--climb-soft); color: var(--climb); }
+  .pill.wedding { background: var(--wedding-soft); color: #7a5c00; }
+  .pill.family { background: var(--family-soft); color: var(--family); }
+  .pill.conflict { background: var(--conflict-soft); color: var(--conflict); }
+
+  /* Options tabs */
+  .tabs {
+    display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1rem;
+  }
+  .tab-btn {
+    border: 1px solid var(--line); background: var(--bg-card);
+    color: var(--muted); font: inherit; font-weight: 600; font-size: .92rem;
+    padding: .65rem 1rem; border-radius: 999px; cursor: pointer;
+    transition: .15s ease;
+  }
+  .tab-btn:hover { border-color: var(--teal); color: var(--teal); }
+  .tab-btn.active {
+    background: var(--teal); color: #fff; border-color: var(--teal);
+  }
+  .option-panel { display: none; }
+  .option-panel.active { display: block; animation: fade .25s ease; }
+  @keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+  .option-card {
+    background: var(--bg-card); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 1.4rem; box-shadow: var(--shadow);
+  }
+  .option-card h3 { margin: 0 0 .4rem; }
+  .option-lead { color: var(--muted); margin: 0 0 1.1rem; }
+  .option-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: .75rem;
+  }
+  .mini-day {
+    border: 1px solid var(--line); border-radius: 12px; padding: .85rem;
+    background: #faf7f1;
+  }
+  .mini-day strong { display: block; font-size: .9rem; margin-bottom: .25rem; }
+  .mini-day span { font-size: .84rem; color: var(--muted); }
+  .pros {
+    margin-top: 1.1rem; display: grid; gap: .45rem;
+  }
+  .pros div {
+    font-size: .9rem; padding: .55rem .75rem; border-radius: 10px;
+    background: var(--climb-soft);
+  }
+  .pros .warn { background: var(--conflict-soft); }
+
+  /* Family section */
+  .family-banner {
+    background: linear-gradient(135deg, #6b3fa0, #8e5bc7);
+    color: #fff; border-radius: var(--radius); padding: 1.4rem 1.5rem;
+    margin-bottom: 1.25rem; box-shadow: var(--shadow);
+  }
+  .family-banner h2 { margin: 0 0 .35rem; color: #fff; }
+  .family-banner p { margin: 0; opacity: .92; }
+  .cost-bar {
+    display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1rem;
+  }
+  .cost-bar span {
+    background: rgba(255,255,255,.18); padding: .35rem .7rem;
+    border-radius: 999px; font-size: .85rem; font-weight: 600;
+  }
+
+  .guilin-days { display: grid; gap: 1.25rem; }
+  .g-day {
+    background: var(--bg-card); border: 1px solid #dccfee;
+    border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow);
+  }
+  .g-day-head {
+    background: var(--family-soft); padding: .9rem 1.2rem;
+    display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+    border-bottom: 1px solid #e5d6f5;
+  }
+  .g-day-head h3 { margin: 0; color: var(--family); font-size: 1.15rem; }
+  .g-day-body { padding: 1.2rem; }
+  .stops {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+  .stop {
+    border: 1px solid var(--line); border-radius: 12px; overflow: hidden;
+    background: #fff;
+  }
+  .stop img {
+    width: 100%; height: 150px; object-fit: cover; display: block;
+    background: #eee;
+  }
+  .stop-body { padding: .75rem .9rem 1rem; }
+  .stop-body h4 { margin: 0 0 .25rem; font-size: 1rem; }
+  .stop-body .cn { color: var(--family); font-size: .82rem; margin-bottom: .35rem; }
+  .stop-body p { margin: 0; font-size: .86rem; color: var(--muted); }
+  .price {
+    display: inline-block; margin-top: .5rem;
+    font-size: .78rem; font-weight: 700;
+    background: var(--family-soft); color: var(--family);
+    padding: .2rem .5rem; border-radius: 6px;
+  }
+
+  /* Climbing */
+  .climb-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+  }
+  .climb-card {
+    background: var(--bg-card); border: 1px solid var(--line);
+    border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow);
+  }
+  .climb-card img { width: 100%; height: 160px; object-fit: cover; display: block; }
+  .climb-card .body { padding: 1rem 1.1rem 1.2rem; }
+  .climb-card h3 { margin: 0 0 .35rem; font-size: 1.1rem; }
+  .climb-card p { margin: 0; font-size: .88rem; color: var(--muted); }
+  .access {
+    margin-top: .7rem; font-size: .82rem;
+    background: var(--climb-soft); color: var(--climb);
+    padding: .45rem .65rem; border-radius: 8px;
+  }
+
+  /* Maps */
+  .map-box {
+    height: 420px; border-radius: var(--radius); overflow: hidden;
+    border: 1px solid var(--line); box-shadow: var(--shadow);
+    background: #ddd;
+  }
+  .map-note { font-size: .85rem; color: var(--muted); margin: .6rem 0 0; }
+
+  /* Wedding highlight */
+  .wedding-card {
+    display: grid; grid-template-columns: 1.2fr .8fr; gap: 1rem;
+    background: var(--bg-card); border: 1px solid #e4d39a;
+    border-radius: var(--radius); padding: 1.3rem; box-shadow: var(--shadow);
+  }
+  @media (max-width: 720px) {
+    .wedding-card { grid-template-columns: 1fr; }
+  }
+  .wedding-card h3 { margin: 0 0 .5rem; color: #7a5c00; }
+  .wedding-card img {
+    width: 100%; height: 100%; min-height: 180px; object-fit: cover;
+    border-radius: 12px;
+  }
+  .pin {
+    display: inline-flex; align-items: center; gap: .35rem;
+    background: var(--wedding-soft); color: #7a5c00;
+    font-weight: 700; font-size: .82rem;
+    padding: .3rem .65rem; border-radius: 999px; margin-bottom: .75rem;
+  }
+
+  /* Photo gallery strip for HK */
+  .photo-strip {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: .75rem; margin-top: 1rem;
+  }
+  .photo-strip figure {
+    margin: 0; border-radius: 12px; overflow: hidden;
+    background: var(--bg-card); border: 1px solid var(--line);
+  }
+  .photo-strip img { width: 100%; height: 140px; object-fit: cover; display: block; }
+  .photo-strip figcaption {
+    padding: .5rem .7rem; font-size: .8rem; color: var(--muted);
+  }
+
+  footer {
+    margin-top: 3.5rem; padding-top: 1.5rem; border-top: 1px solid var(--line);
+    color: var(--muted); font-size: .88rem; text-align: center;
+  }
+
+  .leaflet-container { font: inherit; }
+  .map-popup h4 { margin: 0 0 .25rem; font-size: .95rem; }
+  .map-popup p { margin: 0; font-size: .82rem; color: #444; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <span class="hero-badge">🇭🇰 · 🇨🇳  · październik–listopad 2026</span>
+      <h1>Hongkong 24.10–2.11.2026 — pomoc w wyborze planu</h1>
+      <p class="hero-sub">
+        Planer decyzji dla <strong>Krystiana i żony</strong> — pierwszy raz w tej części Azji.
+        Kalendarz, wspinaczka, wesele kuzynki i osobny tor <em>planu rodziny</em> Guilin–Yangshuo.
+        To pomoc w wyborze, nie sztywny rozkład — wybieracie, co pasuje.
+      </p>
+      <div class="meta-row">
+        <span class="chip flight">✈ SEA → HKG · 24 X 11:45 → 25 X 16:45</span>
+        <span class="chip flight">✈ HKG → SEA · 2 XI 13:30 → 09:10</span>
+        <span class="chip wedding">💍 Wesele · 1 XI · Sha Tin</span>
+        <span class="chip climb">🧗 2–3 dni wspinaczki</span>
+        <span class="chip family">👨‍👩‍👧‍👦 Guilin · plan rodziny (opcjonalny)</span>
+      </div>
+      <div class="notice">
+        <strong>Uwaga:</strong> ten dokument jest narzędziem porównawczym.
+        Plan Guilin to propozycja rodziny (~1142 RMB/os. dla 8 osób) — możecie dołączyć albo zostać w Hongkongu.
+        Mają guidebook wspinaczkowy; koniec października zwykle ma dobrą pogodę, ale sezon tajfunów jeszcze „dociąga” — sprawdzajcie HKO.
+      </div>
+    </header>
+
+    <nav class="toc" aria-label="Spis treści">
+      <div class="toc-inner">
+        <a href="#legenda">Legenda</a>
+        <a href="#kalendarz">Kalendarz</a>
+        <a href="#opcje">Nasze opcje</a>
+        <a href="#wspinaczka">Wspinaczka</a>
+        <a href="#wesele">Wesele</a>
+        <a href="#guilin">Plan rodziny</a>
+        <a href="#mapa">Mapa</a>
+      </div>
+    </nav>
+
+    <section id="legenda">
+      <div class="section-head">
+        <div>
+          <span class="tag ours">Nasze / wspólne</span>
+          <h2>Legenda</h2>
+          <p>Kolory w kalendarzu i na mapie.</p>
+        </div>
+      </div>
+      <div class="legend">
+        <div class="legend-item"><span class="dot flight"></span> Lot / transfer</div>
+        <div class="legend-item"><span class="dot city"></span> Miasto / zwiedzanie HK</div>
+        <div class="legend-item"><span class="dot climb"></span> Dzień wspinaczkowy</div>
+        <div class="legend-item"><span class="dot wedding"></span> Wesele (Sha Tin)</div>
+        <div class="legend-item"><span class="dot family"></span> Plan rodziny · Guilin</div>
+        <div class="legend-item"><span class="dot conflict"></span> Konflikt dat (opcja B)</div>
+      </div>
+    </section>
+
+    <section id="kalendarz">
+      <div class="section-head">
+        <div>
+          <span class="tag ours">Oś czasu</span>
+          <h2>Kalendarz · 24 X – 2 XI 2026</h2>
+          <p>Każdy dzień jako karta. Szczegóły opcji poniżej — tu ogólna rama podróży.</p>
+        </div>
+      </div>
+      <div class="calendar">
+        <article class="day-card flight">
+          <h3 class="day-date">24 października</h3>
+          <div class="day-dow">sobota · SEA</div>
+          <div class="day-body">
+            <span class="pill flight">Lot</span>
+            <ul>
+              <li>Wylot z Seattle <strong>11:45</strong></li>
+              <li>Noc w powietrzu (przelot SEA→HKG)</li>
+            </ul>
+          </div>
+        </article>
+        <article class="day-card flight">
+          <h3 class="day-date">25 października</h3>
+          <div class="day-dow">niedziela · przylot HKG</div>
+          <div class="day-body">
+            <span class="pill flight">Przylot</span>
+            <span class="pill city">HK intro</span>
+            <ul>
+              <li>Przylot HKG <strong>16:45</strong></li>
+              <li>Airport Express / taxi → hotel</li>
+              <li>Lekki spacer: Victoria Harbour / Tsim Sha Tsui</li>
+              <li>Wczesny sen (jet lag)</li>
+            </ul>
+          </div>
+        </article>
+        <article class="day-card">
+          <h3 class="day-date">26 października</h3>
+          <div class="day-dow">poniedziałek</div>
+          <div class="day-body">
+            <span class="pill city">Miasto</span>
+            <span class="pill family">Okno Guilin?</span>
+            <ul>
+              <li>Opcja A/C: Central, Peak, dim sum</li>
+              <li>Opcja B: możliwe wyjście na Guilin Dzień 1</li>
+            </ul>
+          </div>
+        </article>
+        <article class="day-card climb-day family-window">
+          <h3 class="day-date">27 października</h3>
+          <div class="day-dow">wtorek</div>
+          <div class="day-body">
+            <span class="pill climb">Wspinaczka</span>
+            <span class="pill family">Guilin D2?</span>
+            <ul>
+              <li>A/C: Lion Rock lub Kowloon Peak</li>
+              <li>B: Li River + Xingping (rodzina)</li>
+            </ul>
+          </div>
+        </article>
+        <article class="day-card climb-day family-window">
+          <h3 class="day-date">28 października</h3>
+          <div class="day-dow">środa</div>
+          <div class="day-body">
+            <span class="pill climb">Wspinaczka</span>
+            <span class="pill family">Guilin D3?</span>
+            <ul>
+              <li>A/C: Cape Collinson / Shek O / Clearwater Bay</li>
+              <li>B: Yulong + Moon Hill, powrót</li>
+            </ul>
+          </div>
+        </article>
+        <article class="day-card climb-day">
+          <h3 class="day-date">29 października</h3>
+          <div class="day-dow">czwartek</div>
+          <div class="day-body">
+            <span class="pill climb">Wspinaczka</span>
+            <span class="pill city">Buffer</span>
+            <ul>
+              <li>Trzeci dzień skały (Tung Lung Chau / Fei Ngo Shan)</li>
+              <li>Lub odpoczynek + Kowloon po Guilin</li>
+            </ul>
+          </div>
+        </article>
+        <article class="day-card">
+          <h3 class="day-date">30 października</h3>
+          <div class="day-dow">piątek</div>
+          <div class="day-body">
+            <span class="pill city">HK / NT</span>
+            <ul>
+              <li>Islands (Lantau) lub New Territories</li>
+              <li>Opcja C: baza bliżej Sha Tin</li>
+            </ul>
+          </div>
+        </article>
+        <article class="day-card">
+          <h3 class="day-date">31 października</h3>
+          <div class="day-dow">sobota</div>
+          <div class="day-body">
+            <span class="pill city">Luz</span>
+            <ul>
+              <li>Shopping / street food / spa</li>
+              <li>Przygotowanie stroju na wesele</li>
+              <li>Eventualnie lekka skała rano</li>
+            </ul>
+          </div>
+        </article>
+        <article class="day-card wedding-day">
+          <h3 class="day-date">1 listopada</h3>
+          <div class="day-dow">niedziela · Sha Tin</div>
+          <div class="day-body">
+            <span class="pill wedding">Wesele</span>
+            <ul>
+              <li>Regal Riverside Hotel, Tai Chung Kiu Rd</li>
+              <li>Przyjęcie <strong>17:00</strong> · kolacja <strong>20:00</strong></li>
+              <li>To przyjęcie weselne kuzynki (nie Wasz ślub)</li>
+            </ul>
+          </div>
+        </article>
+        <article class="day-card flight">
+          <h3 class="day-date">2 listopada</h3>
+          <div class="day-dow">poniedziałek · powrót</div>
+          <div class="day-body">
+            <span class="pill flight">Lot powrotny</span>
+            <ul>
+              <li>Wylot HKG <strong>13:30</strong></li>
+              <li>Przylot SEA <strong>09:10</strong> (ten sam / następny dzień kalendarzowy — sprawdźcie bilet)</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="opcje">
+      <div class="section-head">
+        <div>
+          <span class="tag ours">Porównanie</span>
+          <h2>Nasze opcje itinerariów</h2>
+          <p>Trzy warianty do porównania — wszystkie z 2–3 dniami wspinaczki. Kliknij zakładkę.</p>
+        </div>
+      </div>
+
+      <div class="tabs" role="tablist">
+        <button class="tab-btn active" data-tab="a" role="tab" aria-selected="true">Opcja A · tylko HK</button>
+        <button class="tab-btn" data-tab="b" role="tab" aria-selected="false">Opcja B · HK + okno Guilin</button>
+        <button class="tab-btn" data-tab="c" role="tab" aria-selected="false">Opcja C · wspinaczka + baza NT</button>
+      </div>
+
+      <div id="panel-a" class="option-panel active" role="tabpanel">
+        <div class="option-card">
+          <h3>Opcja A — Hongkong only</h3>
+          <p class="option-lead">25–27 miasto, 28–30 wspinanie, 31 luz, 1 ślub, 2 wylot. Bez Guilin — maksymalnie HK i guidebook.</p>
+          <div class="option-grid">
+            <div class="mini-day"><strong>25 X</strong><span>Przylot 16:45 · harbour · sen</span></div>
+            <div class="mini-day"><strong>26 X</strong><span>Central + Peak + dim sum (aklimatyzacja)</span></div>
+            <div class="mini-day"><strong>27 X</strong><span>🏙️ Kowloon · street food · harbour</span></div>
+            <div class="mini-day"><strong>28 X</strong><span>🧗 Lion Rock (MTR + dojście)</span></div>
+            <div class="mini-day"><strong>29 X</strong><span>🧗 Kowloon Peak / Fei Ngo Shan</span></div>
+            <div class="mini-day"><strong>30 X</strong><span>🧗 Cape Collinson / Shek O / Tung Lung</span></div>
+            <div class="mini-day"><strong>31 X</strong><span>Luz · street food · przygotowanie</span></div>
+            <div class="mini-day"><strong>1 XI</strong><span>💍 Regal Riverside · Sha Tin</span></div>
+            <div class="mini-day"><strong>2 XI</strong><span>✈ Wylot 13:30</span></div>
+          </div>
+          <div class="pros">
+            <div>✅ Najmniej logistyki · pełne 3 dni skały · zero konfliktu z rodziną</div>
+            <div>✅ Pierwszy raz w Azji = więcej czasu na HK</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="panel-b" class="option-panel" role="tabpanel">
+        <div class="option-card">
+          <h3>Opcja B — HK + okno na Guilin</h3>
+          <p class="option-lead">Zostawiacie 3 dni (28–30 X) jako okno: albo Wasze wspinanie w HK, albo dołączenie do planu rodziny Guilin D1–D3.</p>
+          <div class="option-grid">
+            <div class="mini-day"><strong>25–27 X</strong><span>🏙️ Intro HK (jak w opcji A)</span></div>
+            <div class="mini-day" style="border-color:#e8b4ad;background:var(--conflict-soft)"><strong>28 X · KONFLIKT</strong><span>🧗 Wspinanie HK vs Guilin D1</span></div>
+            <div class="mini-day" style="border-color:#e8b4ad;background:var(--conflict-soft)"><strong>29 X · KONFLIKT</strong><span>🧗 Wspinanie vs Guilin D2 (Li River)</span></div>
+            <div class="mini-day" style="border-color:#e8b4ad;background:var(--conflict-soft)"><strong>30 X · KONFLIKT</strong><span>🧗 Wspinanie vs Guilin D3 + powrót</span></div>
+            <div class="mini-day"><strong>31 X</strong><span>Powrót / luz w HK</span></div>
+            <div class="mini-day"><strong>1 XI</strong><span>💍 Wesele Sha Tin</span></div>
+            <div class="mini-day"><strong>2 XI</strong><span>✈ Wylot</span></div>
+          </div>
+          <div class="pros">
+            <div>✅ Widzicie Guilin z rodziną · unikalne krajobrazy</div>
+            <div class="warn">⚠️ Tylko ~1–2 dni wspinaczki zamiast 3 · loty/pociągi HK↔Guilin do dopięcia · zmęczenie przed weselem</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="panel-c" class="option-panel" role="tabpanel">
+        <div class="option-card">
+          <h3>Opcja C — wspinaczka-heavy + baza New Territories</h3>
+          <p class="option-lead">Hotel bliżej Sha Tin (Tai Wai / Sha Tin / Fo Tan). Szybszy dojazd na wesele i na skały wschodniego HK / NT. Mniej „turystyki miasta”, więcej guidebooka.</p>
+          <div class="option-grid">
+            <div class="mini-day"><strong>25 X</strong><span>Przylot → baza NT (np. Sha Tin)</span></div>
+            <div class="mini-day"><strong>26 X</strong><span>Krótki City Day (MTR do Central) + powrót</span></div>
+            <div class="mini-day"><strong>27 X</strong><span>🧗 Lion Rock (blisko NT)</span></div>
+            <div class="mini-day"><strong>28 X</strong><span>🧗 Kowloon Peak / Fei Ngo Shan</span></div>
+            <div class="mini-day"><strong>29 X</strong><span>🧗 Clearwater Bay lub Cape Collinson</span></div>
+            <div class="mini-day"><strong>30 X</strong><span>Opcjonalnie Tung Lung Chau (prom)</span></div>
+            <div class="mini-day"><strong>31 X</strong><span>Luz w NT · przygotowanie wesela</span></div>
+            <div class="mini-day"><strong>1 XI</strong><span>💍 10–15 min do Regal Riverside</span></div>
+            <div class="mini-day"><strong>2 XI</strong><span>✈ Airport Express z Kowloon/HK</span></div>
+          </div>
+          <div class="pros">
+            <div>✅ Najwięcej skały · idealne pod wesele w Sha Tin · mniej transient hotel hops</div>
+            <div>✅ Lion Rock / Kowloon Peak na wyciągnięcie ręki</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="wspinaczka">
+      <div class="section-head">
+        <div>
+          <span class="tag climb">Guidebook ready</span>
+          <h2>Wspinaczka outdoor · Hongkong</h2>
+          <p>Realistyczne day-trips z miasta. Macie guidebook — poniżej dostęp (MTR + bus/taxi) i krótkie notatki. Koniec października zwykle sucho i chłodniej; sprawdzajcie ostrzeżenia tajfunowe HKO.</p>
+        </div>
+      </div>
+      <div class="climb-grid">
+        <article class="climb-card">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Lion_Rock_2016.jpg/960px-Lion_Rock_2016.jpg" alt="Lion Rock Hongkong" loading="lazy"
+               onerror="this.src='https://thumb.wikimedia.org/wikipedia/commons/thumb/2/20/HK_Kln_Tong_HKPC_Building_view_003_Lion_Rock_mountain_MTR_Station_Mar-2014.JPG/1280px-HK_Kln_Tong_HKPC_Building_view_003_Lion_Rock_mountain_MTR_Station_Mar-2014.JPG'">
+          <div class="body">
+            <h3>Lion Rock · 獅子山</h3>
+            <p>Ikoniczny grzbiet nad Kowloon. Sport + trad według sektora; świetne widoki na miasto. Klasyczny „pierwszy dzień” z guidebooka.</p>
+            <div class="access">🚇 MTR Wong Tai Sin / Kowloon Tong + dojście pieszo / taxi pod trailhead</div>
+          </div>
+        </article>
+        <article class="climb-card">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Hong_Kong_Night_Skyline.jpg/1280px-Hong_Kong_Night_Skyline.jpg" alt="Fei Ngo Shan / Kowloon Peak" loading="lazy"
+               onerror="this.src='https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a4/Hong_Kong_Harbour_Night_2019-06-11.jpg/1280px-Hong_Kong_Harbour_Night_2019-06-11.jpg'">
+          <div class="body">
+            <h3>Kowloon Peak / Fei Ngo Shan · 飛鵝山</h3>
+            <p>Wiele sektorów, dobre na cały dzień. Widoki na harbour z wysokości. Dojazd łatwiejszy taksówką pod Fei Ngo Shan Road; wracajcie przed zmrokiem — droga kręta.</p>
+            <div class="access">🚇 MTR Choi Hung / Shun Lee + taxi / bus pod Fei Ngo Shan Rd</div>
+          </div>
+        </article>
+        <article class="climb-card">
+          <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cb/Lei_Yue_Mun_-_Hong_Kong_Island_coast_11.jpg/1280px-Lei_Yue_Mun_-_Hong_Kong_Island_coast_11.jpg" alt="Cape Collinson" loading="lazy"
+               onerror="this.src='https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cb/Lei_Yue_Mun_-_Hong_Kong_Island_coast_11.jpg/1280px-Lei_Yue_Mun_-_Hong_Kong_Island_coast_11.jpg'">
+          <div class="body">
+            <h3>Cape Collinson · 歌連臣角</h3>
+            <p>Skały nad morzem na wschodzie HK Island. (zdjęcie: wschodnie wybrzeże HK) Sportowe drogi, klimat „ocean cliff”. Dobrze łączy się z Shek O.</p>
+            <div class="access">🚇 MTR Chai Wan + bus / taxi w stronę Cape Collinson Rd</div>
+          </div>
+        </article>
+        <article class="climb-card">
+          <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=80" alt="Shek O Beach" loading="lazy"
+               onerror="this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=80'">
+          <div class="body">
+            <h3>Shek O · 石澳</h3>
+            <p>Plaża + sektory w okolicy. (zdjęcie ilustracyjne plaży) Po wspinaczce fish &amp; chips / cold drink w wiosce. Łatwy „recovery day” klimatycznie.</p>
+            <div class="access">🚇 MTR Shau Kei Wan + bus 9 do Shek O</div>
+          </div>
+        </article>
+        <article class="climb-card">
+          <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2a/Clear_Water_Bay_Peninsula_1.jpg/1280px-Clear_Water_Bay_Peninsula_1.jpg" alt="Clearwater Bay" loading="lazy"
+               onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/d/d9/Clear_Water_Bay_Peninsula.JPG'">
+          <div class="body">
+            <h3>Clearwater Bay · 清水灣</h3>
+            <p>Półwysep Sai Kung — kilka klasycznych ścian. Planujcie wodę i transport powrotny (mniej częste busy wieczorem).</p>
+            <div class="access">🚇 MTR Hang Hau / Po Lam + bus / taxi Clear Water Bay Rd</div>
+          </div>
+        </article>
+        <article class="climb-card">
+          <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8d/Tung_Lung_Chau_63.jpg/1280px-Tung_Lung_Chau_63.jpg" alt="Tung Lung Chau" loading="lazy"
+               onerror="this.src='https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d4/Tung_Lung_Chau_39.jpg/1280px-Tung_Lung_Chau_39.jpg'">
+          <div class="body">
+            <h3>Tung Lung Chau · 東龍洲</h3>
+            <p>Wyspa z wielkimi ścianami — klasyka HK. Tylko przy dobrej pogodzie morskiej; sprawdzajcie rozkład promu i wracajcie z zapasem czasu.</p>
+            <div class="access">⛴️ Prom z Sai Wan Ho / Sam Ka Tsuen (rozklad sezonowy) — day trip</div>
+          </div>
+        </article>
+      </div>
+      <p class="map-note" style="margin-top:1rem">
+        📌 Macie guidebook — traktujcie powyższe jako shortlistę day-trips, nie zastępstwo topo.
+        Pogoda: późny październik zwykle dobry; ryzyko ogona sezonu tajfunowego — sprawdzajcie <em>Hong Kong Observatory</em> wieczorem przed dniem skały.
+      </p>
+    </section>
+
+    <section id="wesele">
+      <div class="section-head">
+        <div>
+          <span class="tag" style="background:var(--wedding-soft);color:#7a5c00">1 listopada</span>
+          <h2>Przyjęcie weselne kuzynki</h2>
+          <p>Nie Wasz ślub — jesteście gośćmi. Regal Riverside Hotel, Sha Tin.</p>
+        </div>
+      </div>
+      <div class="wedding-card">
+        <div>
+          <div class="pin">📍 Pin weselny</div>
+          <h3>Regal Riverside Hotel</h3>
+          <p style="margin:0 0 .75rem;color:var(--muted)">
+            Tai Chung Kiu Road, Sha Tin, New Territories, Hongkong
+          </p>
+          <ul style="margin:0;padding-left:1.2rem">
+            <li>Przyjęcie (reception): <strong>17:00</strong></li>
+            <li>Kolacja: <strong>20:00</strong></li>
+            <li>Dojazd: MTR Sha Tin / City One + krótki spacer lub taxi</li>
+            <li>Opcja C: hotel w NT = spokojny powrót po kolacji</li>
+          </ul>
+        </div>
+        <img src="https://images.unsplash.com/photo-1536599018102-9f803c140fc1?w=1200&q=80" alt="Sha Tin New Territories" loading="lazy"
+             onerror="this.src='https://thumb.wikimedia.org/wikipedia/commons/thumb/1/11/Victoria_Harbour_skyscrapers.jpg/1280px-Victoria_Harbour_skyscrapers.jpg'">
+      </div>
+    </section>
+
+    <section id="guilin">
+      <div class="family-banner">
+        <h2>Plan rodziny · Guilin – Yangshuo</h2>
+        <p>Opcjonalny tor 3 dni / 2 noce dla 8 osób · ~1142 RMB/os. · Możecie dołączyć (opcja B) albo zostać w HK.</p>
+        <div class="cost-bar">
+          <span>Bilety 3720</span>
+          <span>Hotele 2520</span>
+          <span>Van 2700</span>
+          <span>Obsługa 200</span>
+          <span>= 9140 RMB / 8 os.</span>
+        </div>
+      </div>
+
+      <div class="guilin-days">
+        <article class="g-day">
+          <div class="g-day-head">
+            <h3>Dzień 1 · Guilin</h3>
+            <span class="pill family">Noc: Lijiang Yunduan Hotel</span>
+          </div>
+          <div class="g-day-body">
+            <div class="stops">
+              <div class="stop">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Colina_de_la_trompa_de_elefante.jpg/960px-Colina_de_la_trompa_de_elefante.jpg" alt="Elephant Trunk Hill" loading="lazy">
+                <div class="stop-body">
+                  <h4>Elephant Trunk Hill</h4>
+                  <div class="cn">象鼻山</div>
+                  <p>Symbol Guilin — wzgórze jak słoń pijący z Li Jiang. Start zwiedzania po przylocie.</p>
+                  <span class="price">wstęp wolny</span>
+                </div>
+              </div>
+              <div class="stop">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Yangshuo_countryside_scenery.jpg/960px-Yangshuo_countryside_scenery.jpg" alt="Guihai Qinglan / Guilin karst" loading="lazy"
+                     onerror="this.src='https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0b/Li_River_at_Xingping_1.jpg/1280px-Li_River_at_Xingping_1.jpg'">
+                <div class="stop-body">
+                  <h4>Guilin Hai Qinglan</h4>
+                  <div class="cn">桂海晴岚</div>
+                  <p>Widokowe wzgórza / park krajobrazowy — dobre światło popołudniem. (zdjęcie: krajobraz Guilin/Yangshuo)</p>
+                  <span class="price">50 RMB</span>
+                </div>
+              </div>
+              <div class="stop">
+                <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/Lake_Shanhu_pagodas_at_night.jpg/1280px-Lake_Shanhu_pagodas_at_night.jpg" alt="Sun and Moon Pagodas" loading="lazy"
+                     onerror="this.src='https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/Sun_and_Moon_Pagodas_Guilin_November_2017_HDR.jpg/1280px-Sun_and_Moon_Pagodas_Guilin_November_2017_HDR.jpg'">
+                <div class="stop-body">
+                  <h4>Sun &amp; Moon Pagodas</h4>
+                  <div class="cn">日月双塔</div>
+                  <p>Wieczorne pagody na Shan Lake + spacer po Dongxi streets (东西巷).</p>
+                  <span class="price">wieczór w mieście</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="g-day">
+          <div class="g-day-head">
+            <h3>Dzień 2 · Li River → Yangshuo</h3>
+            <span class="pill family">Noc: Langyun Garden Hotel</span>
+          </div>
+          <div class="g-day-body">
+            <div class="stops">
+              <div class="stop">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Li_River%2C_Xingping.jpg/960px-Li_River%2C_Xingping.jpg" alt="Li River cruise" loading="lazy">
+                <div class="stop-body">
+                  <h4>Rejs Li River (najlepszy odcinek)</h4>
+                  <div class="cn">漓江 · ~90 min</div>
+                  <p>Klasyka Guilin — ostre szczyty krasowe z wody. Skrócony, „najładniejszy” fragment.</p>
+                  <span class="price">115 RMB</span>
+                </div>
+              </div>
+              <div class="stop">
+                <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7f/Xingping_Ancient_Town_%28WEST_PAVILLION%29.jpg/1280px-Xingping_Ancient_Town_%28WEST_PAVILLION%29.jpg" alt="Xingping old town" loading="lazy"
+                     onerror="this.src='https://thumb.wikimedia.org/wikipedia/commons/thumb/b/be/Li_River_at_Xingping_2.jpg/1280px-Li_River_at_Xingping_2.jpg'">
+                <div class="stop-body">
+                  <h4>Xingping old town</h4>
+                  <div class="cn">兴坪古镇</div>
+                  <p>Stare uliczki + punkt widokowy z banknotu 20 RMB (二十元人民币风景).</p>
+                  <span class="price">w cenie dnia</span>
+                </div>
+              </div>
+              <div class="stop">
+                <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c4/Yangshuo-4335.JPG/1280px-Yangshuo-4335.JPG" alt="Impression Liu Sanjie / Yangshuo" loading="lazy"
+                     onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/c/c0/Yangshuo.jpg'">
+                <div class="stop-body">
+                  <h4>Impression Liu Sanjie (B2)</h4>
+                  <div class="cn">印象刘三姐</div>
+                  <p>Spektakl Zhang Yimou nad rzeką — wieczór w Yangshuo.</p>
+                  <span class="price">195 RMB · B2</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="g-day">
+          <div class="g-day-head">
+            <h3>Dzień 3 · Yangshuo → powrót</h3>
+            <span class="pill family">Transfer do domu / HK</span>
+          </div>
+          <div class="g-day-body">
+            <div class="stops">
+              <div class="stop">
+                <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c7/Yulong_River_Bamboo_raft_boatmen_-_panoramio.jpg/1280px-Yulong_River_Bamboo_raft_boatmen_-_panoramio.jpg" alt="Yulong bamboo raft" loading="lazy"
+                     onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/c/c0/Yangshuo.jpg'">
+                <div class="stop-body">
+                  <h4>Yulong bamboo raft</h4>
+                  <div class="cn">遇龙河</div>
+                  <p>Spływ bambusową tratwą — spokojniejszy niż duży rejs Li Jiang.</p>
+                  <span class="price">45 RMB</span>
+                </div>
+              </div>
+              <div class="stop">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Yangshuo_countryside_scenery.jpg/960px-Yangshuo_countryside_scenery.jpg" alt="Ten-Mile Gallery" loading="lazy"
+                     onerror="this.src='https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3f/Much_activity_here_against_the_backdrop_of_the_karsts_%2835270761663%29.jpg/1280px-Much_activity_here_against_the_backdrop_of_the_karsts_%2835270761663%29.jpg'">
+                <div class="stop-body">
+                  <h4>Ten-Mile Gallery</h4>
+                  <div class="cn">十里画廊</div>
+                  <p>Dolina z formacjami krasowymi — rower / van między punktami.</p>
+                  <span class="price">w cenie vanu</span>
+                </div>
+              </div>
+              <div class="stop">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Moon_Hill.jpg/960px-Moon_Hill.jpg" alt="Moon Hill" loading="lazy"
+                     onerror="this.src='https://thumb.wikimedia.org/wikipedia/commons/thumb/7/78/Moon_Hill_-_Yangshuo%2C_China.jpg/1280px-Moon_Hill_-_Yangshuo%2C_China.jpg'">
+                <div class="stop-body">
+                  <h4>Moon Hill</h4>
+                  <div class="cn">月亮山</div>
+                  <p>Naturalny łuk w skale — wejście pod „księżyc”.</p>
+                  <span class="price">w planie dnia</span>
+                </div>
+              </div>
+              <div class="stop">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Li_River%2C_Xingping.jpg/960px-Li_River%2C_Xingping.jpg" alt="Xianggong Mountain" loading="lazy"
+                     onerror="this.src='https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0b/Li_River_at_Xingping_1.jpg/1280px-Li_River_at_Xingping_1.jpg'">
+                <div class="stop-body">
+                  <h4>Xianggong Mountain</h4>
+                  <div class="cn">相公山 · 60 RMB</div>
+                  <p>Punkt widokowy na meandry Li Jiang — często o zachodzie. (zdjęcie: Li River koło Xingping)</p>
+                  <span class="price">60 RMB</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="mapa">
+      <div class="section-head">
+        <div>
+          <span class="tag ours">OpenStreetMap + Leaflet</span>
+          <h2>Mapa · Guilin + Hongkong</h2>
+          <p>Markery planu rodziny (fiolet) oraz HK: lotnisko, hotel weselny, sektory wspinaczkowe (zieleń).</p>
+        </div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.75rem">
+        <button type="button" id="map-focus-all" class="tab-btn active" style="font-size:.85rem;padding:.45rem .85rem">Cała mapa</button>
+        <button type="button" id="map-focus-hk" class="tab-btn" style="font-size:.85rem;padding:.45rem .85rem">Zoom · Hongkong</button>
+        <button type="button" id="map-focus-guilin" class="tab-btn" style="font-size:.85rem;padding:.45rem .85rem">Zoom · Guilin / Yangshuo</button>
+      </div>
+      <div id="map" class="map-box" role="img" aria-label="Mapa Guilin i Hongkongu"></div>
+      <p class="map-note">Przesuwaj i zoomuj. Kliknij marker po szczegóły. Mapa OSM · bez klucza API.</p>
+
+      <h3 style="margin-top:2rem;font-size:1.2rem">Hongkong — klimat wizualny</h3>
+      <div class="photo-strip">
+        <figure>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Hong_Kong_Skyline_Restitch_-_Dec_2007.jpg/1280px-Hong_Kong_Skyline_Restitch_-_Dec_2007.jpg" alt="Hong Kong skyline" loading="lazy">
+          <figcaption>Victoria Harbour — skyline</figcaption>
+        </figure>
+        <figure>
+          <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fd/Aeropuerto_de_Hong_Kong%2C_2013-08-13%2C_DD_05.JPG/1280px-Aeropuerto_de_Hong_Kong%2C_2013-08-13%2C_DD_05.JPG" alt="HKG airport" loading="lazy"
+               onerror="this.src='https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fd/Aeropuerto_de_Hong_Kong%2C_2013-08-13%2C_DD_05.JPG/1280px-Aeropuerto_de_Hong_Kong%2C_2013-08-13%2C_DD_05.JPG'">
+          <figcaption>Lotnisko HKG — przylot 25 X 16:45</figcaption>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1536599018102-9f803c140fc1?w=1200&q=80" alt="Sha Tin" loading="lazy">
+          <figcaption>Hongkong nocą — klimat przed weselem w Sha Tin</figcaption>
+        </figure>
+        <figure>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Lion_Rock_2016.jpg/960px-Lion_Rock_2016.jpg" alt="Lion Rock" loading="lazy"
+               onerror="this.src='https://thumb.wikimedia.org/wikipedia/commons/thumb/2/20/HK_Kln_Tong_HKPC_Building_view_003_Lion_Rock_mountain_MTR_Station_Mar-2014.JPG/1280px-HK_Kln_Tong_HKPC_Building_view_003_Lion_Rock_mountain_MTR_Station_Mar-2014.JPG'">
+          <figcaption>Lion Rock — kandydat na dzień 1 skały</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <footer>
+      <p>Hongkong 2026 · planer decyzji · Krystian &amp; żona · to narzędzie decyzyjne, nie finalny itinerary.</p>
+      <p>Zdjęcia: Wikimedia Commons · mapa: © OpenStreetMap contributors · Leaflet</p>
+    </footer>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script>
+    // Tabs
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        document.querySelectorAll('.option-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+        document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+      });
+    });
+
+    // Leaflet map — show both regions with fitBounds
+    const map = L.map('map', { scrollWheelZoom: false });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: '&copy; OpenStreetMap'
+    }).addTo(map);
+
+    const familyIcon = L.divIcon({
+      className: '',
+      html: '<div style="background:#6b3fa0;width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4)"></div>',
+      iconSize: [14, 14], iconAnchor: [7, 7]
+    });
+    const climbIcon = L.divIcon({
+      className: '',
+      html: '<div style="background:#2d6a3e;width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4)"></div>',
+      iconSize: [14, 14], iconAnchor: [7, 7]
+    });
+    const flightIcon = L.divIcon({
+      className: '',
+      html: '<div style="background:#1e4d8c;width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4)"></div>',
+      iconSize: [14, 14], iconAnchor: [7, 7]
+    });
+    const weddingIcon = L.divIcon({
+      className: '',
+      html: '<div style="background:#b8860b;width:16px;height:16px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;font-size:9px">💍</div>',
+      iconSize: [16, 16], iconAnchor: [8, 8]
+    });
+
+    function popup(title, body) {
+      return `<div class="map-popup"><h4>${title}</h4><p>${body}</p></div>`;
+    }
+
+    const markers = [];
+
+    // Guilin / Yangshuo — plan rodziny
+    const guilinStops = [
+      [25.2736, 110.2900, 'Elephant Trunk Hill (象鼻山)', 'Dzień 1 · Guilin · wstęp wolny'],
+      [25.2670, 110.3010, 'Sun & Moon Pagodas (日月双塔)', 'Dzień 1 wieczór · Shan Lake'],
+      [25.2360, 110.3280, 'Dongxi streets (东西巷)', 'Dzień 1 wieczór · stare uliczki'],
+      [24.9167, 110.5167, 'Xingping / Li River (兴坪·漓江)', 'Dzień 2 · rejs + banknot 20 RMB'],
+      [24.7780, 110.4960, 'Yangshuo · Impression Liu Sanjie', 'Dzień 2 wieczór · spektakl B2'],
+      [24.7450, 110.4700, 'Yulong River (遇龙河)', 'Dzień 3 · bamboo raft 45 RMB'],
+      [24.7330, 110.4680, 'Moon Hill (月亮山)', 'Dzień 3'],
+      [24.9000, 110.5500, 'Xianggong Mountain (相公山)', 'Dzień 3 · 60 RMB'],
+    ];
+    guilinStops.forEach(([lat, lng, t, b]) => {
+      markers.push(L.marker([lat, lng], { icon: familyIcon }).addTo(map).bindPopup(popup(t, b)));
+    });
+
+    // Hong Kong
+    const hkStops = [
+      [22.3089, 113.9148, flightIcon, 'Lotnisko HKG', 'Przylot 25 X 16:45 · wylot 2 XI 13:30'],
+      [22.3825, 114.1956, weddingIcon, 'Regal Riverside Hotel · Sha Tin', 'Wesele 1 XI · reception 17:00 · dinner 20:00 · Tai Chung Kiu Rd'],
+      [22.3522, 114.1870, climbIcon, 'Lion Rock', 'Wspinaczka · MTR Wong Tai Sin'],
+      [22.3410, 114.2230, climbIcon, 'Kowloon Peak / Fei Ngo Shan', 'Wspinaczka · Fei Ngo Shan Rd'],
+      [22.2600, 114.2550, climbIcon, 'Cape Collinson', 'Wspinaczka · Chai Wan'],
+      [22.2300, 114.2510, climbIcon, 'Shek O', 'Wspinaczka + plaża · bus 9'],
+      [22.2850, 114.2950, climbIcon, 'Clearwater Bay', 'Wspinaczka · Sai Kung peninsula'],
+      [22.2550, 114.2900, climbIcon, 'Tung Lung Chau', 'Wspinaczka · prom day trip'],
+    ];
+    hkStops.forEach(([lat, lng, icon, t, b]) => {
+      markers.push(L.marker([lat, lng], { icon }).addTo(map).bindPopup(popup(t, b)));
+    });
+
+    const group = L.featureGroup(markers);
+    map.fitBounds(group.getBounds().pad(0.18));
+
+    // Enable scroll zoom after click
+    map.on('click', () => map.scrollWheelZoom.enable());
+  
+    // Map focus buttons
+    const focusBtns = {
+      'map-focus-all': () => map.fitBounds(group.getBounds().pad(0.18)),
+      'map-focus-hk': () => map.flyTo([22.32, 114.20], 11),
+      'map-focus-guilin': () => map.flyTo([24.95, 110.45], 9),
+    };
+    Object.keys(focusBtns).forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.addEventListener('click', () => {
+        document.querySelectorAll('#mapa .tab-btn').forEach(b => b.classList.remove('active'));
+        el.classList.add('active');
+        focusBtns[id]();
+      });
+    });
+</script>
+</body>
+</html>
