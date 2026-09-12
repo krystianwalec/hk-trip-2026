@@ -404,6 +404,81 @@
     background: var(--climb-soft); color: var(--climb);
     padding: .45rem .65rem; border-radius: 8px;
   }
+  .climb-plan {
+    margin-top: 1.1rem;
+    display: grid; gap: 1rem;
+  }
+  .climb-gear {
+    background: linear-gradient(135deg, var(--climb-soft), #f7faf7);
+    border: 1px solid #b7d4bf;
+    border-left: 4px solid var(--climb);
+    border-radius: 0 14px 14px 0;
+    padding: 1rem 1.15rem;
+    box-shadow: var(--shadow);
+  }
+  .climb-gear h3 {
+    margin: 0 0 .55rem; font-size: 1.05rem; color: var(--climb);
+    font-family: "Fraunces", Georgia, serif;
+  }
+  .climb-gear ul { margin: 0; padding-left: 1.15rem; }
+  .climb-gear li { margin: .28rem 0; font-size: .9rem; }
+  .climb-day-card {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .climb-day-card > img { width: 100%; height: 170px; object-fit: cover; display: block; }
+  .climb-day-card .body { padding: 1.05rem 1.15rem 1.2rem; }
+  .climb-day-card h3 { margin: 0 0 .35rem; font-size: 1.15rem; color: var(--climb); }
+  .climb-day-card .lede { margin: 0 0 .75rem; font-size: .9rem; color: var(--muted); }
+  .badge-row { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .75rem; }
+  .cbadge {
+    display: inline-block; font-size: .72rem; font-weight: 700;
+    letter-spacing: .03em; text-transform: uppercase;
+    padding: .22rem .55rem; border-radius: 999px;
+  }
+  .cbadge.primary { background: var(--climb); color: #fff; }
+  .cbadge.choice { background: #dff0e4; color: var(--climb); border: 1px solid #b7d4bf; }
+  .cbadge.backup { background: #f3eee4; color: #7a5c00; border: 1px solid #e4d39a; }
+  .cbadge.weekend { background: #fff3e0; color: #b35c00; border: 1px solid #f0c48a; }
+  .cbadge.warn { background: #fde8e8; color: #9b1c1c; border: 1px solid #f0b4b4; }
+  .route-list {
+    margin: .55rem 0 0; padding-left: 1.1rem;
+    font-size: .88rem; color: var(--ink);
+  }
+  .route-list li { margin: .22rem 0; }
+  .route-list strong { color: var(--climb); }
+  .choice-block {
+    margin-top: .85rem; padding: .85rem .95rem;
+    border: 1px dashed #b7d4bf; border-radius: 12px;
+    background: #f7fbf8;
+  }
+  .choice-block h4 { margin: 0 0 .35rem; font-size: .95rem; color: var(--climb); }
+  .choice-block p { margin: 0 0 .45rem; font-size: .88rem; color: var(--muted); }
+  .choice-block.backup-block {
+    background: #fffaf0; border-color: #e4d39a;
+  }
+  .choice-block.backup-block h4 { color: #7a5c00; }
+  .weekend-note {
+    margin-top: 1rem;
+    background: linear-gradient(135deg, #fff8ee, #fff3e0);
+    border: 1px solid #f0c48a;
+    border-left: 4px solid #d97706;
+    border-radius: 0 14px 14px 0;
+    padding: 1rem 1.15rem;
+  }
+  .weekend-note h3 { margin: 0 0 .4rem; font-size: 1.05rem; color: #9a3412; font-family: "Fraunces", Georgia, serif; }
+  .weekend-note p { margin: .35rem 0; font-size: .9rem; }
+  .weekend-note .ferry { font-size: .86rem; color: var(--muted); }
+  .src-note {
+    margin-top: .85rem; font-size: .8rem; color: var(--muted);
+  }
+  .src-note a { color: var(--climb); font-weight: 600; }
+  .plan-day.climb-tint .plan-day-head { background: var(--climb-soft); border-color: #b7d4bf; }
+  .plan-day.climb-tint .plan-day-head h4 { color: var(--climb); }
+  .plan-day.climb-tint .steps .slot { color: var(--climb); }
 
   /* Maps */
   .map-box {
@@ -572,7 +647,7 @@
       </div>
       <div class="notice">
         <strong>Potwierdzone:</strong> jedziemy z rodziną do Guilin <strong>29–31 X 2026</strong> (~1142 RMB/os. dla 8 osób).
-        Wspinaczka w HK: <strong>poniedziałek–wtorek 26–27 X</strong> (plan osobno).
+        Wspinaczka w HK: <strong>poniedziałek–wtorek 26–27 X</strong> — Beacon Hill + Monkey Buttress / Central Crags (<a href="#wspinaczka">plan poniżej</a>).
         <strong>28 X</strong> to wolny dzień na zwiedzanie — patrz opcje A/B/C.
         Mają guidebook; koniec października zwykle dobra pogoda, ale sezon tajfunów jeszcze „dociąga” — sprawdzajcie HKO.
       </div>
@@ -625,7 +700,7 @@
       </div>
       <div class="spine" aria-label="Sztywny kręgosłup podróży">
         <div class="spine-item flight"><strong>25 X</strong> Przylot HKG · wieczór wg opcji</div>
-        <div class="spine-item climb"><strong>26–27 X</strong> Wspinanie — plan osobno</div>
+        <div class="spine-item climb"><strong>26–27 X</strong> Beacon Hill + Monkey/Central · <a href="#wspinaczka" style="color:inherit">plan</a></div>
         <div class="spine-item hotel"><strong>26–29 X</strong> Józka/Ada · Dorsett Kai Tak</div>
         <div class="spine-item city vary"><strong>28 X</strong> Zwiedzanie — tu różnią się opcje</div>
         <div class="spine-item family"><strong>29–31 X</strong> Guilin z rodziną · potwierdzone</div>
@@ -667,9 +742,11 @@
             <span class="pill climb">Wspinaczka</span>
             <span class="pill hotel">Józka &amp; Ada · hotel</span>
             <ul>
-              <li><em>Wspinanie — plan osobno</em></li>
-              <li>Dzień 1 skały w Hongkongu</li>
+              <li><strong>Beacon Hill (Main Wall)</strong> — baza Dorsett Kai Tak</li>
+              <li>Taxi → Lung Yan Rd · One Eyed Snake / Cat Ladder / Pretty Girl…</li>
+              <li>Wieczór opc.: Wong Tai Sin / Chi Lin / Kowloon City</li>
               <li><strong>Rodzina:</strong> Józka i Ada check-in <strong>Dorsett Kai Tak</strong> (noclegi 26–29 X)</li>
+              <li><a href="#wspinaczka">Szczegóły → Plan wspinania</a></li>
             </ul>
           </div>
         </article>
@@ -679,8 +756,10 @@
           <div class="day-body">
             <span class="pill climb">Wspinaczka</span>
             <ul>
-              <li><em>Wspinanie — plan osobno</em></li>
-              <li>Dzień 2 skały · ostatni dzień wspinaczki w HK</li>
+              <li><strong>A)</strong> Monkey Buttress <em>lub</em> <strong>B)</strong> Central Crags</li>
+              <li>Backup: Devil’s Peak (łatwy dojazd z Dorsett)</li>
+              <li>Tung Lung Chau <strong>nie</strong> — weekend-only kaito</li>
+              <li><a href="#wspinaczka">Szczegóły → Plan wspinania</a></li>
             </ul>
           </div>
         </article>
@@ -772,7 +851,7 @@
 
       <div class="spine" aria-label="Sztywny kręgosłup podróży">
         <div class="spine-item flight"><strong>25 X</strong> Przylot HKG · wieczór wg opcji</div>
-        <div class="spine-item climb"><strong>26–27 X</strong> Wspinanie — plan osobno</div>
+        <div class="spine-item climb"><strong>26–27 X</strong> Beacon Hill + Monkey/Central · <a href="#wspinaczka" style="color:inherit">plan</a></div>
         <div class="spine-item hotel"><strong>26–29 X</strong> Józka/Ada · Dorsett Kai Tak</div>
         <div class="spine-item city vary"><strong>28 X</strong> Zwiedzanie — tu różnią się opcje</div>
         <div class="spine-item family"><strong>29–31 X</strong> Guilin z rodziną · potwierdzone</div>
@@ -791,7 +870,7 @@
         <div class="option-card">
           <h3>Opcja A — klasyczne Hongkong</h3>
           <p class="option-lead">Wieczór 25 X + pełny 28 X: Peak, Star Ferry, dim sum, rynki. Hotel w mieście (Island / Kowloon). 26–27 X skała, 29–31 X Guilin — bez zmian.</p>
-          <p class="climb-aside">🧗 26–27 X · <strong>wspinanie — plan osobno</strong>. Ten wariant nie rusza skały ani Guilin.</p>
+          <p class="climb-aside">🧗 26–27 X · <strong>Beacon Hill + Monkey Buttress / Central Crags</strong> (baza Dorsett). Ten wariant nie rusza skały ani Guilin. <a href="#wspinaczka">Plan →</a></p>
 
           <div class="teaser-label">Teaser · klasyczne HK (25 wieczór + 28 X)</div>
           <div class="teaser-row">
@@ -829,13 +908,13 @@
                 <li><span class="slot">Noc</span><span class="act">Kolacja w okolicy hotelu · sen o „normalnej” godzinie lokalnej</span></li>
               </ol>
             </article>
-            <article class="plan-day">
+            <article class="plan-day climb-tint">
               <div class="plan-day-head">
                 <h4>26–27 X · pon–wt</h4>
                 <span class="when">zablokowane</span>
               </div>
               <ol class="steps">
-                <li><span class="slot">Cały dzień</span><span class="act"><em>Wspinanie — plan osobno</em> · dwa dni skały w HK</span></li>
+                <li><span class="slot">Cały dzień</span><span class="act"><strong>26:</strong> Beacon Hill · <strong>27:</strong> Monkey / Central / Devil’s Peak · <a href="#wspinaczka">plan</a></span></li>
               </ol>
             </article>
             <article class="plan-day">
@@ -895,7 +974,7 @@
         <div class="option-card">
           <h3>Opcja B — Lantau / Big Buddha na 28 X</h3>
           <p class="option-lead">Wieczór 25 X lekko przy harbour. Cały 28 X na Lantau: Ngong Ping 360, Tian Tan Buddha, Po Lin. 26–27 X skała, 29–31 X Guilin — bez zmian.</p>
-          <p class="climb-aside">🧗 26–27 X · <strong>wspinanie — plan osobno</strong>. 28 X to dzień wyspy, nie skały.</p>
+          <p class="climb-aside">🧗 26–27 X · <strong>Beacon Hill + Monkey / Central</strong> (baza Dorsett). 28 X to dzień wyspy, nie skały. <a href="#wspinaczka">Plan →</a></p>
 
           <div class="teaser-label">Teaser · Lantau 28 X</div>
           <div class="teaser-row">
@@ -933,13 +1012,13 @@
                 <li><span class="slot">Noc</span><span class="act">Lekka kolacja przy hotelu · sen</span></li>
               </ol>
             </article>
-            <article class="plan-day">
+            <article class="plan-day climb-tint">
               <div class="plan-day-head">
                 <h4>26–27 X · pon–wt</h4>
                 <span class="when">zablokowane</span>
               </div>
               <ol class="steps">
-                <li><span class="slot">Cały dzień</span><span class="act"><em>Wspinanie — plan osobno</em></span></li>
+                <li><span class="slot">Cały dzień</span><span class="act"><strong>26:</strong> Beacon Hill · <strong>27:</strong> Monkey / Central · <a href="#wspinaczka">plan</a></span></li>
               </ol>
             </article>
             <article class="plan-day">
@@ -995,7 +1074,7 @@
         <div class="option-card">
           <h3>Opcja C — baza bliżej Sha Tin / New Territories</h3>
           <p class="option-lead">Hotel Tai Wai / Sha Tin / Fo Tan od 25 X (albo przynajmniej na 28 X + powrót z Guilin). 28 X spokojny dzień NT + rekonesans hotelu weselnego. 1 XI: 10–15 min do Regal Riverside.</p>
-          <p class="climb-aside">🧗 26–27 X · <strong>wspinanie — plan osobno</strong>. Lion Rock / Kowloon Peak są wygodne z bazy NT.</p>
+          <p class="climb-aside">🧗 26–27 X · <strong>Beacon Hill</strong> (blisko Dorsett) + <strong>Monkey / Central</strong>; backup Devil’s Peak. Tung Lung tylko weekend. <a href="#wspinaczka">Plan →</a></p>
 
           <div class="teaser-label">Teaser · NT / Sha Tin na 28 X</div>
           <div class="teaser-row">
@@ -1009,7 +1088,7 @@
             </figure>
             <figure>
               <img src="images/lion-rock.jpg" alt="Lion Rock z NT" loading="lazy">
-              <figcaption>Lion Rock · blisko bazy NT (26–27 X)</figcaption>
+              <figcaption>Beacon Hill / skała · blisko Kowloon (26–27 X)</figcaption>
             </figure>
             <figure>
               <img src="images/neon.jpg" alt="Mong Kok po drodze" loading="lazy">
@@ -1034,13 +1113,13 @@
                 <li><span class="slot">Noc</span><span class="act">Kolacja lokalna (Sha Tin / Tai Wai) · sen</span></li>
               </ol>
             </article>
-            <article class="plan-day">
+            <article class="plan-day climb-tint">
               <div class="plan-day-head">
                 <h4>26–27 X · pon–wt</h4>
                 <span class="when">zablokowane</span>
               </div>
               <ol class="steps">
-                <li><span class="slot">Cały dzień</span><span class="act"><em>Wspinanie — plan osobno</em> · Lion Rock / Fei Ngo Shan blisko NT</span></li>
+                <li><span class="slot">Cały dzień</span><span class="act"><strong>26:</strong> Beacon Hill · <strong>27:</strong> Monkey / Central / Devil’s Peak · <a href="#wspinaczka">plan</a></span></li>
               </ol>
             </article>
             <article class="plan-day">
@@ -1087,7 +1166,7 @@
 
           <div class="pros">
             <div>✅ Najbliżej wesela · spokojny 28 X i 1 XI po powrocie z Guilin</div>
-            <div>✅ 26–27 X: Lion Rock / Kowloon Peak bez dojazdu przez całe miasto</div>
+            <div>✅ 26–27 X: Beacon Hill blisko Dorsett; Devil’s Peak jako łatwy backup Kowloon</div>
           </div>
         </div>
       </div>
@@ -1097,7 +1176,8 @@
       <div class="callout-climb">
         <h3 id="callout-title">🧗 Jedziemy z rodziną — jak ułożona jest wspinaczka?</h3>
         <ul>
-          <li><strong>Skała w HK:</strong> tylko <strong>26–27 października</strong> (pon–wt) — <em>wspinanie — plan osobno</em>.</li>
+          <li><strong>Skała w HK:</strong> tylko <strong>26–27 października</strong> (pon–wt) — baza <strong>Dorsett Kai Tak</strong>. Primarnie: <strong>Beacon Hill</strong> (26) + <strong>Monkey Buttress / Central Crags</strong> (27). <a href="#wspinaczka">Plan wspinania →</a></li>
+          <li><strong>Tung Lung Chau</strong> jest idealne, ale kaito zwykle <strong>tylko sob/niedz/święta</strong> — nie primarnie na Mon–Tue.</li>
           <li><strong>28 X</strong> jest dniem zwiedzania, nie trzecim dniem skały.</li>
           <li><strong>W samym Guilin:</strong> realnie tylko 31 X — Moon Hill (Dzień 3 w Guilin z rodziną).</li>
         </ul>
@@ -1107,64 +1187,154 @@
     <section id="wspinaczka">
       <div class="section-head">
         <div>
-          <span class="tag climb">Guidebook ready</span>
-          <h2>Wspinaczka outdoor · Hongkong</h2>
-          <p>Realistyczne day-trips z miasta. Macie guidebook — poniżej dostęp (MTR + bus/taxi) i krótkie notatki. Koniec października zwykle sucho i chłodniej; sprawdzajcie ostrzeżenia tajfunowe HKO.</p>
+          <span class="tag climb">26–27 X · baza Dorsett</span>
+          <h2>Plan wspinania 26–27 X</h2>
+          <p>
+            Tylko <strong>poniedziałek–wtorek 26–27 października 2026</strong>. Baza: <strong>Dorsett Kai Tak</strong>
+            (43 Shing Kai Road · ≈ 22.3268, 114.1955). Tung Lung Chau jest świetne, ale kaito zwykle
+            <strong>tylko sob/niedz/święta</strong> — na Mon–Tue primarnie Beacon Hill + Monkey / Central / Devil’s Peak.
+          </p>
         </div>
       </div>
-      <div class="climb-grid">
-        <article class="climb-card">
-          <img src="images/lion-rock.jpg" alt="Lion Rock Hongkong" loading="lazy">
+
+      <div class="climb-plan">
+        <aside class="climb-gear" aria-label="Sprzęt i notatki">
+          <h3>⚙️ Sprzęt i notatki</h3>
+          <ul>
+            <li><strong>Stopnie:</strong> francuskie ≈ 5.10 / 6a–6b+</li>
+            <li><strong>Długość dróg:</strong> zwykle 12–20 m · lina <strong>60 m</strong> · <strong>12–15 ekspresów</strong> · kask</li>
+            <li><strong>Woda:</strong> 1,5–2 L · późny październik ≈ <strong>25–28°C</strong></li>
+            <li>Sprawdźcie <em>Hong Kong Observatory</em> wieczorem przed skałą (ogon sezonu tajfunowego)</li>
+            <li><strong>Dojazd:</strong> Octopus + taksówki z workiem lin z Dorsett Kai Tak</li>
+          </ul>
+        </aside>
+
+        <article class="climb-day-card">
+          <img src="images/lion-rock.jpg" alt="Beacon Hill / Kowloon cliffs" loading="lazy">
           <div class="body">
-            <h3>Lion Rock · 獅子山</h3>
-            <p>Ikoniczny grzbiet nad Kowloon. Sport + trad według sektora; świetne widoki na miasto. Klasyczny „pierwszy dzień” z guidebooka.</p>
-            <div class="access">🚇 MTR Wong Tai Sin / Kowloon Tong + dojście pieszo / taxi pod trailhead</div>
+            <div class="badge-row">
+              <span class="cbadge primary">Poniedziałek 26 X</span>
+              <span class="cbadge choice">Primary</span>
+            </div>
+            <h3>Beacon Hill · Main Wall · 筆架山</h3>
+            <p class="lede">
+              Z Dorsett: taxi <strong>15–20 min</strong> na koniec <strong>Lung Yan Road</strong> (龍欣道 / Beacon Hill reservoir),
+              potem ≈ <strong>10 min</strong> ścieżką. Uważajcie na małpy.
+            </p>
+            <div class="access">🚕 Taxi z Dorsett → Lung Yan Rd · parking / trailhead przy zbiorniku</div>
+            <ul class="route-list">
+              <li><strong>One Eyed Snake</strong> 5.10a</li>
+              <li><strong>Cat Ladder</strong> 5.10a</li>
+              <li><strong>Pretty Girl</strong> 5.10b</li>
+              <li><strong>Blue Cross</strong> 5.10b/c</li>
+              <li><strong>Spitting Cobra</strong> 5.10d</li>
+              <li><strong>King Cobra</strong> — łatwy warm-up</li>
+            </ul>
+            <p class="lede" style="margin-top:.85rem;margin-bottom:0">
+              <strong>Wieczór opcjonalnie:</strong> Wong Tai Sin / Chi Lin Nunnery / jedzenie w Kowloon City koło Dorsett.
+            </p>
           </div>
         </article>
-        <article class="climb-card">
-          <img src="images/hk-skyline.jpg" alt="Fei Ngo Shan / Kowloon Peak" loading="lazy">
+
+        <article class="climb-day-card">
+          <img src="images/hk-skyline.jpg" alt="Hong Kong Island crags area" loading="lazy">
           <div class="body">
-            <h3>Kowloon Peak / Fei Ngo Shan · 飛鵝山</h3>
-            <p>Wiele sektorów, dobre na cały dzień. Widoki na harbour z wysokości. Dojazd łatwiejszy taksówką pod Fei Ngo Shan Road; wracajcie przed zmrokiem — droga kręta.</p>
-            <div class="access">🚇 MTR Choi Hung / Shun Lee + taxi / bus pod Fei Ngo Shan Rd</div>
+            <div class="badge-row">
+              <span class="cbadge primary">Wtorek 27 X</span>
+              <span class="cbadge choice">Wybierz jeden</span>
+            </div>
+            <h3>Monkey Buttress · Central Crags · backup Devil’s Peak</h3>
+            <p class="lede">Jeden pełny dzień — wybierzcie A albo B; Devil’s Peak jako plan B przy zmęczeniu / pogodzie.</p>
+
+            <div class="choice-block">
+              <h4>A) Monkey Buttress · Braemar Hill</h4>
+              <p>
+                MTR Causeway Bay / Tin Hau → green minibus <strong>25</strong> na koniec Braemar Hill Rd →
+                5–6 min trail (fixed rope). Kończcie wczesnym popołudniem.
+              </p>
+              <div class="access">🚇 MTR Tin Hau / Causeway Bay → GMB 25 → Braemar Hill Rd end</div>
+              <ul class="route-list">
+                <li><strong>Cheeky Monkey</strong> ≈ 5.10a</li>
+                <li><strong>Jujube’s Memory</strong> ≈ 5.10b/c</li>
+                <li><strong>Impavidi Destini</strong> ≈ 6b</li>
+                <li><strong>Hellish</strong> 6b+</li>
+              </ul>
+            </div>
+
+            <div class="choice-block">
+              <h4>B) Central Crags · Soho / Mid-Levels / Bird’s Nest / Forgotten Buttress</h4>
+              <p>
+                Taxi / minibus na <strong>Po Shan Rd</strong> lub <strong>Old Peak Rd</strong>; podejścia 15–20 min.
+                Linie ≈ 6a–6b+.
+              </p>
+              <div class="access">🚕 Taxi / minibus → Po Shan Rd lub Old Peak Rd</div>
+              <ul class="route-list">
+                <li><strong>Peel Street</strong> 6b+</li>
+                <li><strong>Battle of the Bulge</strong> 6b</li>
+                <li>Inne linie Bird’s Nest / Forgotten Buttress ≈ 6a–6b+</li>
+              </ul>
+            </div>
+
+            <div class="choice-block backup-block">
+              <h4>Backup · Devil’s Peak · 魔鬼山</h4>
+              <p>
+                Łatwy wschodni Kowloon, widoki na harbour, krótki taxi z Dorsett.
+                Dobry, gdy A/B odpadają albo chcecie krótszy dzień.
+              </p>
+              <div class="access">🚕 Krótki taxi z Dorsett Kai Tak · wsch. Kowloon</div>
+            </div>
           </div>
         </article>
-        <article class="climb-card">
-          <img src="images/tung-lung.jpg" alt="Cape Collinson" loading="lazy">
-          <div class="body">
-            <h3>Cape Collinson · 歌連臣角</h3>
-            <p>Skały nad morzem na wschodzie HK Island. (zdjęcie: wschodnie wybrzeże HK) Sportowe drogi, klimat „ocean cliff”. Dobrze łączy się z Shek O.</p>
-            <div class="access">🚇 MTR Chai Wan + bus / taxi w stronę Cape Collinson Rd</div>
+
+        <aside class="weekend-note" aria-label="Tung Lung Chau weekend only">
+          <div class="badge-row">
+            <span class="cbadge weekend">Idealne, ale weekend-only</span>
+            <span class="cbadge warn">Nie primary Mon–Tue 26–27 X</span>
           </div>
-        </article>
-        <article class="climb-card">
-          <img src="images/shek-o.jpg" alt="Shek O Beach" loading="lazy">
-          <div class="body">
-            <h3>Shek O · 石澳</h3>
-            <p>Plaża + sektory w okolicy. (zdjęcie ilustracyjne plaży) Po wspinaczce fish &amp; chips / cold drink w wiosce. Łatwy „recovery day” klimatycznie.</p>
-            <div class="access">🚇 MTR Shau Kei Wan + bus 9 do Shek O</div>
-          </div>
-        </article>
-        <article class="climb-card">
-          <img src="images/clearwater.jpg" alt="Clearwater Bay" loading="lazy">
-          <div class="body">
-            <h3>Clearwater Bay · 清水灣</h3>
-            <p>Półwysep Sai Kung — kilka klasycznych ścian. Planujcie wodę i transport powrotny (mniej częste busy wieczorem).</p>
-            <div class="access">🚇 MTR Hang Hau / Po Lam + bus / taxi Clear Water Bay Rd</div>
-          </div>
-        </article>
-        <article class="climb-card">
-          <img src="images/tung-lung.jpg" alt="Tung Lung Chau" loading="lazy">
-          <div class="body">
-            <h3>Tung Lung Chau · 東龍洲</h3>
-            <p>Wyspa z wielkimi ścianami — klasyka HK. Tylko przy dobrej pogodzie morskiej; sprawdzajcie rozkład promu i wracajcie z zapasem czasu.</p>
-            <div class="access">⛴️ Prom z Sai Wan Ho / Sam Ka Tsuen (rozklad sezonowy) — day trip</div>
-          </div>
-        </article>
+          <h3>🏝️ Tung Lung Chau · Technical Wall / Sea Gully</h3>
+          <p>
+            Kaito na Tung Lung Chau kursuje typowo <strong>sobota / niedziela / święta</strong>.
+            <strong>26–27 X to poniedziałek–wtorek</strong> — bez specjalnego promu <strong>nie jest dostępne</strong> jako plan dnia.
+            Zostawcie na inny wyjazd albo gdy złapiecie weekendowy rejs.
+          </p>
+          <p class="ferry">
+            <strong>Prom:</strong> Sai Wan Ho albo <strong>Sam Ka Tsuen</strong> (bliżej z Dorsett) ·
+            Coral Sea <strong>2368 8885</strong> / Blue Sea <strong>2337 6568</strong> · kupcie return · spacer 20–30 min na ścianę.
+          </p>
+          <ul class="route-list">
+            <li><strong>Green Slab</strong> 5.10a</li>
+            <li><strong>Ah Lun’s / Fixed State</strong> 6a–6a+</li>
+            <li><strong>Small Roof</strong> ≈ 5.10b/c</li>
+            <li><strong>New Breed</strong> 6b</li>
+            <li><strong>End of the World / Java Jive / Gladiator</strong> 6b+</li>
+          </ul>
+          <p style="margin-bottom:0"><strong>Wieczór (gdy weekend):</strong> owoce morza w Lei Yue Mun.</p>
+          <img src="images/tung-lung.jpg" alt="Tung Lung Chau cliffs" loading="lazy" style="width:100%;height:160px;object-fit:cover;border-radius:12px;margin-top:.85rem;display:block">
+        </aside>
+
+        <div class="climb-grid" style="margin-top:.25rem">
+          <article class="climb-card">
+            <img src="images/shek-o.jpg" alt="Shek O Beach" loading="lazy">
+            <div class="body">
+              <h3>Shek O · kontekst</h3>
+              <p>Nie w oknie 26–27 X — fajny ocean / plaża na inny dzień lub przyszły wyjazd.</p>
+              <div class="access">🚇 MTR Shau Kei Wan + bus 9</div>
+            </div>
+          </article>
+          <article class="climb-card">
+            <img src="images/clearwater.jpg" alt="Clearwater Bay" loading="lazy">
+            <div class="body">
+              <h3>Clearwater Bay · kontekst</h3>
+              <p>Klasyczne sektory Sai Kung — poza Mon–Tue planem; mapa trzyma focus na 26–27 X.</p>
+              <div class="access">🚇 Hang Hau / Po Lam + bus / taxi</div>
+            </div>
+          </article>
+        </div>
       </div>
-      <p class="map-note" style="margin-top:1rem">
-        📌 Macie guidebook — traktujcie powyższe jako shortlistę day-trips, nie zastępstwo topo.
-        Pogoda: późny październik zwykle dobry; ryzyko ogona sezonu tajfunowego — sprawdzajcie <em>Hong Kong Observatory</em> wieczorem przed dniem skały.
+
+      <p class="src-note">
+        📌 Źródło planu: <a href="https://grok.com/share/bGVnYWN5_c5985378-7d77-401e-8a2d-12fa2d8e5252" target="_blank" rel="noopener">Grok share — climbing HK</a>
+        · guidebook nadal nadrzędny względem topo · zdjęcia lokalne <code>images/*.jpg</code>
       </p>
     </section>
 
@@ -1177,8 +1347,9 @@
       <div class="hotel-grid">
         <article class="hotel-card">
           <h3>🏨 Dorsett Kai Tak</h3>
-          <p class="addr">Kowloon City District, Hongkong<br>
-            Współrzędne mapy ≈ <strong>22.3268, 114.1955</strong> (Kai Tak / Kowloon City)</p>
+          <p class="addr">43 Shing Kai Road, Kowloon City District, Hongkong<br>
+            Współrzędne mapy ≈ <strong>22.3268, 114.1955</strong> (Kai Tak / Kowloon City)<br>
+            <strong>Baza wspinania 26–27 X</strong> (Beacon Hill · Monkey / Central · Devil’s Peak)</p>
           <ul>
             <li><strong>Pobyt:</strong> 26–29 października 2026</li>
             <li>Check-in ok. 26 X · check-out 29 X rano przed Guilin</li>
@@ -1373,7 +1544,7 @@
         <div>
           <span class="tag ours">OpenStreetMap + Leaflet</span>
           <h2>Mapa · Guilin + Hongkong</h2>
-          <p>Markery Guilin z rodziną (fiolet), HK: lotnisko, hotel weselny, sektory (zieleń), <strong>hotele Józka i Ady</strong> (róż / 🏨).</p>
+          <p>Markery Guilin (fiolet), lotnisko, wesele (💍), <strong>hotele Józka i Ady</strong> (🏨), sektory wspinaczkowe 26–27 X (🟢 🧗 — osobny kolor od hoteli).</p>
         </div>
       </div>
       <div style="display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.75rem">
@@ -1400,7 +1571,7 @@
         </figure>
         <figure>
           <img src="images/lion-rock.jpg" alt="Lion Rock" loading="lazy">
-          <figcaption>Lion Rock — kandydat na dzień 1 skały</figcaption>
+          <figcaption>Beacon Hill / Kowloon — dzień 1 skały (26 X)</figcaption>
         </figure>
       </div>
     </section>
@@ -1441,7 +1612,12 @@
     });
     const climbIcon = L.divIcon({
       className: '',
-      html: '<div style="background:#2d6a3e;width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4)"></div>',
+      html: '<div style="background:#1b7a3d;width:20px;height:20px;border-radius:6px 6px 6px 2px;border:2px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;font-size:11px;line-height:1;transform:rotate(-8deg)">🧗</div>',
+      iconSize: [20, 20], iconAnchor: [10, 10]
+    });
+    const climbFerryIcon = L.divIcon({
+      className: '',
+      html: '<div style="background:#d97706;width:14px;height:14px;border-radius:3px;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4)"></div>',
       iconSize: [14, 14], iconAnchor: [7, 7]
     });
     const flightIcon = L.divIcon({
@@ -1485,15 +1661,15 @@
     // Hong Kong
     const hkStops = [
       [22.3089, 113.9148, flightIcon, 'Lotnisko HKG', 'Przylot 25 X 16:45 · wylot 2 XI 13:30'],
-      [22.3268, 114.1955, hotelIcon, 'Dorsett Kai Tak · Józka i Ada', 'Hotel rodziny · pobyt 26–29 X 2026 · Kowloon City / Kai Tak'],
+      [22.3268, 114.1955, hotelIcon, 'Dorsett Kai Tak · Józka i Ada', 'Hotel rodziny · baza wspinania 26–27 X · pobyt 26–29 X · 43 Shing Kai Road'],
       [22.3865, 114.2088, hotelIcon, 'Alva Hotel By Royal · Józka i Ada', 'Hotel rodziny · pobyt 31 X – 11 XI 2026 · 1 Yuen Hong St, Sha Tin · blisko wesela'],
       [22.3825, 114.1956, weddingIcon, 'Regal Riverside Hotel · Sha Tin', 'Wesele 1 XI · reception 17:00 · dinner 20:00 · Tai Chung Kiu Rd'],
-      [22.3522, 114.1870, climbIcon, 'Lion Rock', 'Wspinaczka · MTR Wong Tai Sin'],
-      [22.3410, 114.2230, climbIcon, 'Kowloon Peak / Fei Ngo Shan', 'Wspinaczka · Fei Ngo Shan Rd'],
-      [22.2600, 114.2550, climbIcon, 'Cape Collinson', 'Wspinaczka · Chai Wan'],
-      [22.2300, 114.2510, climbIcon, 'Shek O', 'Wspinaczka + plaża · bus 9'],
-      [22.2850, 114.2950, climbIcon, 'Clearwater Bay', 'Wspinaczka · Sai Kung peninsula'],
-      [22.2550, 114.2900, climbIcon, 'Tung Lung Chau', 'Wspinaczka · prom day trip'],
+      [22.3495, 114.1728, climbIcon, 'Beacon Hill · Main Wall', '🧗 Poniedziałek 26 X · primary · taxi z Dorsett → Lung Yan Rd'],
+      [22.2845, 114.1995, climbIcon, 'Monkey Buttress · Braemar Hill', '🧗 Wtorek 27 X · opcja A · GMB 25 z Tin Hau / Causeway Bay'],
+      [22.2750, 114.1405, climbIcon, 'Central Crags · Po Shan / Mid-Levels', '🧗 Wtorek 27 X · opcja B · Po Shan / Old Peak Rd'],
+      [22.2938, 114.2418, climbIcon, 'Devil’s Peak', '🧗 Wtorek 27 X · backup · krótki taxi z Dorsett'],
+      [22.2545, 114.2895, climbIcon, 'Tung Lung Chau · Technical Wall', '🏝️ Idealne, ale weekend-only kaito · NIE primary Mon–Tue 26–27 X'],
+      [22.2865, 114.2375, climbFerryIcon, 'Sam Ka Tsuen ferry pier', '⛴️ Prom na Tung Lung (bliżej z Dorsett) · Coral Sea / Blue Sea · weekend'],
     ];
     hkStops.forEach(([lat, lng, icon, t, b]) => {
       markers.push(L.marker([lat, lng], { icon }).addTo(map).bindPopup(popup(t, b)));
