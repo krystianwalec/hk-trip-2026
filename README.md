@@ -66,3 +66,8 @@ Trzy opcje (A/B/C) różnią tylko **wieczór 25 X + pełny 28 X** (i lekki pora
 - C — baza bliżej Sha Tin / New Territories
 
 Kalendarz, mapa Leaflet, jet lag (SEA→HKG), teaser zdjęć z `images/`.
+
+Sekcja **Hotele Józka i Ady** (rodzina — niekoniecznie hotele Krystiana):
+- Dorsett Kai Tak (Kowloon City) · 26–29 X 2026 · mapa ≈ 22.3268, 114.1955
+- Alva Hotel By Royal (1 Yuen Hong St, Sha Tin) · 31 X – 11 XI 2026 · mapa ≈ 22.3865, 114.2088
+- Przepływ: Dorsett → Guilin 29–31 X → Alva po powrocie; Alva blisko wesela (Regal Riverside, Sha Tin).

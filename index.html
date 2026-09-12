@@ -28,6 +28,9 @@
     --flight: #1e4d8c;
     --flight-soft: #dde8f5;
     --conflict: #a33a2c;
+
+    --hotel: #c2185b;
+    --hotel-soft: #fce4ec;
     --conflict-soft: #f8e4e1;
     --radius: 16px;
     --shadow: 0 8px 28px rgba(26,26,26,.08);
@@ -81,6 +84,7 @@
   .chip.wedding { border-color: #e4d39a; background: var(--wedding-soft); color: #7a5c00; }
   .chip.family { border-color: #d4c0ea; background: var(--family-soft); color: var(--family); }
   .chip.climb { border-color: #b7d4bf; background: var(--climb-soft); color: var(--climb); }
+  .chip.hotel { border-color: #f0b8cb; background: var(--hotel-soft); color: var(--hotel); }
 
   .notice {
     margin-top: 1.75rem;
@@ -142,6 +146,7 @@
   .tag.family { background: var(--family-soft); color: var(--family); }
   .tag.ours { background: var(--teal-soft); color: var(--teal); }
   .tag.climb { background: var(--climb-soft); color: var(--climb); }
+  .tag.hotel { background: var(--hotel-soft); color: var(--hotel); }
 
   /* Legend */
   .legend {
@@ -162,6 +167,7 @@
   .dot.wedding { background: var(--wedding); }
   .dot.family { background: var(--family); }
   .dot.conflict { background: var(--conflict); }
+  .dot.hotel { background: var(--hotel); }
 
   /* Calendar */
   .calendar {
@@ -187,6 +193,7 @@
   .day-card.wedding-day::before { background: var(--wedding); }
   .day-card.family-window::before { background: var(--family); }
   .day-card.conflict-day::before { background: var(--conflict); }
+  .day-card.hotel-day::before { background: var(--hotel); }
   .day-date {
     font-family: "Fraunces", Georgia, serif;
     font-size: 1.15rem; margin: 0 0 .15rem;
@@ -206,6 +213,7 @@
   .pill.wedding { background: var(--wedding-soft); color: #7a5c00; }
   .pill.family { background: var(--family-soft); color: var(--family); }
   .pill.conflict { background: var(--conflict-soft); color: var(--conflict); }
+  .pill.hotel { background: var(--hotel-soft); color: var(--hotel); }
 
   /* Options tabs */
   .tabs {
@@ -282,6 +290,8 @@
   .spine-item.family strong { color: var(--family); }
   .spine-item.wedding { background: var(--wedding-soft); border-color: #e4d39a; }
   .spine-item.wedding strong { color: #7a5c00; }
+  .spine-item.hotel { background: var(--hotel-soft); border-color: #f0b8cb; }
+  .spine-item.hotel strong { color: var(--hotel); }
   .spine-item.vary {
     outline: 2px dashed var(--teal);
     outline-offset: 0;
@@ -294,6 +304,35 @@
     border-radius: 10px;
     padding: .55rem .75rem;
     margin: 0 0 1rem;
+  }
+
+
+  /* Family hotels — Józka & Ada */
+  .hotel-banner {
+    background: linear-gradient(135deg, #c2185b, #e91e8c);
+    color: #fff; border-radius: var(--radius); padding: 1.4rem 1.5rem;
+    margin-bottom: 1.25rem; box-shadow: var(--shadow);
+  }
+  .hotel-banner h2 { margin: 0 0 .35rem; color: #fff; }
+  .hotel-banner p { margin: 0; opacity: .95; }
+  .hotel-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+  .hotel-card {
+    background: var(--bg-card); border: 1px solid #f0b8cb;
+    border-radius: var(--radius); padding: 1.2rem 1.25rem;
+    box-shadow: var(--shadow); border-left: 5px solid var(--hotel);
+  }
+  .hotel-card h3 { margin: 0 0 .35rem; color: var(--hotel); font-size: 1.15rem; }
+  .hotel-card .addr { color: var(--muted); font-size: .9rem; margin: 0 0 .75rem; }
+  .hotel-card ul { margin: 0; padding-left: 1.15rem; font-size: .92rem; }
+  .hotel-card li { margin: .3rem 0; }
+  .hotel-note {
+    margin-top: 1rem; font-size: .9rem;
+    background: var(--hotel-soft); color: var(--hotel);
+    border: 1px solid #f0b8cb; border-radius: 12px;
+    padding: .75rem 1rem;
   }
 
   /* Family section */
@@ -529,6 +568,7 @@
         <span class="chip wedding">💍 Wesele · 1 XI · Sha Tin</span>
         <span class="chip climb">🧗 26–27 X wspinaczka</span>
         <span class="chip family">👨‍👩‍👧‍👦 Guilin · 29–31 X · jedziemy z rodziną</span>
+        <span class="chip hotel">🏨 Hotele Józka i Ady · Dorsett + Alva</span>
       </div>
       <div class="notice">
         <strong>Potwierdzone:</strong> jedziemy z rodziną do Guilin <strong>29–31 X 2026</strong> (~1142 RMB/os. dla 8 osób).
@@ -550,6 +590,7 @@
         <a href="#kalendarz">Kalendarz</a>
         <a href="#opcje">Nasze opcje</a>
         <a href="#wspinaczka">Wspinaczka</a>
+        <a href="#hotele">Hotele Józka i Ady</a>
         <a href="#wesele">Wesele</a>
         <a href="#guilin">Guilin z rodziną</a>
         <a href="#mapa">Mapa</a>
@@ -570,6 +611,7 @@
         <div class="legend-item"><span class="dot climb"></span> Dzień wspinaczkowy</div>
         <div class="legend-item"><span class="dot wedding"></span> Wesele (Sha Tin)</div>
         <div class="legend-item"><span class="dot family"></span> Guilin · potwierdzone</div>
+        <div class="legend-item"><span class="dot hotel"></span> Hotele Józka i Ady (rodzina)</div>
       </div>
     </section>
 
@@ -584,8 +626,10 @@
       <div class="spine" aria-label="Sztywny kręgosłup podróży">
         <div class="spine-item flight"><strong>25 X</strong> Przylot HKG · wieczór wg opcji</div>
         <div class="spine-item climb"><strong>26–27 X</strong> Wspinanie — plan osobno</div>
+        <div class="spine-item hotel"><strong>26–29 X</strong> Józka/Ada · Dorsett Kai Tak</div>
         <div class="spine-item city vary"><strong>28 X</strong> Zwiedzanie — tu różnią się opcje</div>
         <div class="spine-item family"><strong>29–31 X</strong> Guilin z rodziną · potwierdzone</div>
+        <div class="spine-item hotel"><strong>31 X–11 XI</strong> Józka/Ada · Alva Sha Tin</div>
         <div class="spine-item wedding"><strong>1 XI</strong> Wesele · Sha Tin</div>
         <div class="spine-item flight"><strong>2 XI</strong> Wylot HKG 13:30</div>
       </div>
@@ -621,9 +665,11 @@
           <div class="day-dow">poniedziałek</div>
           <div class="day-body">
             <span class="pill climb">Wspinaczka</span>
+            <span class="pill hotel">Józka &amp; Ada · hotel</span>
             <ul>
               <li><em>Wspinanie — plan osobno</em></li>
               <li>Dzień 1 skały w Hongkongu</li>
+              <li><strong>Rodzina:</strong> Józka i Ada check-in <strong>Dorsett Kai Tak</strong> (noclegi 26–29 X)</li>
             </ul>
           </div>
         </article>
@@ -643,9 +689,11 @@
           <div class="day-dow">środa · wolny dzień HK</div>
           <div class="day-body">
             <span class="pill city">Zwiedzanie</span>
+            <span class="pill hotel">Dorsett · Józka &amp; Ada</span>
             <ul>
               <li>Wolny dzień w Hongkongu — warianty A/B/C poniżej</li>
               <li>Klasyczne HK · Lantau / Big Buddha · albo baza bliżej Sha Tin</li>
+              <li><strong>Rodzina:</strong> Józka i Ada nadal w <strong>Dorsett Kai Tak</strong> (do 29 X rano)</li>
             </ul>
           </div>
         </article>
@@ -654,8 +702,10 @@
           <div class="day-dow">czwartek · Guilin Dzień 1</div>
           <div class="day-body">
             <span class="pill family">Guilin · potwierdzone</span>
+            <span class="pill hotel">Wylot z Dorsett</span>
             <ul>
               <li><strong>Jedziemy z rodziną:</strong> Elephant Trunk, Hai Qinglan, pagody</li>
+              <li><strong>Józka i Ada:</strong> check-out z Dorsett Kai Tak → wyjazd do Chin (Guilin) z rodziną</li>
             </ul>
           </div>
         </article>
@@ -675,9 +725,11 @@
           <div class="day-body">
             <span class="pill family">Guilin · potwierdzone</span>
             <span class="pill climb">Moon Hill</span>
+            <span class="pill hotel">Alva · check-in</span>
             <ul>
               <li><strong>Jedziemy z rodziną:</strong> Yulong + Moon Hill + powrót do HK</li>
               <li>Jedyna realna skała w Guilin: <strong>Moon Hill (31 X)</strong></li>
+              <li><strong>Józka i Ada:</strong> po powrocie z Guilin check-in <strong>Alva Hotel By Royal</strong> (Sha Tin) · pobyt <strong>31 X – 11 XI</strong></li>
             </ul>
           </div>
         </article>
@@ -686,10 +738,12 @@
           <div class="day-dow">niedziela · Sha Tin</div>
           <div class="day-body">
             <span class="pill wedding">Wesele</span>
+            <span class="pill hotel">Alva · blisko</span>
             <ul>
               <li>Regal Riverside Hotel, Tai Chung Kiu Rd</li>
               <li>Przyjęcie <strong>17:00</strong> · kolacja <strong>20:00</strong></li>
               <li>To przyjęcie weselne kuzynki (nie Wasz ślub)</li>
+              <li><strong>Józka i Ada:</strong> hotel <strong>Alva</strong> też w Sha Tin — blisko wesela (krótki dojazd)</li>
             </ul>
           </div>
         </article>
@@ -719,8 +773,10 @@
       <div class="spine" aria-label="Sztywny kręgosłup podróży">
         <div class="spine-item flight"><strong>25 X</strong> Przylot HKG · wieczór wg opcji</div>
         <div class="spine-item climb"><strong>26–27 X</strong> Wspinanie — plan osobno</div>
+        <div class="spine-item hotel"><strong>26–29 X</strong> Józka/Ada · Dorsett Kai Tak</div>
         <div class="spine-item city vary"><strong>28 X</strong> Zwiedzanie — tu różnią się opcje</div>
         <div class="spine-item family"><strong>29–31 X</strong> Guilin z rodziną · potwierdzone</div>
+        <div class="spine-item hotel"><strong>31 X–11 XI</strong> Józka/Ada · Alva Sha Tin</div>
         <div class="spine-item wedding"><strong>1 XI</strong> Wesele · Sha Tin</div>
         <div class="spine-item flight"><strong>2 XI</strong> Wylot HKG 13:30</div>
       </div>
@@ -1112,6 +1168,40 @@
       </p>
     </section>
 
+
+    <section id="hotele">
+      <div class="hotel-banner">
+        <h2>Hotele Józka i Ady</h2>
+        <p>To hotele <strong>rodziny</strong> (Józek i Ada) — niekoniecznie Wasze własne noclegi. Przydatne do planowania wspólnych dojazdów i dnia wesela.</p>
+      </div>
+      <div class="hotel-grid">
+        <article class="hotel-card">
+          <h3>🏨 Dorsett Kai Tak</h3>
+          <p class="addr">Kowloon City District, Hongkong<br>
+            Współrzędne mapy ≈ <strong>22.3268, 114.1955</strong> (Kai Tak / Kowloon City)</p>
+          <ul>
+            <li><strong>Pobyt:</strong> 26–29 października 2026</li>
+            <li>Check-in ok. 26 X · check-out 29 X rano przed Guilin</li>
+            <li>29–31 X: wyjazd z rodziną do Chin (Guilin) — bez hotelu w HK w tym oknie</li>
+          </ul>
+        </article>
+        <article class="hotel-card">
+          <h3>🏨 Alva Hotel By Royal</h3>
+          <p class="addr">1 Yuen Hong Street, Sha Tin District, Hongkong<br>
+            Współrzędne mapy ≈ <strong>22.3865, 114.2088</strong></p>
+          <ul>
+            <li><strong>Pobyt:</strong> 31 października – 11 listopada 2026</li>
+            <li>Check-in po powrocie z Guilin (31 X)</li>
+            <li><strong>Blisko wesela:</strong> też Sha Tin — krótki dojazd do Regal Riverside (1 XI)</li>
+          </ul>
+        </article>
+      </div>
+      <p class="hotel-note">
+        <strong>Przepływ:</strong> Dorsett Kai Tak (26–29 X) → Guilin z rodziną (29–31 X) → Alva Sha Tin (od 31 X). 
+        Alva jest w tym samym dystrykcie co wesele w Regal Riverside — wygodnie na 1 XI.
+      </p>
+    </section>
+
     <section id="wesele">
       <div class="section-head">
         <div>
@@ -1132,6 +1222,7 @@
             <li>Kolacja: <strong>20:00</strong></li>
             <li>Dojazd: MTR Sha Tin / City One + krótki spacer lub taxi</li>
             <li>Opcja C: hotel w NT = 10–15 min do hotelu · spokojny powrót po kolacji</li>
+            <li><strong>Józka i Ada:</strong> Alva Hotel By Royal (1 Yuen Hong St, Sha Tin) — też Sha Tin, blisko Regal Riverside na 1 XI</li>
           </ul>
         </div>
         <img src="images/hk-skyline.jpg" alt="Sha Tin New Territories" loading="lazy">
@@ -1282,7 +1373,7 @@
         <div>
           <span class="tag ours">OpenStreetMap + Leaflet</span>
           <h2>Mapa · Guilin + Hongkong</h2>
-          <p>Markery Guilin z rodziną (fiolet) oraz HK: lotnisko, hotel weselny, sektory wspinaczkowe (zieleń).</p>
+          <p>Markery Guilin z rodziną (fiolet), HK: lotnisko, hotel weselny, sektory (zieleń), <strong>hotele Józka i Ady</strong> (róż / 🏨).</p>
         </div>
       </div>
       <div style="display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.75rem">
@@ -1315,7 +1406,7 @@
     </section>
 
     <footer>
-      <p>Hongkong 2026 · Krystian &amp; żona · Guilin 29–31 X potwierdzone · opcje = 25 wieczór + 28 X.</p>
+      <p>Hongkong 2026 · Krystian &amp; żona · Guilin 29–31 X potwierdzone · hotele Józka i Ady (rodzina) · opcje = 25 wieczór + 28 X.</p>
       <p>Zdjęcia: Wikimedia Commons · mapa: © OpenStreetMap contributors · Leaflet</p>
     </footer>
   </div>
@@ -1364,6 +1455,12 @@
       iconSize: [16, 16], iconAnchor: [8, 8]
     });
 
+    const hotelIcon = L.divIcon({
+      className: '',
+      html: '<div style="background:#c2185b;width:18px;height:18px;border-radius:4px;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;font-size:10px;line-height:1">🏨</div>',
+      iconSize: [18, 18], iconAnchor: [9, 9]
+    });
+
     function popup(title, body) {
       return `<div class="map-popup"><h4>${title}</h4><p>${body}</p></div>`;
     }
@@ -1388,6 +1485,8 @@
     // Hong Kong
     const hkStops = [
       [22.3089, 113.9148, flightIcon, 'Lotnisko HKG', 'Przylot 25 X 16:45 · wylot 2 XI 13:30'],
+      [22.3268, 114.1955, hotelIcon, 'Dorsett Kai Tak · Józka i Ada', 'Hotel rodziny · pobyt 26–29 X 2026 · Kowloon City / Kai Tak'],
+      [22.3865, 114.2088, hotelIcon, 'Alva Hotel By Royal · Józka i Ada', 'Hotel rodziny · pobyt 31 X – 11 XI 2026 · 1 Yuen Hong St, Sha Tin · blisko wesela'],
       [22.3825, 114.1956, weddingIcon, 'Regal Riverside Hotel · Sha Tin', 'Wesele 1 XI · reception 17:00 · dinner 20:00 · Tai Chung Kiu Rd'],
       [22.3522, 114.1870, climbIcon, 'Lion Rock', 'Wspinaczka · MTR Wong Tai Sin'],
       [22.3410, 114.2230, climbIcon, 'Kowloon Peak / Fei Ngo Shan', 'Wspinaczka · Fei Ngo Shan Rd'],
