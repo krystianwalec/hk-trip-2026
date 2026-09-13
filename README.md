@@ -52,10 +52,11 @@ Nie trzeba builda ani Node — wystarczy statyczny HTML.
 
 Sztywny kręgosłup (wszędzie ten sam):
 
-- 25 X przylot HKG
-- **26–27 X wspinaczka** — Beacon Hill (26) + Monkey Buttress / Central Crags / Devil’s Peak (27); Tung Lung weekend-only
+- 25 X przylot HKG · check-in **Dorsett Kai Tak**
+- **26–27 X wspinaczka** — Beacon Hill (26) + Monkey Buttress / Central Crags / Devil’s Peak (27); Tung Lung weekend-only · baza Dorsett
 - **28 X wolny dzień** zwiedzania HK
 - **29–31 X Guilin z rodziną — potwierdzone**
+- **31 X–2 XI Alva Hotel By Royal** (Sha Tin; check-out Krystiana 2 XI rano)
 - 1 XI wesele · Regal Riverside, Sha Tin
 - 2 XI wylot
 
@@ -74,7 +75,7 @@ Sekcja **Plan wspinania 26–27 X** (baza Dorsett Kai Tak):
 - Markery mapy: Beacon Hill, Monkey Buttress, Central Crags, Devil’s Peak, Tung Lung, Sam Ka Tsuen pier
 - Źródło: [Grok share climbing](https://grok.com/share/bGVnYWN5_c5985378-7d77-401e-8a2d-12fa2d8e5252)
 
-Sekcja **Hotele Józka i Ady** (rodzina — niekoniecznie hotele Krystiana):
-- Dorsett Kai Tak (Kowloon City / 43 Shing Kai Road) · 26–29 X 2026 · mapa ≈ 22.3268, 114.1955 · baza wspinania
-- Alva Hotel By Royal (1 Yuen Hong St, Sha Tin) · 31 X – 11 XI 2026 · mapa ≈ 22.3865, 114.2088
+Sekcja **Hotele (my + rodzina)** (wspólne, potwierdzone rezerwacje):
+- Dorsett Kai Tak (Kowloon City / 43 Shing Kai Road) · 25–29 X 2026 · mapa ≈ 22.3268, 114.1955 · baza wspinania
+- Alva Hotel By Royal (1 Yuen Hong St, Sha Tin) · Krystian i żona 31 X – 2 XI 2026 (rodzina może zostać do 11 XI) · mapa ≈ 22.3865, 114.2088
 - Przepływ: Dorsett → Guilin 29–31 X → Alva po powrocie; Alva blisko wesela (Regal Riverside, Sha Tin).
