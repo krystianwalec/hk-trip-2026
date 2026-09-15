@@ -55,7 +55,7 @@ Sztywny kręgosłup (wszędzie ten sam):
 - 25 X przylot HKG · check-in **Dorsett Kai Tak**
 - **26–27 X wspinaczka** — Beacon Hill (26) + Monkey Buttress / Central Crags / Devil’s Peak (27); Tung Lung weekend-only · baza Dorsett
 - **28 X wolny dzień** zwiedzania HK
-- **29–31 X Guilin z rodziną — potwierdzone**
+- **29–31 X Guilin z rodziną — potwierdzone** (12 os. · ~1366 HKD/os. ≈ 750 PLN · od rodziny / organizatorów)
 - **31 X–2 XI Alva Hotel By Royal** (Sha Tin; check-out Krystiana 2 XI rano)
 - 1 XI wesele · Regal Riverside, Sha Tin
 - 2 XI wylot
@@ -79,3 +79,12 @@ Sekcja **Hotele (my + rodzina)** (wspólne, potwierdzone rezerwacje):
 - Dorsett Kai Tak (Kowloon City / 43 Shing Kai Road) · 25–29 X 2026 · mapa ≈ 22.3268, 114.1955 · baza wspinania
 - Alva Hotel By Royal (1 Yuen Hong St, Sha Tin) · Krystian i żona 31 X – 2 XI 2026 (rodzina może zostać do 11 XI) · mapa ≈ 22.3865, 114.2088
 - Przepływ: Dorsett → Guilin 29–31 X → Alva po powrocie; Alva blisko wesela (Regal Riverside, Sha Tin).
+
+Sekcja **Guilin – Yangshuo 29–31 X** (plan i koszty **od rodziny / organizatorów**):
+- Grupa: **12 osób** · 3 dni / 2 noce
+- **Dzień 1 (29 X, Guilin):** przylot → Wzgórze Trąby Słonia (Elephant Trunk, wstęp wolny) → Guihai Qinglan / Czyste Niebo nad Jeziorem Guilin (50) → wieczór wolny: Pagody Słońca i Księżyca + Aleja Wschód-Zachód (Dongxi) → noc **Guilin Atour Hotel** (Superior twin + śniadanie)
+- **Dzień 2 (30 X):** rejs Li Jiang **4★ ~4 h** (główne atrakcje rzeki) → stary Xingping → pejzaż z banknotu 20 ¥ → Impression Liu Sanjie B2 → noc **Yangshuo Atour Hotel** (Superior twin + śniadanie; okolica Ten-Mile Gallery)
+- **Dzień 3 (31 X):** tratwy bambusowe Yulong (4-os.) → Ten-Mile Gallery → Moon Hill (jedyna skała w oknie Guilin) → Xiangong / Xianggong → transfer na dworzec i powrót
+- Koszty pakietu (HKD, 12 os.): bilety 8820 (m.in. Guihai 50×12=600, rejs 360×12=4320, Liu Sanjie B2 195×12=2340, Yulong 280×3 tratwy=840, Xianggong 60×12=720) + hotele 4680 (Guilin Atour 350×6=2100, Yangshuo Atour 430×6=2580) + van 15 miejsc 2700 + obsługa 200 → **16 400** razem · **~1366 HKD/os. ≈ ~750 PLN** / 3 dni
+- **Nie wliczone:** pociągi HK ↔ Guilin, posiłki poza śniadaniem. Pociągi do ustalenia w tym tygodniu (pamiętane ~£80 w obie strony).
+- Hotele w Guilin: **Guilin Atour Hotel** (29 X) i **Yangshuo Atour Hotel** (30 X, okolica Ten-Mile Gallery) · Superior twin + śniadanie · 6 pokoi

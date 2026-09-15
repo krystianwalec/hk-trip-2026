@@ -386,6 +386,75 @@
     padding: .2rem .5rem; border-radius: 6px;
   }
 
+
+  .g-source {
+    font-size: .88rem;
+    color: var(--muted);
+    background: #faf7f1;
+    border: 1px dashed #dccfee;
+    border-radius: 12px;
+    padding: .7rem .95rem;
+    margin: 0 0 1.15rem;
+  }
+  .g-source strong { color: var(--family); }
+  .cost-table-wrap {
+    overflow-x: auto;
+    margin: 0 0 1.35rem;
+    background: var(--bg-card);
+    border: 1px solid #dccfee;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+  .cost-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .9rem;
+  }
+  .cost-table th {
+    text-align: left;
+    padding: .6rem .9rem;
+    background: var(--family-soft);
+    color: var(--family);
+    font-size: .72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    border-bottom: 1px solid #e5d6f5;
+  }
+  .cost-table td {
+    padding: .48rem .9rem;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  .cost-table th.amt, .cost-table td.amt {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .cost-table td.amt { font-weight: 600; }
+  .cost-table tr.sub td {
+    background: #faf7f1;
+    font-weight: 700;
+  }
+  .cost-table tr.grand td {
+    background: var(--family-soft);
+    color: var(--family);
+    font-weight: 800;
+    border-bottom: 0;
+    font-size: 1rem;
+  }
+  .cost-table .muted { color: var(--muted); font-weight: 500; }
+  .cost-avg {
+    display: flex; flex-wrap: wrap; gap: .55rem;
+    margin: -.5rem 0 1.25rem;
+  }
+  .cost-avg span {
+    background: var(--family-soft); color: var(--family);
+    border: 1px solid #dccfee;
+    padding: .4rem .75rem; border-radius: 999px;
+    font-size: .88rem; font-weight: 700;
+  }
+
   /* Climbing */
   .climb-grid {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -710,11 +779,11 @@
         <span class="chip flight">✈ HKG → SEA · 2 XI 13:30 → 09:10</span>
         <span class="chip wedding">💍 Wesele · 1 XI · Sha Tin</span>
         <span class="chip climb">🧗 26–27 X wspinaczka</span>
-        <span class="chip family">👨‍👩‍👧‍👦 Guilin · 29–31 X · jedziemy z rodziną</span>
+        <span class="chip family">👨‍👩‍👧‍👦 Guilin · 29–31 X · 12 os. · od rodziny / organizatorów</span>
         <span class="chip hotel">🏨 Hotele (my + rodzina) · Dorsett + Alva</span>
       </div>
       <div class="notice">
-        <strong>Potwierdzone:</strong> jedziemy z rodziną do Guilin <strong>29–31 X 2026</strong> (~1142 RMB/os. dla 8 osób).
+        <strong>Potwierdzone:</strong> jedziemy z rodziną do Guilin <strong>29–31 X 2026</strong> (~1366 HKD/os. ≈ 750 PLN · 12 os. · 3 dni).
         Wspinaczka w HK: <strong>poniedziałek–wtorek 26–27 X</strong> — Beacon Hill + Monkey Buttress / Central Crags (<a href="#wspinaczka">plan poniżej</a>
         <a href="#skala">Skala YDS ↔ FR</a>).
         <strong>28 X</strong> to wolny dzień na zwiedzanie — patrz opcje A/B/C.
@@ -853,8 +922,8 @@
             <span class="pill family">Guilin · potwierdzone</span>
             <span class="pill hotel">Wylot z Dorsett</span>
             <ul>
-              <li><strong>Jedziemy z rodziną:</strong> Elephant Trunk, Hai Qinglan, pagody</li>
-              <li><strong>Hotel:</strong> check-out z <strong>Dorsett Kai Tak</strong> (my + rodzina) → wyjazd do Chin (Guilin)</li>
+              <li><strong>Jedziemy z rodziną:</strong> Wzgórze Trąby Słonia, Guihai Qinglan, wieczór: pagody + Aleja Wschód-Zachód</li>
+              <li><strong>Hotel:</strong> check-out z <strong>Dorsett Kai Tak</strong> → Guilin · noc <strong>Guilin Atour Hotel</strong></li>
             </ul>
           </div>
         </article>
@@ -864,7 +933,8 @@
           <div class="day-body">
             <span class="pill family">Guilin · potwierdzone</span>
             <ul>
-              <li><strong>Jedziemy z rodziną:</strong> Li River + Xingping + Impression Liu Sanjie</li>
+              <li><strong>Jedziemy z rodziną:</strong> rejs Li 4★ ~4 h · Xingping · pejzaż z banknotu 20 ¥ · Impression Liu Sanjie</li>
+              <li><strong>Hotel:</strong> <strong>Yangshuo Atour Hotel</strong> (okolica Ten-Mile Gallery)</li>
             </ul>
           </div>
         </article>
@@ -876,7 +946,7 @@
             <span class="pill climb">Moon Hill</span>
             <span class="pill hotel">Alva · check-in</span>
             <ul>
-              <li><strong>Jedziemy z rodziną:</strong> Yulong + Moon Hill + powrót do HK</li>
+              <li><strong>Jedziemy z rodziną:</strong> Yulong (tratwy) · Ten-Mile Gallery · Moon Hill · Xianggong · transfer na dworzec i powrót</li>
               <li>Jedyna realna skała w Guilin: <strong>Moon Hill (31 X)</strong></li>
               <li><strong>Hotel:</strong> po powrocie z Guilin check-in <strong>Alva Hotel By Royal</strong> (Sha Tin) — my + rodzina · Krystian i żona do <strong>2 XI</strong> rano; rodzina może zostać dłużej (do 11 XI)</li>
             </ul>
@@ -1006,9 +1076,9 @@
                 <span class="when">jedziemy z rodziną · potwierdzone</span>
               </div>
               <ol class="steps">
-                <li><span class="slot">29 X D1</span><span class="act">Elephant Trunk · Hai Qinglan · pagody — <em>szczegóły w sekcji Guilin</em></span></li>
-                <li><span class="slot">30 X D2</span><span class="act">Rejs Li River · Xingping · Impression Liu Sanjie</span></li>
-                <li><span class="slot">31 X D3</span><span class="act">Yulong · Moon Hill · transfer powrotny do Hongkongu</span></li>
+                <li><span class="slot">29 X D1</span><span class="act">Wzgórze Trąby Słonia · Guihai Qinglan · wieczór pagody + Aleja Wschód-Zachód — <em>szczegóły w sekcji Guilin</em></span></li>
+                <li><span class="slot">30 X D2</span><span class="act">Rejs Li 4★ ~4 h · Xingping · banknot 20 ¥ · Impression Liu Sanjie · noc Yangshuo Atour</span></li>
+                <li><span class="slot">31 X D3</span><span class="act">Yulong · Ten-Mile Gallery · Moon Hill · Xianggong · transfer na dworzec i powrót</span></li>
               </ol>
             </article>
             <article class="plan-day wedding-tint">
@@ -1110,7 +1180,7 @@
                 <span class="when">jedziemy z rodziną · potwierdzone</span>
               </div>
               <ol class="steps">
-                <li><span class="slot">29–31 X</span><span class="act">Ten sam program z rodziną (Elephant Trunk → Li River → Yulong / Moon Hill) — <em>sekcja Guilin</em></span></li>
+                <li><span class="slot">29–31 X</span><span class="act">Ten sam program z rodziną (Trąba Słonia → rejs Li 4★ ~4 h → Yulong / Moon Hill / Xianggong) — <em>sekcja Guilin</em></span></li>
               </ol>
             </article>
             <article class="plan-day wedding-tint">
@@ -1507,78 +1577,121 @@
     <section id="guilin">
       <div class="family-banner">
         <h2>Jedziemy z rodziną · Guilin – Yangshuo</h2>
-        <p><strong>Potwierdzone: 29–31 października 2026</strong> · 3 dni / 2 noce dla 8 osób · ~1142 RMB/os. · Krystian i żona jadą z rodziną.</p>
+        <p><strong>Potwierdzone: 29–31 października 2026</strong> · 3 dni / 2 noce · <strong>12 osób</strong> · ~1366 HKD/os. ≈ ~750 PLN · plan i koszty <strong>od rodziny / organizatorów</strong>.</p>
         <div class="cost-bar">
-          <span>Bilety 3720</span>
-          <span>Hotele 2520</span>
+          <span>Bilety 8820</span>
+          <span>Hotele 4680</span>
           <span>Van 2700</span>
           <span>Obsługa 200</span>
-          <span>= 9140 RMB / 8 os.</span>
+          <span>= 16 400 / 12 os.</span>
         </div>
+      </div>
+
+      <p class="g-source">
+        Źródło planu i wyceny: <strong>od rodziny / organizatorów</strong>.
+        Pakiet w HKD. <strong>Nie wliczone:</strong> pociągi Hongkong ↔ Guilin oraz posiłki poza śniadaniem.
+        Pociągi do ustalenia w tym tygodniu — pamiętane ok. <strong>£80 w obie strony</strong>.
+      </p>
+
+      <div class="cost-table-wrap">
+        <table class="cost-table">
+          <thead>
+            <tr><th>Pozycja · 12 osób</th><th>Wyliczenie</th><th class="amt">HKD</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Wzgórze Trąby Słonia</td><td class="muted">wstęp wolny</td><td class="amt">0</td></tr>
+            <tr><td>Guihai Qinglan</td><td class="muted">50 × 12</td><td class="amt">600</td></tr>
+            <tr><td>Rejs Li 4★ (~4 h)</td><td class="muted">360 × 12</td><td class="amt">4320</td></tr>
+            <tr><td>Impression Liu Sanjie B2</td><td class="muted">195 × 12</td><td class="amt">2340</td></tr>
+            <tr><td>Tratwy bambusowe Yulong (4-os.)</td><td class="muted">280 × 3 tratwy</td><td class="amt">840</td></tr>
+            <tr><td>Xiangong / Xianggong</td><td class="muted">60 × 12</td><td class="amt">720</td></tr>
+            <tr class="sub"><td>Bilety razem</td><td class="muted">wejściówki + rejs + spektakl + tratwy</td><td class="amt">8820</td></tr>
+            <tr><td>Guilin Atour · Superior twin + śniadanie</td><td class="muted">350 × 6 pokoi × 1 noc</td><td class="amt">2100</td></tr>
+            <tr><td>Yangshuo Atour · Superior twin + śniadanie</td><td class="muted">430 × 6 pokoi × 1 noc</td><td class="amt">2580</td></tr>
+            <tr class="sub"><td>Hotele razem</td><td class="muted">2 noce · 6 pokoi dwuosobowych</td><td class="amt">4680</td></tr>
+            <tr><td>Transport</td><td class="muted">van 15 miejsc · kierowca / przewodnik</td><td class="amt">2700</td></tr>
+            <tr><td>Opłata serwisowa</td><td class="muted">obsługa pakietu</td><td class="amt">200</td></tr>
+            <tr class="grand"><td>Razem za 12 osób</td><td class="muted">3 dni / 2 noce</td><td class="amt">16 400</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="cost-avg">
+        <span>Średnio ~1366 HKD/os.</span>
+        <span>≈ ~750 PLN / 3 dni</span>
       </div>
 
       <div class="guilin-days">
         <article class="g-day">
           <div class="g-day-head">
             <h3>Dzień 1 · 29 X · Guilin</h3>
-            <span class="pill family">Noc: Lijiang Yunduan Hotel</span>
+            <span class="pill family">Noc: Guilin Atour Hotel</span>
           </div>
           <div class="g-day-body">
             <div class="stops">
               <div class="stop">
-                <img src="images/elephant-trunk.jpg" alt="Elephant Trunk Hill" loading="lazy">
+                <img src="images/elephant-trunk.jpg" alt="Wzgórze Trąby Słonia" loading="lazy">
                 <div class="stop-body">
-                  <h4>Elephant Trunk Hill</h4>
-                  <div class="cn">象鼻山</div>
-                  <p>Symbol Guilin — wzgórze jak słoń pijący z Li Jiang. Start zwiedzania po przylocie.</p>
+                  <h4>Wzgórze Trąby Słonia</h4>
+                  <div class="cn">象鼻山 · Elephant Trunk Hill</div>
+                  <p>Przylot i start zwiedzania. Symbol Guilin — wzgórze jak słoń pijący z Li Jiang.</p>
                   <span class="price">wstęp wolny</span>
                 </div>
               </div>
               <div class="stop">
-                <img src="images/yangshuo.jpg" alt="Guihai Qinglan / Guilin karst" loading="lazy">
+                <img src="images/yangshuo.jpg" alt="Guihai Qinglan / Czyste Niebo nad Jeziorem Guilin" loading="lazy">
                 <div class="stop-body">
-                  <h4>Guilin Hai Qinglan</h4>
-                  <div class="cn">桂海晴岚</div>
-                  <p>Widokowe wzgórza / park krajobrazowy — dobre światło popołudniem. (zdjęcie: krajobraz Guilin/Yangshuo)</p>
-                  <span class="price">50 RMB</span>
+                  <h4>Guihai Qinglan</h4>
+                  <div class="cn">桂海晴岚 · Czyste Niebo nad Jeziorem Guilin</div>
+                  <p>Park krajobrazowy / widok na jezioro i kras — dobre światło popołudniem.</p>
+                  <span class="price">50 HKD</span>
                 </div>
               </div>
               <div class="stop">
-                <img src="images/pagodas.jpg" alt="Sun and Moon Pagodas" loading="lazy">
+                <img src="images/pagodas.jpg" alt="Pagody Słońca i Księżyca" loading="lazy">
                 <div class="stop-body">
-                  <h4>Sun &amp; Moon Pagodas</h4>
-                  <div class="cn">日月双塔</div>
-                  <p>Wieczorne pagody na Shan Lake + spacer po Dongxi streets (东西巷).</p>
-                  <span class="price">wieczór w mieście</span>
+                  <h4>Pagody Słońca i Księżyca + Aleja Wschód-Zachód</h4>
+                  <div class="cn">日月双塔 · 东西巷 / Dongxi</div>
+                  <p>Wieczór wolny: Twin Sun &amp; Moon Pagodas na Shan Lake i spacer Aleją Wschód-Zachód (Dongxi).</p>
+                  <span class="price">wieczór wolny</span>
                 </div>
               </div>
             </div>
+            <p class="map-note" style="margin:.85rem 0 0">Hotel: <strong>Guilin Atour</strong> · Superior twin + śniadanie.</p>
           </div>
         </article>
 
         <article class="g-day">
           <div class="g-day-head">
-            <h3>Dzień 2 · 30 X · Li River → Yangshuo</h3>
-            <span class="pill family">Noc: Langyun Garden Hotel</span>
+            <h3>Dzień 2 · 30 X · Li Jiang → Yangshuo</h3>
+            <span class="pill family">Noc: Yangshuo Atour Hotel</span>
           </div>
           <div class="g-day-body">
             <div class="stops">
               <div class="stop">
-                <img src="images/li-river.jpg" alt="Li River cruise" loading="lazy">
+                <img src="images/li-river.jpg" alt="Rejs Li Jiang 4 gwiazdki" loading="lazy">
                 <div class="stop-body">
-                  <h4>Rejs Li River (najlepszy odcinek)</h4>
-                  <div class="cn">漓江 · ~90 min</div>
-                  <p>Klasyka Guilin — ostre szczyty krasowe z wody. Skrócony, „najładniejszy” fragment.</p>
-                  <span class="price">115 RMB</span>
+                  <h4>Rejs Li Jiang 4★</h4>
+                  <div class="cn">漓江 · ~4 godz. · główne atrakcje rzeki</div>
+                  <p>Klasyczny rejs czterogwiazdkowy — ostre szczyty krasowe z wody, pełniejszy odcinek niż skrót.</p>
+                  <span class="price">360 HKD · ~4 h</span>
                 </div>
               </div>
               <div class="stop">
-                <img src="images/xingping.jpg" alt="Xingping old town" loading="lazy">
+                <img src="images/xingping.jpg" alt="Stary Xingping" loading="lazy">
                 <div class="stop-body">
-                  <h4>Xingping old town</h4>
+                  <h4>Stary Xingping</h4>
                   <div class="cn">兴坪古镇</div>
-                  <p>Stare uliczki + punkt widokowy z banknotu 20 RMB (二十元人民币风景).</p>
-                  <span class="price">w cenie dnia</span>
+                  <p>Zabytkowe uliczki miasteczka nad Li — po zejściu z rejsu.</p>
+                  <span class="price">w programie dnia</span>
+                </div>
+              </div>
+              <div class="stop">
+                <img src="images/li-river-banknote.jpg" alt="Pejzaż z banknotu 20 juanów" loading="lazy">
+                <div class="stop-body">
+                  <h4>Pejzaż z banknotu 20 ¥</h4>
+                  <div class="cn">二十元人民币风景</div>
+                  <p>Punkt widokowy z chińskiego banknotu 20 yuan — ten sam krajobraz Li Jiang / Xingping.</p>
+                  <span class="price">w programie dnia</span>
                 </div>
               </div>
               <div class="stop">
@@ -1587,27 +1700,28 @@
                   <h4>Impression Liu Sanjie (B2)</h4>
                   <div class="cn">印象刘三姐</div>
                   <p>Spektakl Zhang Yimou nad rzeką — wieczór w Yangshuo.</p>
-                  <span class="price">195 RMB · B2</span>
+                  <span class="price">195 HKD · B2</span>
                 </div>
               </div>
             </div>
+            <p class="map-note" style="margin:.85rem 0 0">Hotel: <strong>Yangshuo Atour</strong> · Superior twin + śniadanie · okolica Ten-Mile Gallery.</p>
           </div>
         </article>
 
         <article class="g-day">
           <div class="g-day-head">
-            <h3>Dzień 3 · 31 X · Yangshuo → powrót</h3>
-            <span class="pill family">Transfer do domu / HK</span>
+            <h3>Dzień 3 · 31 X · Yangshuo → dworzec i powrót</h3>
+            <span class="pill family">Transfer na dworzec</span>
           </div>
           <div class="g-day-body">
             <div class="stops">
               <div class="stop">
-                <img src="images/bamboo-raft.jpg" alt="Yulong bamboo raft" loading="lazy">
+                <img src="images/bamboo-raft.jpg" alt="Tratwa bambusowa Yulong" loading="lazy">
                 <div class="stop-body">
-                  <h4>Yulong bamboo raft</h4>
-                  <div class="cn">遇龙河</div>
-                  <p>Spływ bambusową tratwą — spokojniejszy niż duży rejs Li Jiang.</p>
-                  <span class="price">45 RMB</span>
+                  <h4>Tratwy bambusowe Yulong</h4>
+                  <div class="cn">遇龙河 · tratwy 4-osobowe</div>
+                  <p>Spływ rzeką Yulong — spokojniejszy niż duży rejs Li. Trzy tratwy po cztery osoby.</p>
+                  <span class="price">280 HKD / tratwa · 3 tratwy</span>
                 </div>
               </div>
               <div class="stop">
@@ -1615,7 +1729,7 @@
                 <div class="stop-body">
                   <h4>Ten-Mile Gallery</h4>
                   <div class="cn">十里画廊</div>
-                  <p>Dolina z formacjami krasowymi — rower / van między punktami.</p>
+                  <p>Dolina z formacjami krasowymi — van między punktami (okolica hotelu w Yangshuo).</p>
                   <span class="price">w cenie vanu</span>
                 </div>
               </div>
@@ -1629,12 +1743,12 @@
                 </div>
               </div>
               <div class="stop">
-                <img src="images/yangshuo.jpg" alt="Xianggong Mountain" loading="lazy">
+                <img src="images/yangshuo.jpg" alt="Xiangong / Xianggong Mountain" loading="lazy">
                 <div class="stop-body">
-                  <h4>Xianggong Mountain</h4>
-                  <div class="cn">相公山 · 60 RMB</div>
-                  <p>Punkt widokowy na meandry Li Jiang — często o zachodzie. (zdjęcie: Li River koło Xingping)</p>
-                  <span class="price">60 RMB</span>
+                  <h4>Xiangong / Xianggong</h4>
+                  <div class="cn">相公山</div>
+                  <p>Punkt widokowy na meandry Li Jiang. Potem transfer na dworzec i powrót do Hongkongu.</p>
+                  <span class="price">60 HKD</span>
                 </div>
               </div>
             </div>
@@ -1749,14 +1863,17 @@
 
     // Guilin / Yangshuo — jedziemy z rodziną
     const guilinStops = [
-      [25.2736, 110.2900, 'Elephant Trunk Hill (象鼻山)', 'Dzień 1 · Guilin · wstęp wolny'],
-      [25.2670, 110.3010, 'Sun & Moon Pagodas (日月双塔)', 'Dzień 1 wieczór · Shan Lake'],
-      [25.2360, 110.3280, 'Dongxi streets (东西巷)', 'Dzień 1 wieczór · stare uliczki'],
-      [24.9167, 110.5167, 'Xingping / Li River (兴坪·漓江)', 'Dzień 2 · rejs + banknot 20 RMB'],
-      [24.7780, 110.4960, 'Yangshuo · Impression Liu Sanjie', 'Dzień 2 wieczór · spektakl B2'],
-      [24.7450, 110.4700, 'Yulong River (遇龙河)', 'Dzień 3 · bamboo raft 45 RMB'],
-      [24.7330, 110.4680, 'Moon Hill (月亮山)', 'Dzień 3'],
-      [24.9000, 110.5500, 'Xianggong Mountain (相公山)', 'Dzień 3 · 60 RMB'],
+      [25.2736, 110.2900, 'Wzgórze Trąby Słonia (象鼻山)', 'Dzień 1 · Guilin · wstęp wolny'],
+      [25.2810, 110.3340, 'Guihai Qinglan (桂海晴岚)', 'Dzień 1 · Czyste Niebo nad Jeziorem · 50 HKD'],
+      [25.2670, 110.3010, 'Pagody Słońca i Księżyca (日月双塔)', 'Dzień 1 wieczór wolny · Shan Lake'],
+      [25.2360, 110.3280, 'Aleja Wschód-Zachód (东西巷 / Dongxi)', 'Dzień 1 wieczór wolny · stare uliczki'],
+      [24.9167, 110.5167, 'Xingping / rejs Li 4★ (兴坪·漓江)', 'Dzień 2 · rejs ~4 h + stary Xingping'],
+      [24.9376, 110.5194, 'Pejzaż z banknotu 20 ¥', 'Dzień 2 · punkt widokowy z banknotu'],
+      [24.7780, 110.4960, 'Yangshuo · Impression Liu Sanjie', 'Dzień 2 wieczór · spektakl B2 · 195 HKD'],
+      [24.7600, 110.4780, 'Ten-Mile Gallery (十里画廊)', 'Dzień 3 · dolina krasowa · okolica hotelu Atour'],
+      [24.7450, 110.4700, 'Yulong (遇龙河)', 'Dzień 3 · tratwy 4-os. · 280 HKD / tratwa'],
+      [24.7330, 110.4680, 'Moon Hill (月亮山)', 'Dzień 3 · skała w oknie Guilin'],
+      [24.9000, 110.5500, 'Xiangong / Xianggong (相公山)', 'Dzień 3 · 60 HKD · potem dworzec'],
     ];
     guilinStops.forEach(([lat, lng, t, b]) => {
       markers.push(L.marker([lat, lng], { icon: familyIcon }).addTo(map).bindPopup(popup(t, b)));
