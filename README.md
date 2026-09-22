@@ -68,7 +68,6 @@ Trzy opcje (A/B/C) różnią tylko **wieczór 25 X + pełny 28 X** (i lekki pora
 
 Kalendarz, mapa Leaflet, jet lag (SEA→HKG), teaser zdjęć z `images/`.
 
-Sekcja **Do załatwienia przed wyjazdem** (`#przed-wyjazdem`): otwarte checklisty — Global Entry, płatności HK+Chiny, roaming/eSIM; pobocznie pociągi HK↔Guilin (TBD).
 
 Sekcja **Plan wspinania 26–27 X** (baza Dorsett Kai Tak):
 - Pon 26 X: Beacon Hill Main Wall (taxi Lung Yan Rd)
