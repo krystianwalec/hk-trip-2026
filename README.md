@@ -82,11 +82,12 @@ Sekcja **Hotele (my + rodzina)** (wspólne, potwierdzone rezerwacje):
 - Alva Hotel By Royal (1 Yuen Hong St, Sha Tin) · Krystian i żona 31 X – 2 XI 2026 (rodzina może zostać do 11 XI) · mapa ≈ 22.3865, 114.2088
 - Przepływ: Dorsett → Guilin 29–31 X → Alva po powrocie; Alva blisko wesela (Regal Riverside, Sha Tin).
 
-Sekcja **Guilin – Yangshuo 29–31 X** (plan i koszty **od rodziny / organizatorów**):
+Sekcja **Guilin – Yangshuo 29–31 X** (najnowszy plan **organizatorów rodzinnych**):
 - Grupa: **12 osób** · 3 dni / 2 noce
-- **Dzień 1 (29 X, Guilin):** przylot → Wzgórze Trąby Słonia (Elephant Trunk, wstęp wolny) → Guihai Qinglan / Czyste Niebo nad Jeziorem Guilin (50) → wieczór wolny: Pagody Słońca i Księżyca + Aleja Wschód-Zachód (Dongxi) → noc **Guilin Atour Hotel** (Superior twin + śniadanie)
-- **Dzień 2 (30 X):** rejs Li Jiang **4★ ~4 h** (główne atrakcje rzeki) → stary Xingping → pejzaż z banknotu 20 ¥ → Impression Liu Sanjie B2 → noc **Yangshuo Atour Hotel** (Superior twin + śniadanie; okolica Ten-Mile Gallery)
-- **Dzień 3 (31 X):** tratwy bambusowe Yulong (4-os.) → Ten-Mile Gallery → Moon Hill (jedyna skała w oknie Guilin) → Xiangong / Xianggong → transfer na dworzec i powrót
-- Koszty pakietu (HKD, 12 os.): bilety 8820 (m.in. Guihai 50×12=600, rejs 360×12=4320, Liu Sanjie B2 195×12=2340, Yulong 280×3 tratwy=840, Xianggong 60×12=720) + hotele 4680 (Guilin Atour 350×6=2100, Yangshuo Atour 430×6=2580) + van 15 miejsc 2700 + obsługa 200 → **16 400** razem · **~1366 HKD/os. ≈ ~750 PLN** / 3 dni
-- **Nie wliczone:** pociągi HK ↔ Guilin, posiłki poza śniadaniem. Pociągi do ustalenia w tym tygodniu (pamiętane ~£80 w obie strony).
-- Hotele w Guilin: **Guilin Atour Hotel** (29 X) i **Yangshuo Atour Hotel** (30 X, okolica Ten-Mile Gallery) · Superior twin + śniadanie · 6 pokoi
+- **Dzień 1 (29 X, Guilin):** 13:30 Guilin West → lunch → Reed Flute 15:00–16:30 → Diecai 17:30–18:00 (zachód ~17:58) → kolacja → od 19:30 pagody + Dongxi → noc **Guilin Atour Hotel** *(bez Trąby Słonia / Guihai Qinglan)*
+- **Dzień 2 (30 X):** śniadanie 07:30 · wyjazd 08:30 · rejs Li ~4 h 10:00–14:00 · Xingping 14:30–17:30 (?? opc./TBD) · kolacja · Impression Liu Sanjie 20:00–21:10 → noc **Yangshuo Atour Hotel**
+- **Dzień 3 (31 X):** Yulong 09:00–11:00 · Jiuxian 11:00–12:30 (??) · lunch · Shili Gallery opc. 14:00–15:30 · **Ruyi Bridge** 15:30–16:30 · Xianggong 16:45–18:15 · kolacja/bagaż · wyjazd 20:00 na dworzec *(Moon Hill nie w planie)*
+- Koszty pakietu (HKD, 12 os.): **16 400** / ~1366 HKD/os. · tabela może wymagać odświeżenia biletów (Reed Flute / Diecai / Ruyi bez nowych cen; stare pozycje Trąba/Guihai nadal w wycenie organizatorów)
+- **Nie wliczone:** pociągi HK ↔ Guilin, posiłki poza śniadaniem. Pociągi TBD (~£80 w obie strony).
+- Hotele: **Guilin Atour** (29 X) + **Yangshuo Atour** (30 X) · Superior twin + śniadanie · 6 pokoi
+- Wjazd ChRL: paszporty polskie — bezwizowo ≤30 dni (do końca 2026; weryfikacja przed wylotem)
