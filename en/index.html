@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hong Kong 2026 — Trip planner · Krystian &amp; wife</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%A7%97%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&amp;family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<style>
+  :root {
+    --bg: #f4f0e8;
+    --bg-card: #fffcf7;
+    --ink: #1a1a1a;
+    --muted: #5c5a55;
+    --line: #e2d9c8;
+    --accent: #c45c26;
+    --accent-soft: #f3e0d4;
+    --teal: #0d6e6e;
+    --teal-soft: #d7efef;
+    --family: #6b3fa0;
+    --family-soft: #efe6f8;
+    --wedding: #b8860b;
+    --wedding-soft: #f7efd4;
+    --climb: #2d6a3e;
+    --climb-soft: #e2f0e6;
+    --flight: #1e4d8c;
+    --flight-soft: #dde8f5;
+    --conflict: #a33a2c;
+
+    --hotel: #c2185b;
+    --hotel-soft: #fce4ec;
+    --conflict-soft: #f8e4e1;
+    --radius: 16px;
+    --shadow: 0 8px 28px rgba(26,26,26,.08);
+    --max: 1100px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: "DM Sans", system-ui, sans-serif;
+    color: var(--ink);
+    background:
+      radial-gradient(1200px 600px at 10% -10%, #f7e6d4 0%, transparent 55%),
+      radial-gradient(900px 500px at 100% 0%, #d9ecec 0%, transparent 50%),
+      var(--bg);
+    line-height: 1.55;
+  }
+  h1, h2, h3{
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+  a { color: var(--teal); }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.25rem 4rem; }
+
+  /* Hero */
+  .hero {
+    position: relative;
+    padding: 3.5rem 0 2.5rem;
+    overflow: hidden;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: .5rem;
+    background: var(--accent-soft); color: var(--accent);
+    padding: .35rem .85rem; border-radius: 999px;
+    font-size: .85rem; font-weight: 600;
+  }
+  .hero h1 { font-size: clamp(2rem, 5vw, 3.1rem); margin: 1rem 0 .5rem; }
+  .hero-sub { color: var(--muted); font-size: 1.1rem; max-width: 42rem; }
+  .meta-row {
+    display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.5rem;
+  }
+  .chip {
+    display: inline-flex; align-items: center; gap: .4rem;
+    background: var(--bg-card); border: 1px solid var(--line);
+    padding: .45rem .8rem; border-radius: 999px; font-size: .9rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,.03);
+  }
+  .chip.flight { border-color: #b9cce6; background: var(--flight-soft); color: var(--flight); }
+  .chip.wedding { border-color: #e4d39a; background: var(--wedding-soft); color: #7a5c00; }
+  .chip.family { border-color: #d4c0ea; background: var(--family-soft); color: var(--family); }
+  .chip.climb { border-color: #b7d4bf; background: var(--climb-soft); color: var(--climb); }
+  .chip.hotel { border-color: #f0b8cb; background: var(--hotel-soft); color: var(--hotel); }
+
+  .notice {
+    margin-top: 1.75rem;
+    background: var(--bg-card);
+    border-left: 4px solid var(--accent);
+    padding: 1rem 1.25rem;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    box-shadow: var(--shadow);
+  }
+  .notice strong { color: var(--accent); }
+
+  /* Nav */
+  .toc {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(244,240,232,.92); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+    margin: 0 -1.25rem; padding: .65rem 1.25rem;
+  }
+  .toc-inner {
+    max-width: var(--max); margin: 0 auto;
+    display: flex; gap: .5rem; overflow-x: auto; scrollbar-width: thin;
+  }
+  .toc a {
+    white-space: nowrap; text-decoration: none; color: var(--muted);
+    font-size: .88rem; font-weight: 500;
+    padding: .4rem .75rem; border-radius: 999px;
+  }
+  .toc a:hover { background: var(--accent-soft); color: var(--accent); }
+
+  section { margin-top: 3rem; }
+  .section-head {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: 1rem; flex-wrap: wrap; margin-bottom: 1.25rem;
+  }
+  .section-head h2 { margin: 0; font-size: clamp(1.5rem, 3vw, 2rem); }
+  .section-head p { margin: .35rem 0 0; color: var(--muted); max-width: 36rem; }
+  .tag {
+    font-size: .75rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .06em; padding: .3rem .6rem; border-radius: 6px;
+  }
+  .tag.family { background: var(--family-soft); color: var(--family); }
+  .tag.ours { background: var(--teal-soft); color: var(--teal); }
+  .tag.climb { background: var(--climb-soft); color: var(--climb); }
+  .tag.hotel { background: var(--hotel-soft); color: var(--hotel); }
+
+  /* Legend */
+  .legend {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: .6rem; margin-bottom: 1.5rem;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: .55rem;
+    background: var(--bg-card); border: 1px solid var(--line);
+    padding: .55rem .75rem; border-radius: 12px; font-size: .88rem;
+  }
+  .dot {
+    width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0;
+  }
+  .dot.flight { background: var(--flight); }
+  .dot.climb { background: var(--climb); }
+  .dot.wedding { background: var(--wedding); }
+  .dot.family { background: var(--family); }
+  .dot.hotel { background: var(--hotel); }
+
+  /* Calendar */
+  .calendar {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+  .day-card {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.15rem 1.2rem;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+  }
+  .day-card::before {
+    content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px;
+    background: var(--teal);
+  }
+  .day-card.flight::before { background: var(--flight); }
+  .day-card.climb-day::before { background: var(--climb); }
+  .day-card.wedding-day::before { background: var(--wedding); }
+  .day-card.family-window::before { background: var(--family); }
+  .day-date {
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 1.15rem; margin: 0 0 .15rem;
+  }
+  .day-dow { color: var(--muted); font-size: .82rem; margin-bottom: .7rem; }
+  .day-body { font-size: .92rem; }
+  .day-body ul { margin: .4rem 0 0; padding-left: 1.1rem; }
+  .day-body li { margin: .25rem 0; }
+  .pill {
+    display: inline-block; font-size: .7rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .04em;
+    padding: .2rem .5rem; border-radius: 6px; margin: 0 .25rem .35rem 0;
+  }
+  .pill.flight { background: var(--flight-soft); color: var(--flight); }
+  .pill.climb { background: var(--climb-soft); color: var(--climb); }
+  .pill.wedding { background: var(--wedding-soft); color: #7a5c00; }
+  .pill.family { background: var(--family-soft); color: var(--family); }
+  .pill.hotel { background: var(--hotel-soft); color: var(--hotel); }
+
+  /* Options tabs */
+  .tabs {
+    display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1rem;
+  }
+  .tab-btn {
+    border: 1px solid var(--line); background: var(--bg-card);
+    color: var(--muted); font: inherit; font-weight: 600; font-size: .92rem;
+    padding: .65rem 1rem; border-radius: 999px; cursor: pointer;
+    transition: .15s ease;
+  }
+  .tab-btn:hover { border-color: var(--teal); color: var(--teal); }
+  .tab-btn.active {
+    background: var(--teal); color: #fff; border-color: var(--teal);
+  }
+  .option-panel { display: none; }
+  .option-panel.active { display: block; animation: fade .25s ease; }
+  @keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+  .option-card {
+    background: var(--bg-card); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 1.4rem; box-shadow: var(--shadow);
+  }
+  .option-card h3 { margin: 0 0 .4rem; }
+
+
+  /* Hotele wspólne z rodziną */
+  .hotel-banner {
+    background: linear-gradient(135deg, #c2185b, #e91e8c);
+    color: #fff; border-radius: var(--radius); padding: 1.4rem 1.5rem;
+    margin-bottom: 1.25rem; box-shadow: var(--shadow);
+  }
+  .hotel-banner h2 { margin: 0 0 .35rem; color: #fff; }
+  .hotel-banner p { margin: 0; opacity: .95; }
+  .hotel-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+  .hotel-card {
+    background: var(--bg-card); border: 1px solid #f0b8cb;
+    border-radius: var(--radius); padding: 1.2rem 1.25rem;
+    box-shadow: var(--shadow); border-left: 5px solid var(--hotel);
+  }
+  .hotel-card h3 { margin: 0 0 .35rem; color: var(--hotel); font-size: 1.15rem; }
+  .hotel-card .addr { color: var(--muted); font-size: .9rem; margin: 0 0 .75rem; }
+  .hotel-card ul { margin: 0; padding-left: 1.15rem; font-size: .92rem; }
+  .hotel-card li { margin: .3rem 0; }
+  .hotel-note {
+    margin-top: 1rem; font-size: .9rem;
+    background: var(--hotel-soft); color: var(--hotel);
+    border: 1px solid #f0b8cb; border-radius: 12px;
+    padding: .75rem 1rem;
+  }
+
+  /* Family section */
+  .family-banner {
+    background: linear-gradient(135deg, #6b3fa0, #8e5bc7);
+    color: #fff; border-radius: var(--radius); padding: 1.4rem 1.5rem;
+    margin-bottom: 1.25rem; box-shadow: var(--shadow);
+  }
+  .family-banner h2 { margin: 0 0 .35rem; color: #fff; }
+  .family-banner p { margin: 0; opacity: .92; }
+  .cost-bar {
+    display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1rem;
+  }
+  .cost-bar span {
+    background: rgba(255,255,255,.18); padding: .35rem .7rem;
+    border-radius: 999px; font-size: .85rem; font-weight: 600;
+  }
+
+  .guilin-days { display: grid; gap: 1.25rem; }
+  .g-day {
+    background: var(--bg-card); border: 1px solid #dccfee;
+    border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow);
+  }
+  .g-day-head {
+    background: var(--family-soft); padding: .9rem 1.2rem;
+    display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+    border-bottom: 1px solid #e5d6f5;
+  }
+  .g-day-head h3 { margin: 0; color: var(--family); font-size: 1.15rem; }
+  .g-day-body { padding: 1.2rem; }
+  .stops {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+  .stop {
+    border: 1px solid var(--line); border-radius: 12px; overflow: hidden;
+    background: #fff;
+  }
+  .stop img {
+    width: 100%; height: 150px; object-fit: cover; display: block;
+    background: #eee;
+  }
+  .stop-body { padding: .75rem .9rem 1rem; }
+  .stop-body h4 { margin: 0 0 .25rem; font-size: 1rem; }
+  .stop-body .cn { color: var(--family); font-size: .82rem; margin-bottom: .35rem; }
+  .stop-body p { margin: 0; font-size: .86rem; color: var(--muted); }
+  .price {
+    display: inline-block; margin-top: .5rem;
+    font-size: .78rem; font-weight: 700;
+    background: var(--family-soft); color: var(--family);
+    padding: .2rem .5rem; border-radius: 6px;
+  }
+
+
+  .g-source {
+    font-size: .88rem;
+    color: var(--muted);
+    background: #faf7f1;
+    border: 1px dashed #dccfee;
+    border-radius: 12px;
+    padding: .7rem .95rem;
+    margin: 0 0 1.15rem;
+  }
+  .g-source strong { color: var(--family); }
+  .cost-table-wrap {
+    overflow-x: auto;
+    margin: 0 0 1.35rem;
+    background: var(--bg-card);
+    border: 1px solid #dccfee;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+  .cost-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .9rem;
+  }
+  .cost-table th {
+    text-align: left;
+    padding: .6rem .9rem;
+    background: var(--family-soft);
+    color: var(--family);
+    font-size: .72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    border-bottom: 1px solid #e5d6f5;
+  }
+  .cost-table td {
+    padding: .48rem .9rem;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  .cost-table th.amt, .cost-table td.amt {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .cost-table td.amt { font-weight: 600; }
+  .cost-table tr.sub td {
+    background: #faf7f1;
+    font-weight: 700;
+  }
+  .cost-table tr.grand td {
+    background: var(--family-soft);
+    color: var(--family);
+    font-weight: 800;
+    border-bottom: 0;
+    font-size: 1rem;
+  }
+  .cost-table .muted { color: var(--muted); font-weight: 500; }
+  .cost-avg {
+    display: flex; flex-wrap: wrap; gap: .55rem;
+    margin: -.5rem 0 1.25rem;
+  }
+  .cost-avg span {
+    background: var(--family-soft); color: var(--family);
+    border: 1px solid #dccfee;
+    padding: .4rem .75rem; border-radius: 999px;
+    font-size: .88rem; font-weight: 700;
+  }
+  .access {
+    margin-top: .7rem; font-size: .82rem;
+    background: var(--climb-soft); color: var(--climb);
+    padding: .45rem .65rem; border-radius: 8px;
+  }
+  .climb-gear {
+    background: linear-gradient(135deg, var(--climb-soft), #f7faf7);
+    border: 1px solid #b7d4bf;
+    border-left: 4px solid var(--climb);
+    border-radius: 0 14px 14px 0;
+    padding: 1rem 1.15rem;
+    box-shadow: var(--shadow);
+  }
+  .climb-gear h3 {
+    margin: 0 0 .55rem; font-size: 1.05rem; color: var(--climb);
+    font-family: "Fraunces", Georgia, serif;
+  }
+  .climb-gear ul { margin: 0; padding-left: 1.15rem; }
+  .climb-gear li { margin: .28rem 0; font-size: .9rem; }
+  .climb-day-card {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .climb-day-card > img { width: 100%; height: 170px; object-fit: cover; display: block; }
+  .climb-day-card .body { padding: 1.05rem 1.15rem 1.2rem; }
+  .climb-day-card h3 { margin: 0 0 .35rem; font-size: 1.15rem; color: var(--climb); }
+  .climb-day-card .lede { margin: 0 0 .75rem; font-size: .9rem; color: var(--muted); }
+  .badge-row { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .75rem; }
+  .cbadge {
+    display: inline-block; font-size: .72rem; font-weight: 700;
+    letter-spacing: .03em; text-transform: uppercase;
+    padding: .22rem .55rem; border-radius: 999px;
+  }
+  .cbadge.choice { background: #dff0e4; color: var(--climb); border: 1px solid #b7d4bf; }
+  .cbadge.warn { background: #fde8e8; color: #9b1c1c; border: 1px solid #f0b4b4; }
+  .route-list {
+    margin: .55rem 0 0; padding-left: 1.1rem;
+    font-size: .88rem; color: var(--ink);
+  }
+  .route-list li { margin: .22rem 0; }
+  .route-list strong { color: var(--climb); }
+  .choice-block {
+    margin-top: .85rem; padding: .85rem .95rem;
+    border: 1px dashed #b7d4bf; border-radius: 12px;
+    background: #f7fbf8;
+  }
+  .choice-block h4 { margin: 0 0 .35rem; font-size: .95rem; color: var(--climb); }
+  .choice-block p { margin: 0 0 .45rem; font-size: .88rem; color: var(--muted); }
+  .choice-block.backup-block {
+    background: #fffaf0; border-color: #e4d39a;
+  }
+  .choice-block.backup-block h4 { color: #7a5c00; }
+
+  /* Maps */
+  .map-box {
+    height: 420px; border-radius: var(--radius); overflow: hidden;
+    border: 1px solid var(--line); box-shadow: var(--shadow);
+    background: #ddd;
+  }
+  .map-note { font-size: .85rem; color: var(--muted); margin: .6rem 0 0; }
+
+  /* Wedding highlight */
+  .wedding-card {
+    display: grid; grid-template-columns: 1.2fr .8fr; gap: 1rem;
+    background: var(--bg-card); border: 1px solid #e4d39a;
+    border-radius: var(--radius); padding: 1.3rem; box-shadow: var(--shadow);
+  }
+  @media (max-width: 720px) {
+    .wedding-card { grid-template-columns: 1fr; }
+  }
+  .wedding-card h3 { margin: 0 0 .5rem; color: #7a5c00; }
+  .wedding-card img {
+    width: 100%; height: 100%; min-height: 180px; object-fit: cover;
+    border-radius: 12px;
+  }
+  .pin {
+    display: inline-flex; align-items: center; gap: .35rem;
+    background: var(--wedding-soft); color: #7a5c00;
+    font-weight: 700; font-size: .82rem;
+    padding: .3rem .65rem; border-radius: 999px; margin-bottom: .75rem;
+  }
+
+  /* Jetlag callout */
+  .callout-jetlag {
+    margin: 1.25rem 0 0;
+    background: linear-gradient(135deg, var(--flight-soft), #fff8ee);
+    border: 1px solid #b9cce6;
+    border-left: 4px solid var(--flight);
+    padding: .9rem 1.15rem;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    box-shadow: var(--shadow);
+    font-size: .92rem;
+  }
+  .callout-jetlag strong { color: var(--flight); }
+  .callout-jetlag p { margin: .35rem 0 0; color: var(--ink); }
+  .callout-jetlag p:first-of-type { margin-top: .15rem; }
+  .steps {
+    list-style: none; margin: 0; padding: .65rem .95rem .85rem;
+    display: grid; gap: .4rem;
+  }
+  .steps li {
+    display: grid;
+    grid-template-columns: 6.75rem 1fr;
+    gap: .55rem;
+    font-size: .88rem;
+    padding: .35rem 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .g-day .steps .slot { color: var(--family); }
+  .steps li:last-child { border-bottom: 0; }
+  .steps .slot {
+    font-weight: 700; font-size: .72rem; text-transform: uppercase;
+    letter-spacing: .04em; color: var(--teal);
+    padding-top: .15rem;
+  }
+  .steps .act { color: var(--ink); }
+  .steps .act em { color: var(--muted); font-style: normal; font-size: .84rem; }
+  @media (max-width: 520px) {
+    .steps li { grid-template-columns: 1fr; gap: .15rem; }
+    .teaser-row img { height: 100px; }
+  }
+
+  footer {
+    margin-top: 3.5rem; padding-top: 1.5rem; border-top: 1px solid var(--line);
+    color: var(--muted); font-size: .88rem; text-align: center;
+  }
+
+  .leaflet-container { font: inherit; }
+  .map-popup h4 { margin: 0 0 .25rem; font-size: .95rem; }
+  .map-popup p { margin: 0; font-size: .82rem; color: #444; }
+  .g-details { margin: .75rem 0 1rem; border: 1px solid #cfc6b8; border-radius: 12px; padding: .55rem .9rem; background: #fff; color: #1a1a1a; }
+  .g-details summary { cursor: pointer; }
+</style>
+
+<style id="grade-conv-css">
+.grade-conv {
+  margin: 1.5rem 0;
+  padding: 1.25rem 1.35rem 1.35rem;
+  border-radius: 16px;
+  background: #ffffff;
+  color: #0f172a;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 1px 2px rgba(15,23,42,.06);
+}
+.grade-conv h2 {
+  margin: 0 0 .5rem;
+  color: #0f172a;
+  font-size: 1.25rem;
+}
+.grade-conv-lead {
+  margin: 0 0 1rem;
+  color: #334155;
+  line-height: 1.45;
+}
+.grade-conv-lead strong { color: #14532d; }
+.grade-conv-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid #94a3b8; }
+.grade-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .95rem;
+  background: #fff;
+  color: #0f172a;
+}
+.grade-table th {
+  text-align: left;
+  padding: .65rem .85rem;
+  background: #0f172a;
+  color: #f8fafc;
+  font-weight: 600;
+  border-bottom: 2px solid #0f172a;
+}
+.grade-table td {
+  padding: .55rem .85rem;
+  border-bottom: 1px solid #cbd5e1;
+  color: #0f172a;
+  background: #ffffff;
+  vertical-align: top;
+}
+.grade-table tbody tr:nth-child(even) td {
+  background: #f1f5f9;
+}
+.grade-table tbody tr.grade-target td {
+  background: #dcfce7;
+  color: #14532d;
+  font-weight: 650;
+  border-bottom-color: #86efac;
+}
+.grade-table tbody tr.grade-target:nth-child(even) td {
+  background: #bbf7d0;
+}
+.grade-conv-note {
+  margin: .85rem 0 0;
+  font-size: .85rem;
+  color: #475569;
+  line-height: 1.4;
+}
+@media (prefers-color-scheme: dark) {
+  /* keep table light on purpose for readability even if page is dark */
+}
+  .g-details { margin: .75rem 0 1rem; border: 1px solid #cfc6b8; border-radius: 12px; padding: .55rem .9rem; background: #fff; color: #1a1a1a; }
+  .g-details summary { cursor: pointer; }
+</style>
+
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <span class="hero-badge">🇭🇰 · 🇨🇳 · October–November 2026</span>
+      <h1>Hong Kong 24 Oct – 2 Nov 2026 — day-by-day plan</h1>
+      <p class="hero-sub">Planner for <strong>Krystian and his wife</strong>. Each day 26–28 Oct has 3 variants: <strong>Climbing</strong> · <strong>Hybrid</strong> (climb until ~14:00–15:00, then family) · <strong>With family</strong>. Guilin 29–31 Oct with family, wedding on 1 Nov in Sha Tin.</p>
+      <div class="meta-row">
+        <span class="chip flight">✈ SEA → HKG · 24 Oct 11:45 → 25 Oct 16:45</span>
+        <span class="chip flight">✈ HKG → SEA · 2 Nov 13:30 → 09:10</span>
+        <span class="chip climb">🧗 26–28 Oct · climbing variants</span>
+        <span class="chip family">👨‍👩‍👧‍👦 Guilin 29–31 Oct</span>
+        <span class="chip wedding">💍 Wedding 1 Nov</span>
+      </div>
+    </header>
+
+    <nav class="toc" aria-label="Contents"><div class="toc-inner">
+      <a href="#kalendarz">Calendar</a><a href="#d25">25 Oct</a><a href="#d26">26 Oct</a><a href="#d27">27 Oct</a><a href="#d28">28 Oct</a>
+      <a href="#guilin">Guilin 29–31 Oct</a><a href="#wesele">Wedding 1 Nov</a><a href="#powrot">Return 2 Nov</a>
+      <a href="#wielowyciagowki">Multi-pitch</a><a href="#sprzet">Gear</a><a href="#mapa">Map</a><a href="#hotele">Hotels</a><a href="#skala">Grades</a><a href="../" lang="pl" hreflang="pl" class="lang-switch" style="font-weight:700;border:2px solid currentColor;border-radius:6px;padding:0 .4em">PL</a>
+    </div></nav>
+
+    <section id="kalendarz">
+      <div class="section-head"><div><span class="tag ours">Overview</span><h2>Calendar · 24 Oct – 2 Nov 2026</h2>
+      <p>Click a day for details. Family plan 26–28 Oct follows the <strong>newest version from the family</strong> (27 Oct Lantau, 28 Oct Central + Lamma). Hotels: Dorsett Kai Tak 25–29 Oct · Alva Sha Tin 31 Oct–2 Nov.</p></div></div>
+      <div class="calendar"><a href="#d25" class="day-card flight" style="text-decoration:none;color:inherit"><h3 class="day-date">24 Oct</h3><div class="day-dow">Sat</div><div class="day-body"><p style="margin:.3rem 0 0">Depart SEA 11:45 · Cathay Pacific · overnight flight</p></div></a><a href="#d25" class="day-card flight" style="text-decoration:none;color:inherit"><h3 class="day-date">25 Oct</h3><div class="day-dow">Sun</div><div class="day-body"><p style="margin:.3rem 0 0">Arrive 16:45 · Dorsett</p></div></a><a href="#d26" class="day-card climb-day" style="text-decoration:none;color:inherit"><h3 class="day-date">26 Oct</h3><div class="day-dow">Mon</div><div class="day-body"><p style="margin:.3rem 0 0">Kowloon · Beacon Hill / Gweilo</p></div></a><a href="#d27" class="day-card climb-day" style="text-decoration:none;color:inherit"><h3 class="day-date">27 Oct</h3><div class="day-dow">Tue</div><div class="day-body"><p style="margin:.3rem 0 0">Lantau · Monkey / Central / Temple Crag</p></div></a><a href="#d28" class="day-card climb-day" style="text-decoration:none;color:inherit"><h3 class="day-date">28 Oct</h3><div class="day-dow">Wed</div><div class="day-body"><p style="margin:.3rem 0 0">Central + Lamma · Sok Kwu · Happy Valley</p></div></a><a href="#guilin" class="day-card family-window" style="text-decoration:none;color:inherit"><h3 class="day-date">29–31 Oct</h3><div class="day-dow">Thu–Sat</div><div class="day-body"><p style="margin:.3rem 0 0">Guilin with family · G918 10:02</p></div></a><a href="#wesele" class="day-card wedding-day" style="text-decoration:none;color:inherit"><h3 class="day-date">1 Nov</h3><div class="day-dow">Sun</div><div class="day-body"><p style="margin:.3rem 0 0">Wedding · Regal Riverside 17:00</p></div></a><a href="#powrot" class="day-card flight" style="text-decoration:none;color:inherit"><h3 class="day-date">2 Nov</h3><div class="day-dow">Mon</div><div class="day-body"><p style="margin:.3rem 0 0">Depart HKG 13:30</p></div></a>
+      </div>
+      <div class="legend" style="margin-top:1rem">
+        <div class="legend-item"><span class="dot flight"></span> Flight</div><div class="legend-item"><span class="dot climb"></span> Climbing / variants</div>
+        <div class="legend-item"><span class="dot family"></span> Guilin with family</div><div class="legend-item"><span class="dot wedding"></span> Wedding</div><div class="legend-item"><span class="dot hotel"></span> Hotel</div>
+      </div>
+    </section>
+
+    <section id="d25">
+      <div class="section-head"><div>
+        <span class="tag ours">25 Oct · Sunday</span>
+        <h2>1 · Arrival and Sunday</h2>
+        <p>Arrive HKG <strong>16:45</strong> (Cathay Pacific from SEA, departing 24 Oct 11:45) → <strong>Dorsett Kai Tak</strong>.</p>
+      </div></div>
+      <div class="option-card"><ol class="steps"><li><span class="slot">16:45</span><span class="act">Land at HKG (Cathay Pacific from SEA, departed 24 Oct 11:45)</span></li><li><span class="slot">~16:45–17:45</span><span class="act">Immigration + baggage · buy / top up an Octopus card in the arrivals hall (Airport Express desk)</span></li><li><span class="slot">~17:45</span><span class="act"><strong>Taxi option</strong> (red, Urban): HKG → Dorsett Kai Tak ~40–50 min, ~HK$300–380 incl. bridge/tunnel tolls + luggage</span></li><li><span class="slot">or</span><span class="act"><strong>Airport Express</strong> HKG → Kowloon ~22 min (every ~10 min), then taxi Kowloon → Kai Tak ~20 min, ~HK$80–100 · total ~60–70 min</span></li><li><span class="slot">~18:45</span><span class="act">Check-in <strong>Dorsett Kai Tak</strong> (43 Shing Kai Rd, ~5 min walk from MTR Kai Tak, Tuen Ma line)</span></li><li><span class="slot">~19:30</span><span class="act">Dinner in Kowloon City (taxi ~5 min / walk ~20 min) or a short trip to TST: MTR Kai Tak → Hung Hom → East Tsim Sha Tsui ~15–20 min</span></li><li><span class="slot">~22:00</span><span class="act">Sleep at a normal HKT bedtime</span></li></ol>
+        <div class="callout-jetlag" role="note"><strong>⏱ Jet lag · Seattle → Hong Kong</strong>
+        <p>HKG is ~<strong>15 h</strong> ahead (PDT); ~16 h after US DST ends. Stay up until the HKT evening and get outside into daylight in the morning. Early wake-ups on 26–28 Oct actually help with morning climbing.</p></div>
+        <p><strong>The family arrives 25–27 Oct</strong> — everyone at Dorsett Kai Tak.</p><details class="g-details"><summary><strong>🚇 Getting around</strong></summary><aside class="climb-gear" aria-label="Getting around" style="margin:.5rem 0 0"><ul><li><strong>Octopus</strong> (or Octopus in Apple Wallet) works on the MTR, buses, minibuses, HKKF/Sun Ferry/Star Ferry ferries, trams and the Peak Tram; top up at 7-Eleven / MTR machines.</li><li>With luggage a taxi is simplest; the Airport Express is cheaper and immune to traffic.</li><li>Dorsett: nearest station <strong>MTR Kai Tak</strong> (Tuen Ma) — 1 stop to Diamond Hill / Sung Wong Toi, 2 to Hung Hom.</li></ul></aside></details>
+      </div>
+    </section>
+
+    <section id="d26">
+      <div class="section-head"><div>
+        <span class="tag climb">26 Oct · Monday</span>
+        <h2>2 · Monday 26 Oct · Kowloon</h2>
+        <p>Family: Kowloon + Symphony of Lights. Climbing: Beacon Hill / Lion Rock (Gweilo) — 15–20 min from Dorsett.</p>
+      </div></div>
+      <div class="variant-tabs">
+        <div class="tabs" role="tablist" aria-label="Warianty 26">
+          <button class="tab-btn active" role="tab" aria-selected="true" data-target="v26-climb">🧗 Climbing</button>
+          <button class="tab-btn" role="tab" aria-selected="false" data-target="v26-hyb">🔀 Hybrid</button>
+          <button class="tab-btn" role="tab" aria-selected="false" data-target="v26-fam">👨‍👩‍👧‍👦 With family</button>
+        </div>
+        <div id="v26-climb" class="option-panel active" role="tabpanel"><div class="option-card"><h3>Full climbing day — 2 options</h3>
+<div class="choice-block"><h4>A) Beacon Hill · Main Wall · 5.10a–5.10d</h4><ol class="steps"><li><span class="slot">6:45</span><span class="act">Taxi Dorsett → end of Lung Yan Rd (Beacon Hill) · ~15–20 min, ~HK$70–100</span></li><li><span class="slot">~7:05</span><span class="act">Approach path ~10 min (topo)</span></li><li><span class="slot">7:15–15:00</span><span class="act">Climbing: One Eyed Snake, Cat Ladder, Pretty Girl, Blue Cross, Spitting Cobra · midday break in the shade</span></li><li><span class="slot">~15:15</span><span class="act">Taxi from Lung Yan Rd (book via HKTaxi / Uber — few pass by) → Dorsett ~15–20 min</span></li><li><span class="slot">evening</span><span class="act">Optional: TST + Symphony 20:00 with family (MTR Kai Tak → East TST ~20 min)</span></li></ol><p class="climb-links">📖 <a href="https://hongkongclimbing.com/routes/kowloon/beacon-hill/" target="_blank" rel="noopener">Topo</a> · <a href="https://www.google.com/maps/search/?api=1&amp;query=22.3495,114.1728" target="_blank" rel="noopener">📍 start</a></p></div>
+<div class="choice-block"><h4>B) Lion Rock · Gweilo (4 pitches) + Beacon Hill</h4><ol class="steps"><li><span class="slot">6:15</span><span class="act">Taxi Dorsett → Lion Rock Park / Hung Mui Kuk Rd · ~15–20 min, ~HK$70–90</span></li><li><span class="slot">~6:35–7:15</span><span class="act">Trail approach to the West Face ~30–40 min · start via Prelude (F4)</span></li><li><span class="slot">7:15–11:30</span><span class="act">Gweilo (6a+, 4 pitches) — trad backup on pitches 3–4, build your own anchor at the top</span></li><li><span class="slot">~11:30–12:15</span><span class="act">Descend by the hiking trail, ~1 km traverse to Beacon Hill (~30–40 min~)</span></li><li><span class="slot">12:30–15:00</span><span class="act">Beacon Hill — 2–4 single-pitch routes</span></li><li><span class="slot">~15:15</span><span class="act">Taxi → Dorsett ~15–20 min</span></li></ol><p>The neighbouring <strong>Wards Groove</strong> F6b: last pitch de-bolted Nov 2021 → trad only. Sport alternative: <strong>Social Distancing</strong> F5/F6b (Kowloon Peak, 2020). <a href="#wielowyciagowki">List →</a></p></div>
+<article class="climb-day-card" id="gweilo">
+          <img src="../images/lion-rock-hkbu.jpg" alt="Lion Rock seen from Kowloon Tong (HKBU)" style="object-position:center 30%" loading="lazy">
+          <div class="body">
+            <div class="badge-row">
+              <span class="cbadge choice">Multi-pitch option</span>
+              <span class="cbadge warn">Chopped bolts · bring trad</span>
+            </div>
+            <h3>Gweilo · Lion Rock West Face · 獅子山 · 6a+ (HK), 4 pitches, ≈75 m</h3>
+            <p class="lede">
+              An HK classic (FA 1991). Starts from the top of <em>Prelude</em> (F4). Pitches: 5 (22 m) · 6a+ corner crack (12 m) · 5+ exposed traverse (13 m) · 6a+ (28 m) to the summit. Walk off on the hiking trail (no abseils). About <strong>6 km from Dorsett</strong> (taxi 15–20 min to Lion Rock Park / Wang Tau Hom), approach ≈ 30–40 min. Beacon Hill is right next to it (≈ 1 km).
+            </p>
+            <div class="access">🚕 Taxi from Dorsett → Lion Rock Park (Hung Mui Kuk Rd) · Lion Rock trail · no ferry</div>
+            <p><strong>Does it fit the plan?</strong> Yes — no ferry constraints; best instead of / alongside Beacon Hill on <strong>Mon 26 Oct</strong> (no queues on a weekday). Start early (heat; the face is west-facing in the afternoon).</p>
+            <p><strong>Bolt status (latest info):</strong></p>
+            <ul class="route-list">
+              <li><a href="https://hongkongclimbing.com/routes/kowloon/lion-rock/west-face/" target="_blank" rel="noopener">hongkongclimbing.com</a> (warning “as of October 2020”): some bolts on <strong>pitches 3 and 4 chopped</strong>, the traverse around the arête unprotected, <strong>summit anchor removed</strong> — you must build your own (trad / slings around boulders).</li>
+              <li><a href="https://www.thecrag.com/en/climbing/hong-kong/kowloon/route/15712057" target="_blank" rel="noopener">theCrag</a>: “Bolts chopped” warning dated <strong>3 Oct 2020</strong>; the neighbouring Wards Groove entry says that <strong>since 2025</strong> pitch 4 needs trad protection + your own anchor at the top.</li>
+              <li><a href="https://www.ukclimbing.com/logbook/crags/lion_rock_kowloon-2007/gweilo-36642" target="_blank" rel="noopener">UKC logbook</a>: 16 Nov 2023 — a party bailed at the start of pitch 3 (chopped bolts); 25 Jan 2024 — “last pitch was cut”; 16 Nov 2024 — “Trad climbed it”.</li>
+              <li>No information found about rebolting after 2020 (last rebolt: F. Haden, Jan 2014 — <a href="https://www.mountainproject.com/route/108402651/gweilo" target="_blank" rel="noopener">Mountain Project</a>).</li>
+            </ul>
+            <p><strong>Gear (our cautious recommendation — not from the topo):</strong> 15 quickdraws + 4–5 long slings, 60 m rope, helmet; <strong>a set of medium–large nuts</strong> + <strong>cams approx. 0.4–2 (BD) / “1.5–2.5 friends”</strong> per hkclimbing — in practice 1× each size, optionally 2× #1–#2; 2 × 120 cm slings + HMS lockers for the summit anchor. Without trad gear — pitches 1–2 only, then abseil.</p>
+            <p class="climb-links" style="margin:.5rem 0 0;font-size:.9em">📖 <a href="https://hongkongclimbing.com/routes/kowloon/lion-rock/west-face/" target="_blank" rel="noopener">Topo (hongkongclimbing.com)</a> · <a href="https://www.thecrag.com/en/climbing/hong-kong/kowloon/route/15712057" target="_blank" rel="noopener">theCrag</a> · <a href="https://www.mountainproject.com/route/108402651/gweilo" target="_blank" rel="noopener">Mountain Project</a> · <a href="https://www.google.com/maps/search/?api=1&amp;query=22.35224,114.18466" target="_blank" rel="noopener">wall</a> · 📍 <a href="https://www.google.com/maps/search/?api=1&amp;query=22.3445,114.187" target="_blank" rel="noopener">Map / start</a></p>
+          </div>
+        </article>
+<p><a href="#sprzet">⚙️ General gear →</a></p></div></div>
+        <div id="v26-hyb" class="option-panel" role="tabpanel"><div class="option-card"><h3>Hybrid — climb until ~14:00, then family (Kowloon)</h3>
+<div class="choice-block"><h4>H1) Gweilo → Wong Tai Sin (recommended)</h4><ol class="steps"><li><span class="slot">6:15</span><span class="act">Taxi Dorsett → Lion Rock Park ~15–20 min, ~HK$70–90</span></li><li><span class="slot">~7:00–11:30</span><span class="act">Gweilo (approach ~30–40 min)</span></li><li><span class="slot">~11:30–12:30</span><span class="act">Descend the trail towards Wong Tai Sin / Lion Rock Park ~40–50 min~</span></li><li><span class="slot">~12:45</span><span class="act">Taxi → Dorsett ~15 min · shower, drop gear</span></li><li><span class="slot">~14:45</span><span class="act">Meet the family at Dorsett (family check-in ~14:45) · lunch at Chou Choi Koon</span></li><li><span class="slot">~16:00</span><span class="act">MTR Kai Tak → Diamond Hill (Tuen Ma, 1 stop, ~3 min) → Chi Lin Nunnery (exit C2, ~5 min)</span></li><li><span class="slot">~17:00</span><span class="act">Wong Tai Sin Temple: Diamond Hill → Wong Tai Sin (Kwun Tong line, 1 stop) or a ~15 min walk</span></li><li><span class="slot">~18:30</span><span class="act">MTR Wong Tai Sin → Yau Ma Tei, change to Tsuen Wan line → Tsim Sha Tsui ~20–25 min · 1881 Heritage, Avenue of Stars</span></li><li><span class="slot">20:00</span><span class="act"><strong>Symphony of Lights</strong> (TST promenade)</span></li><li><span class="slot">~21:00</span><span class="act">Mak Man Kee (Jordan) · Temple Street · back by MTR Jordan → Kai Tak ~25–30 min or taxi ~20 min, ~HK$90–120</span></li></ol></div>
+<div class="choice-block"><h4>H2) Beacon Hill → family</h4><ol class="steps"><li><span class="slot">7:00</span><span class="act">Taxi → Lung Yan Rd ~15–20 min</span></li><li><span class="slot">7:30–13:30</span><span class="act">Beacon Hill</span></li><li><span class="slot">~13:45</span><span class="act">Taxi → Dorsett ~15–20 min</span></li><li><span class="slot">from ~14:45</span><span class="act">As H1 from the meeting at Dorsett</span></li></ol></div>
+<p><strong>This is the best day for Gweilo.</strong></p></div></div>
+        <div id="v26-fam" class="option-panel" role="tabpanel"><div class="option-card"><h3>With family · Kowloon</h3>
+<ol class="steps"><li><span class="slot">morning</span><span class="act">Free (family still travelling) — a short Beacon Hill session until ~12:00 is possible</span></li><li><span class="slot">13:00</span><span class="act">Part of the family arrives (pick-up — to be confirmed)</span></li><li><span class="slot">~14:45</span><span class="act">Check-in at Dorsett · lunch at Chou Choi Koon (粗菜館) · dessert at Tei Mou Koon (帝茂館), Kowloon City (taxi ~5 min)</span></li><li><span class="slot">~16:00</span><span class="act">Chi Lin Nunnery — MTR Kai Tak → Diamond Hill ~3 min + 5 min walk</span></li><li><span class="slot">~17:00</span><span class="act">Wong Tai Sin Temple — 1 stop on the Kwun Tong line or a ~15 min walk · <em>optional</em> Garden Hill (viewpoint, MTR Sham Shui Po, exit D2 + ~15 min uphill~; detour ~45–60 min)</span></li><li><span class="slot">~18:30</span><span class="act">MTR → TST ~20–25 min · 1881 Heritage · Chungking Mansions · Waterfront · Avenue of Stars</span></li><li><span class="slot">20:00</span><span class="act">Symphony of Lights</span></li><li><span class="slot">~21:00</span><span class="act">Mak Man Kee · Temple Street</span></li><li><span class="slot">~22:30</span><span class="act">Back by MTR ~25–30 min or taxi ~HK$90–120</span></li></ol></div></div>
+      </div><details class="g-details"><summary><strong>🚇 Getting around</strong></summary><aside class="climb-gear" aria-label="Getting around" style="margin:.5rem 0 0"><ul><li>Octopus — see <a href="#d25">25 Oct</a>.</li><li><strong>Best:</strong> taxi to the crag (Lion Rock Park / Lung Yan Rd ~15–20 min, ~HK$70–100) — the MTR doesn't reach the trailhead. Return: book a taxi in an app (HKTaxi / Uber).</li><li>The family travels by MTR: Kai Tak → Diamond Hill (Chi Lin) → Wong Tai Sin → TST.</li><li>With a rope and pack the MTR is fine outside rush hours (7:30–9:30, 17:30–19:30).</li><li>Last MTR ~00:30–01:00; taxis always available.</li></ul></aside></details>
+      <details class="g-details"><summary>📚 Timetable sources</summary><p class="map-note" style="margin:.4rem 0 0"><a href="https://hkkf.com.hk/en/timetables/central-to-sok-kwu-wan/" target="_blank" rel="noopener">HKKF Sok Kwu Wan</a> · <a href="https://hkkf.com.hk/en/timetables/central-to-yung-shue-wan/" target="_blank" rel="noopener">HKKF Yung Shue Wan</a> (from 1 Apr 2026) · <a href="https://www.sunferry.com.hk/en/route-and-fare/timetable?route=central-to-mui-wo" target="_blank" rel="noopener">Sun Ferry Mui Wo</a> · <a href="https://www.np360.com.hk/en/visitor-information/tourist-guide" target="_blank" rel="noopener">Ngong Ping 360</a> · <a href="https://www.thepeak.com.hk/en/ticket-and-booking/purchase-ticket/peak-tram-sky-pass" target="_blank" rel="noopener">Peak Tram</a> · <a href="https://nlb.com.hk/route" target="_blank" rel="noopener">NLB</a>. “~” = estimate (traffic, queues, pace).</p></details>
+      
+    </section>
+
+    <section id="d27">
+      <div class="section-head"><div>
+        <span class="tag climb">27 Oct · Tuesday</span>
+        <h2>3 · Tuesday 27 Oct · Lantau</h2>
+        <p>Family: Lantau (Big Buddha, Tai O). Climbing: HK Island (Monkey / Central) or Devil’s Peak; hybrid joins the family in Tai O.</p>
+      </div></div><img src="../images/big-buddha.jpg" alt="Tian Tan Big Buddha, Ngong Ping (Lantau)" loading="lazy" style="width:100%;max-height:220px;object-fit:cover;border-radius:12px;display:block;margin:0 0 1rem">
+      <div class="variant-tabs">
+        <div class="tabs" role="tablist" aria-label="Warianty 27">
+          <button class="tab-btn active" role="tab" aria-selected="true" data-target="v27-climb">🧗 Climbing</button>
+          <button class="tab-btn" role="tab" aria-selected="false" data-target="v27-hyb">🔀 Hybrid</button>
+          <button class="tab-btn" role="tab" aria-selected="false" data-target="v27-fam">👨‍👩‍👧‍👦 With family</button>
+        </div>
+        <div id="v27-climb" class="option-panel active" role="tabpanel"><div class="option-card"><h3>Full climbing day — 3 options (+ backup)</h3>
+<div class="choice-block"><h4>A) Monkey Buttress · Braemar Hill · 6a–6b+</h4><ol class="steps"><li><span class="slot">6:45</span><span class="act">MTR Kai Tak (Tuen Ma) → Hung Hom, change to East Rail → Admiralty, Island line → Tin Hau (or Causeway Bay) · ~30–35 min, ~HK$15</span></li><li><span class="slot">~7:20</span><span class="act">Green minibus <strong>GMB 25</strong> (Tin Hau → Braemar Hill) to the end of Braemar Hill Rd ~10 min~ · or a taxi from Tin Hau ~HK$40–50</span></li><li><span class="slot">~7:35</span><span class="act">Path 5–6 min (fixed hand-line, topo)</span></li><li><span class="slot">7:45–15:00</span><span class="act">Cheeky Monkey, Jujube’s Memory, Impavidi Destini, Hellish</span></li><li><span class="slot">~15:15</span><span class="act">GMB 25 / taxi to Tin Hau → MTR → Kai Tak ~35–45 min, or a taxi all the way ~30–40 min, ~HK$150–200 (tunnel)</span></li></ol><p class="climb-links">📖 <a href="https://hongkongclimbing.com/routes/hong-kong/monkey-buttress/" target="_blank" rel="noopener">Topo</a> · <a href="https://www.google.com/maps/search/?api=1&amp;query=22.2845,114.1995" target="_blank" rel="noopener">📍 start Braemar Hill Rd</a></p></div>
+<div class="choice-block"><h4>B) Central Crags · Po Shan Rd / Old Peak Rd · 6a–6b+</h4><ol class="steps"><li><span class="slot">6:30</span><span class="act">Taxi Dorsett → Po Shan Rd ~30–40 min, ~HK$180–230 (Cross-Harbour Tunnel) — easier than the MTR with ropes</span></li><li><span class="slot">or</span><span class="act">MTR to Central ~30–36 min + taxi / minibus uphill ~10 min</span></li><li><span class="slot">~7:15</span><span class="act">Approaches 15–20 min (topo) · Soho / Mid-Levels / Bird’s Nest / Forgotten Buttress</span></li><li><span class="slot">7:30–15:00</span><span class="act">Peel Street, Battle of the Bulge and other 6a–6b+ lines from the topo</span></li><li><span class="slot">~15:15</span><span class="act">Walk down to Central ~20 min (Mid-Levels Escalator downhill) → MTR → Kai Tak ~35 min</span></li></ol><p class="climb-links">📖 <a href="https://hongkongclimbing.com/routes/hong-kong/central-crags/" target="_blank" rel="noopener">Topo</a> · <a href="https://www.google.com/maps/search/?api=1&amp;query=22.2795,114.1490" target="_blank" rel="noopener">📍 start Po Shan Rd</a></p></div>
+<div class="choice-block"><h4>C) Lantau · Temple Crag — multi-pitch slabs F5–6a+</h4><ol class="steps"><li><span class="slot">6:15</span><span class="act">MTR Kai Tak (Tuen Ma) → Hung Hom, change to East Rail → Admiralty, Island line → Central · ~30–36 min, ~HK$15 → Central Pier 6 ~10 min walk</span></li><li><span class="slot">7:40</span><span class="act"><strong>Sun Ferry</strong> Central Pier 6 → Mui Wo (fast ferry ~35–40 min; weekdays: 06:10, 07:00, 07:40, 08:30, 09:00, then every ~40 min until 23:30)</span></li><li><span class="slot">~8:20</span><span class="act">Mui Wo: <strong>NLB 1</strong> (→ Tai O) or <strong>NLB 3M</strong> (→ Tung Chung) to Pui O ~10–15 min~ · or a blue Lantau taxi ~HK$60–80~</span></li><li><span class="slot">~8:40</span><span class="act">Chi Ma Wan Rd ~700 m past Ham Tin (Shap Leung Kau Tsuen) → trail ~30 min (topo)</span></li><li><span class="slot">9:15–15:00</span><span class="act">Tin Hau F5 / Jaqattack F5 / Percunia Non Olet F5+ / Via Etrusca F6a+ / Ocean of Emotion F6a+</span></li><li><span class="slot">~15:30</span><span class="act">Descent → Pui O → NLB 1 / 3M to Mui Wo ~15 min → Sun Ferry to Central (every ~30–40 min) → MTR → Kai Tak · total ~2–2.5 h</span></li></ol><p class="climb-links">📖 <a href="https://hongkongclimbing.com/routes/lantau/temple-crag/" target="_blank" rel="noopener">Temple Crag topo</a> · <a href="#wielowyciagowki">List →</a> · <a href="https://www.google.com/maps/search/?api=1&amp;query=22.2301,113.9818" target="_blank" rel="noopener">📍 trail to the wall</a></p></div>
+<div class="choice-block backup-block"><h4>Backup · Devil’s Peak</h4><ol class="steps"><li><span class="slot">7:00</span><span class="act">Taxi Dorsett → Devil’s Peak (Po Lam Rd / Lei Yue Mun) ~20 min, ~HK$80–110~</span></li><li><span class="slot">7:30–13:00</span><span class="act">Shorter day</span></li><li><span class="slot">~13:30</span><span class="act">Taxi → Dorsett ~20 min</span></li></ol><p class="climb-links">📖 <a href="https://hongkongclimbing.com/routes/kowloon/devils-peak-2/" target="_blank" rel="noopener">Topo</a> · <a href="https://www.google.com/maps/search/?api=1&amp;query=22.2938,114.2418" target="_blank" rel="noopener">📍 start</a></p></div>
+<div class="choice-block"><h4>Not this day: Tung Lung Chau</h4><p>The kaito from Sam Ka Tsuen / Sai Wan Ho usually runs only Sat/Sun/holidays. <a href="https://hongkongclimbing.com/routes/tung-lung-chau/" target="_blank" rel="noopener">Topo</a></p></div></div></div>
+        <div id="v27-hyb" class="option-panel" role="tabpanel"><div class="option-card"><h3>Hybrid — climb until ~13:30, then Lantau with family</h3>
+<p>Ngong Ping 360 on weekdays <strong>10:00–18:00</strong> — the family goes “at 10:00 or later”, so they're usually in Tai O ~14:00–16:00.</p>
+<div class="choice-block"><h4>H1) Central Crags → Tai O (recommended)</h4><ol class="steps"><li><span class="slot">6:30</span><span class="act">Taxi Dorsett → Po Shan Rd ~30–40 min, ~HK$180–230</span></li><li><span class="slot">7:15–12:30</span><span class="act">Central Crags</span></li><li><span class="slot">~12:50</span><span class="act">Walk down to MTR Central ~20 min</span></li><li><span class="slot">~13:10</span><span class="act">MTR Tung Chung line Hong Kong → Tung Chung ~30 min</span></li><li><span class="slot">~13:50</span><span class="act"><strong>NLB 11</strong> Tung Chung (station) → Tai O ~50–60 min, every ~10–15 min</span></li><li><span class="slot">~15:00</span><span class="act">Meet the family in <strong>Tai O</strong> · optional boat ride · egg waffles</span></li><li><span class="slot">~17:30</span><span class="act">Together: NLB 11 → Tung Chung ~50–60 min (or Fortune Ferry Tai O → Tung Chung ~1 h, infrequent — check the timetable~)</span></li><li><span class="slot">~19:00</span><span class="act">MTR Tung Chung → Nam Cheong, change to Tuen Ma → Kai Tak ~45–50 min~</span></li></ol></div>
+<div class="choice-block"><h4>H2) Temple Crag → Tai O (longer day, doable)</h4><ol class="steps"><li><span class="slot">6:15</span><span class="act">MTR Kai Tak (Tuen Ma) → Hung Hom, change to East Rail → Admiralty, Island line → Central · ~30–36 min, ~HK$15</span></li><li><span class="slot">7:00 / 7:40</span><span class="act">Sun Ferry Pier 6 → Mui Wo ~35–40 min</span></li><li><span class="slot">~8:00–8:45</span><span class="act">NLB 1 / 3M / taxi to Pui O + trail ~30 min</span></li><li><span class="slot">8:45–13:00</span><span class="act">One multi-pitch F5–6a+, descent</span></li><li><span class="slot">~13:30</span><span class="act"><strong>NLB 1</strong> from Pui O towards Tai O (Mui Wo → Tai O ~45–50 min end to end; from Pui O ~35–40 min~), every ~20–40 min</span></li><li><span class="slot">~14:30</span><span class="act">Tai O with family</span></li><li><span class="slot">evening</span><span class="act">Together NLB 11 → Tung Chung → MTR → Kai Tak ~1 h 45 min~</span></li></ol></div>
+<div class="choice-block"><h4>H3) Quick Beacon Hill → Ngong Ping</h4><ol class="steps"><li><span class="slot">6:45</span><span class="act">Taxi → Beacon Hill</span></li><li><span class="slot">7:15–10:30</span><span class="act">Beacon Hill</span></li><li><span class="slot">~10:45</span><span class="act">Taxi → Dorsett ~15 min, drop gear</span></li><li><span class="slot">~11:30</span><span class="act">MTR Kai Tak → Nam Cheong → Tung Chung ~45–50 min</span></li><li><span class="slot">~12:30</span><span class="act">Ngong Ping 360 (~25 min) · join the family at the Big Buddha</span></li><li><span class="slot">~14:20</span><span class="act">Together <strong>NLB 21</strong> Ngong Ping → Tai O (~15 min, infrequent — every ~50–85 min on weekdays)</span></li></ol></div></div></div>
+        <div id="v27-fam" class="option-panel" role="tabpanel"><div class="option-card"><h3>With family · Lantau</h3>
+<ol class="steps"><li><span class="slot">~8:45</span><span class="act">MTR Kai Tak → Nam Cheong (Tuen Ma) → Tung Chung (Tung Chung line) ~45–50 min, ~HK$20</span></li><li><span class="slot">10:00 or later</span><span class="act">Ngong Ping 360 (Tung Chung → Ngong Ping ~25 min; weekdays 10:00–18:00; tickets online)</span></li><li><span class="slot">~10:30–13:30</span><span class="act">Tian Tan Big Buddha (268 steps) · Po Lin Monastery (vegetarian lunch) · Wisdom Path</span></li><li><span class="slot">~13:30</span><span class="act">NLB 21 Ngong Ping → Tai O ~15 min (infrequent) · optional ~5 h mountain trail Big Buddha → Tai O</span></li><li><span class="slot">~14:00–17:00</span><span class="act">Tai O: stilt houses, optional boat trip, egg waffles, street food, a drink at the Tai O Heritage Hotel</span></li><li><span class="slot">~17:30</span><span class="act">NLB 11 Tai O → Tung Chung ~50–60 min (or Fortune Ferry ~1 h~)</span></li><li><span class="slot">~19:00</span><span class="act">MTR → Kai Tak ~45–50 min</span></li><li><span class="slot">19:00</span><span class="act">The last part of the family arrives</span></li></ol></div></div>
+      </div><details class="g-details"><summary><strong>🚇 Getting around</strong></summary><aside class="climb-gear" aria-label="Getting around" style="margin:.5rem 0 0"><ul><li>Octopus — see <a href="#d25">25 Oct</a>.</li><li><strong>Best:</strong> MTR to Lantau (Tung Chung line); on HK Island take a taxi to the crag (~HK$180–230 via the tunnel) or MTR + minibus.</li><li>Lantau: buses <a href="https://www.nlb.com.hk/route" target="_blank" rel="noopener">NLB (timetables)</a> (11 Tung Chung–Tai O every ~10–15 min; 21 Ngong Ping–Tai O infrequent; 1 Mui Wo–Tai O every ~20–40 min; 3M Mui Wo–Tung Chung via Pui O). Lantau taxis are blue and don't go into the city.</li><li>Sun Ferry Central Pier 6 ↔ Mui Wo: fast ~35–40 min, ordinary ~50–55 min, sailings until late at night.</li><li>Ngong Ping 360 on weekdays 10:00–18:00 — last ride down around 18:00; after that only bus 23 to Tung Chung.</li></ul></aside></details>
+      <details class="g-details"><summary>📚 Timetable sources</summary><p class="map-note" style="margin:.4rem 0 0"><a href="https://hkkf.com.hk/en/timetables/central-to-sok-kwu-wan/" target="_blank" rel="noopener">HKKF Sok Kwu Wan</a> · <a href="https://hkkf.com.hk/en/timetables/central-to-yung-shue-wan/" target="_blank" rel="noopener">HKKF Yung Shue Wan</a> (from 1 Apr 2026) · <a href="https://www.sunferry.com.hk/en/route-and-fare/timetable?route=central-to-mui-wo" target="_blank" rel="noopener">Sun Ferry Mui Wo</a> · <a href="https://www.np360.com.hk/en/visitor-information/tourist-guide" target="_blank" rel="noopener">Ngong Ping 360</a> · <a href="https://www.thepeak.com.hk/en/ticket-and-booking/purchase-ticket/peak-tram-sky-pass" target="_blank" rel="noopener">Peak Tram</a> · <a href="https://nlb.com.hk/route" target="_blank" rel="noopener">NLB</a>. “~” = estimate (traffic, queues, pace).</p></details>
+      
+    </section>
+
+    <section id="d28">
+      <div class="section-head"><div>
+        <span class="tag climb">28 Oct · Wednesday</span>
+        <h2>4 · Wednesday 28 Oct · Central + Lamma</h2>
+        <p>Family: Central in the morning, Lamma in the afternoon, Happy Valley in the evening. Climbing: HK Island or Sok Kwu Buttress on Lamma.</p>
+      </div></div><div class="notice" role="alert" style="border:2px solid #b45309;background:#fff7ed;color:#1a1a1a;margin:0 0 1rem"><strong>⚠️ The family plan for 28 Oct doesn't fit the clock:</strong> ferry to Lamma around <strong>13:00 / 13:45</strong> + walk <strong>2–3 h</strong> = Sok Kwu Wan around <strong>15:45–16:45</strong>, so the <strong>16:05</strong> ferry is unrealistic. Return on the <strong>17:35</strong> ferry from Sok Kwu Wan (or walk back to Yung Shue Wan — ferries every ~20–60 min). Then choose <strong>one</strong>: <strong>Victoria Peak</strong> (sunset — be there by ~17:15, which means shortening or skipping Lamma) <strong>or</strong> <strong>Happy Valley races 18:30–20:30</strong> — not both.</div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.6rem;margin:0 0 1rem"><img src="../images/man-mo.jpg" alt="Man Mo Temple — incense (Sheung Wan)" loading="lazy" style="width:100%;max-height:220px;object-fit:cover;border-radius:12px;display:block;margin:0"><img src="../images/harbour.jpg" alt="View from Victoria Peak at night" loading="lazy" style="width:100%;max-height:220px;object-fit:cover;border-radius:12px;display:block;margin:0"><img src="../images/star-ferry.jpg" alt="Tsim Sha Tsui — clock tower by the Star Ferry pier" loading="lazy" style="width:100%;max-height:220px;object-fit:cover;border-radius:12px;display:block;margin:0"></div>
+      <div class="variant-tabs">
+        <div class="tabs" role="tablist" aria-label="Warianty 28">
+          <button class="tab-btn active" role="tab" aria-selected="true" data-target="v28-climb">🧗 Climbing</button>
+          <button class="tab-btn" role="tab" aria-selected="false" data-target="v28-hyb">🔀 Hybrid</button>
+          <button class="tab-btn" role="tab" aria-selected="false" data-target="v28-fam">👨‍👩‍👧‍👦 With family</button>
+        </div>
+        <div id="v28-climb" class="option-panel active" role="tabpanel"><div class="option-card"><h3>Full climbing day — 2 options</h3>
+<div class="choice-block"><h4>A) Monkey Buttress or Central Crags (whichever you didn't do on 27 Oct)</h4><ol class="steps"><li><span class="slot">6:30–7:30</span><span class="act">Getting there as on 27 Oct A/B</span></li><li><span class="slot">7:30–15:00</span><span class="act">Climbing</span></li><li><span class="slot">~15:30</span><span class="act">Back by MTR / taxi ~35–45 min — or join the family at the Peak / Happy Valley (see H3)</span></li></ol></div>
+<div class="choice-block"><h4>B) Lamma · Sok Kwu Buttress</h4><ol class="steps"><li><span class="slot">6:30</span><span class="act">MTR Kai Tak (Tuen Ma) → Hung Hom, change to East Rail → Admiralty, Island line → Central · ~30–36 min, ~HK$15 → Central Pier 4 ~10 min walk</span></li><li><span class="slot">7:20</span><span class="act"><strong>HKKF</strong> Central Pier 4 → <strong>Sok Kwu Wan</strong> (Mon–Sat: 07:20, 08:35, 10:20, 11:50, 13:50, 15:20, 16:50, 18:45, 20:20, 21:50, 23:30; ~40 min~, HK$30.90)</span></li><li><span class="slot">~8:00</span><span class="act">Path Sok Kwu Wan → Mo Tat Wan, the wall is above the path — a short walk from the pier (topo)</span></li><li><span class="slot">8:15–15:30</span><span class="act">Climbing</span></li><li><span class="slot">16:05</span><span class="act">Ferry Sok Kwu Wan → Central (Mon–Sat: 14:35, 16:05, 17:35, 19:35, 21:05, last 22:40)</span></li><li><span class="slot">~17:30</span><span class="act">MTR → Kai Tak ~35 min</span></li></ol><p class="climb-links">📖 <a href="https://hongkongclimbing.com/routes/lamma/sok-kwu-buttress/" target="_blank" rel="noopener">Topo</a> · <a href="https://www.google.com/maps/search/?api=1&amp;query=22.2045,114.1325" target="_blank" rel="noopener">📍 Sok Kwu Wan pier</a></p></div></div></div>
+        <div id="v28-hyb" class="option-panel" role="tabpanel"><div class="option-card"><h3>Hybrid — several ways</h3>
+<div class="choice-block"><h4>H1) Sok Kwu Buttress → meet in Sok Kwu Wan (recommended)</h4><ol class="steps"><li><span class="slot">7:30</span><span class="act">MTR Kai Tak → Central ~30–36 min → Pier 4</span></li><li><span class="slot">8:35</span><span class="act">HKKF → Sok Kwu Wan (~40 min~)</span></li><li><span class="slot">~9:30–14:30</span><span class="act">Sok Kwu Buttress</span></li><li><span class="slot">~12:00</span><span class="act">Family after lunch in Central: HKKF Central → <strong>Yung Shue Wan</strong> (~27 min, daytime: 11:00, 12:00, 13:00, 13:45, 14:30, 15:15, 15:50, 16:30, then every ~20–30 min)</span></li><li><span class="slot">~13:30–15:30</span><span class="act">The family walks Yung Shue Wan → Sok Kwu Wan (2–3 h)</span></li><li><span class="slot">~15:30</span><span class="act">Meet in <strong>Sok Kwu Wan</strong> · seafood / mango mochi</span></li><li><span class="slot">17:35</span><span class="act">Together HKKF Sok Kwu Wan → Central (~40 min~) · or the family walks back to Yung Shue Wan and you meet in Central</span></li><li><span class="slot">evening — one of</span><span class="act"><strong>A)</strong> Happy Valley (from ~19:00, tram / taxi from Central) <strong>or B)</strong> the Peak at night — not both</span></li><li><span class="slot">~21:00</span><span class="act">MTR Causeway Bay → Admiralty → Hung Hom → Kai Tak ~30 min or taxi ~25 min, ~HK$150–180</span></li></ol></div>
+<div class="choice-block"><h4>H2) Central Crags → lunch with family in Central</h4><ol class="steps"><li><span class="slot">6:30</span><span class="act">Taxi → Po Shan Rd ~30–40 min</span></li><li><span class="slot">7:00–11:30</span><span class="act">Central Crags</span></li><li><span class="slot">~11:45</span><span class="act">Walk down ~15–25 min to PMQ / Kau Kee (Gough St)</span></li><li><span class="slot">~12:15</span><span class="act">Lunch with family (the gear stays with you — no left-luggage nearby)</span></li><li><span class="slot">~13:00</span><span class="act">Together HKKF Central → Yung Shue Wan (13:00 / 13:45) · walk to Sok Kwu Wan</span></li><li><span class="slot">evening</span><span class="act">17:35 ferry from Sok Kwu Wan (or from Yung Shue Wan) · then <strong>one</strong>: the Peak or Happy Valley</span></li></ol></div>
+<div class="choice-block"><h4>H3) Monkey Buttress → Peak / Happy Valley</h4><ol class="steps"><li><span class="slot">6:45</span><span class="act">MTR → Tin Hau ~30–35 min + GMB 25</span></li><li><span class="slot">7:30–15:00</span><span class="act">Monkey Buttress</span></li><li><span class="slot">~15:15</span><span class="act">Taxi Braemar Hill → Dorsett ~25–35 min (shower) or straight on</span></li><li><span class="slot">evening — one of</span><span class="act"><strong>A)</strong> ~17:15 the Peak for sunset (Peak Tram, Garden Rd) <strong>or B)</strong> 18:30 Happy Valley (taxi from Braemar Hill ~10–15 min, ~HK$50–70~)</span></li></ol></div></div></div>
+        <div id="v28-fam" class="option-panel" role="tabpanel"><div class="option-card"><h3>With family · HK Island + Lamma</h3>
+<ol class="steps"><li><span class="slot">~8:30</span><span class="act">MTR Kai Tak → Hung Hom → Admiralty → Sheung Wan ~35 min</span></li><li><span class="slot">~9:15–12:00</span><span class="act">Man Mo Temple · Tai Kwun (toilets) · Mid-Levels Escalators · PMQ (toilets) · Central Market</span></li><li><span class="slot">~12:00</span><span class="act">Lunch: Kau Kee — beef brisket noodles (to be confirmed, queues) · bubble tea at COMEBUYTEA</span></li><li><span class="slot">~13:00 / 13:45</span><span class="act">HKKF Central Pier 4 → Yung Shue Wan ~27 min (HK$24.90)</span></li><li><span class="slot">~13:45–16:00</span><span class="act">Walk Yung Shue Wan → Sok Kwu Wan (2–3 h): coastal trail, beaches, villages, mango mochi</span></li><li><span class="slot">17:35</span><span class="act">HKKF Sok Kwu Wan → Central (later 19:35, 21:05, last 22:40) — <em>or</em> walk back to Yung Shue Wan (~1 h~) for more frequent ferries (every ~20–60 min until 23:30)</span></li><li><span class="slot">evening — pick one</span><span class="act"><strong>A)</strong> Happy Valley 18:30–20:30 (Wednesday): from Central Pier by tram ~30 min~ / taxi ~15 min — after the 17:35 ferry you arrive ~19:00, i.e. for the second half of the races · <strong>B)</strong> Victoria Peak at night (Peak Tram 07:30–23:00) — with the 17:35 ferry you won't make the sunset (~17:50). <em>If the sunset matters: come back from Yung Shue Wan ~16:30 and head to the Peak, and skip Happy Valley.</em></span></li><li><span class="slot">after</span><span class="act">Star Ferry Central / Wan Chai → TST · MTR East TST → Kai Tak ~20 min</span></li></ol></div></div>
+      </div><details class="g-details"><summary><strong>🚇 Getting around</strong></summary><aside class="climb-gear" aria-label="Getting around" style="margin:.5rem 0 0"><ul><li>Octopus — see <a href="#d25">25 Oct</a>.</li><li><strong>Best:</strong> MTR to Central + HKKF ferries from Pier 4.</li><li><strong>Sok Kwu Wan has infrequent ferries</strong> (every ~1.5 h; Mon–Sat from Sok Kwu Wan: 14:35, 16:05, 17:35, 19:35, 21:05, 22:40). Yung Shue Wan every ~20–60 min until 23:30.</li><li>Peak Tram 07:30–23:00 (Garden Rd); queues at sunset — alternatively bus 15 from Central.</li><li>Happy Valley: tram (Octopus) or MTR Causeway Bay + ~10–15 min walk. Return: Star Ferry (Wan Chai/Central → TST) or MTR.</li></ul></aside></details>
+      <details class="g-details"><summary>📚 Timetable sources</summary><p class="map-note" style="margin:.4rem 0 0"><a href="https://hkkf.com.hk/en/timetables/central-to-sok-kwu-wan/" target="_blank" rel="noopener">HKKF Sok Kwu Wan</a> · <a href="https://hkkf.com.hk/en/timetables/central-to-yung-shue-wan/" target="_blank" rel="noopener">HKKF Yung Shue Wan</a> (from 1 Apr 2026) · <a href="https://www.sunferry.com.hk/en/route-and-fare/timetable?route=central-to-mui-wo" target="_blank" rel="noopener">Sun Ferry Mui Wo</a> · <a href="https://www.np360.com.hk/en/visitor-information/tourist-guide" target="_blank" rel="noopener">Ngong Ping 360</a> · <a href="https://www.thepeak.com.hk/en/ticket-and-booking/purchase-ticket/peak-tram-sky-pass" target="_blank" rel="noopener">Peak Tram</a> · <a href="https://nlb.com.hk/route" target="_blank" rel="noopener">NLB</a>. “~” = estimate (traffic, queues, pace).</p></details>
+      
+    </section>
+<section id="guilin">
+      <div class="family-banner">
+        <h2>5 · Guilin 29–31 Oct · with family</h2>
+        <p><strong>Confirmed: 29–31 October 2026</strong> · 3 days / 2 nights · <strong>12 people</strong> · ~1366 HKD/person ≈ ~750 PLN · plan and costs <strong>from the family / organisers</strong>.</p>
+        <div class="cost-bar">
+          <span>Tickets 8820</span>
+          <span>Hotels 4680</span>
+          <span>Van 2700</span>
+          <span>Service 200</span>
+          <span>= 16 400 / 12 people</span>
+        </div>
+      </div>
+
+      <p class="g-source">
+        Source of plan and quote: <strong>the latest plan from the family organisers</strong>. Package priced in HKD. <strong>Not included:</strong> Hong Kong ↔ Guilin trains and meals other than breakfast. Trains to be sorted out this week.
+        <br><strong>Entering mainland China:</strong> Polish passports — visa-free for ≤30 days (valid until end of 2026; check the current rules before you fly).
+      </p>
+
+      <details class="g-details"><summary><strong>💰 Package costs — details (16 400 HKD / 12 people)</strong></summary>
+<div class="cost-table-wrap">
+        <table class="cost-table">
+          <thead>
+            <tr><th>Item · 12 people</th><th>Breakdown</th><th class="amt">HKD</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Elephant Trunk Hill <em>(in the quote, not in the plan)</em></td><td class="muted">free entry</td><td class="amt">0</td></tr>
+            <tr><td>Guihai Qinglan <em>(in the quote, not in the plan)</em></td><td class="muted">50 × 12</td><td class="amt">600</td></tr>
+            <tr><td>Li River cruise 4★ (~4 h)</td><td class="muted">360 × 12</td><td class="amt">4320</td></tr>
+            <tr><td>Impression Liu Sanjie B2</td><td class="muted">195 × 12</td><td class="amt">2340</td></tr>
+            <tr><td>Yulong bamboo rafts (4-person)</td><td class="muted">280 × 3 rafts</td><td class="amt">840</td></tr>
+            <tr><td>Xianggong</td><td class="muted">60 × 12</td><td class="amt">720</td></tr>
+            <tr class="sub"><td>Tickets total</td><td class="muted">entries + cruise + show + rafts</td><td class="amt">8820</td></tr>
+            <tr><td>Guilin Atour · Superior twin + breakfast</td><td class="muted">350 × 6 rooms × 1 night</td><td class="amt">2100</td></tr>
+            <tr><td>Yangshuo Atour · Superior twin + breakfast</td><td class="muted">430 × 6 rooms × 1 night</td><td class="amt">2580</td></tr>
+            <tr class="sub"><td>Hotels total</td><td class="muted">2 nights · 6 double rooms</td><td class="amt">4680</td></tr>
+            <tr><td>Transport</td><td class="muted">15-seat van · driver / guide</td><td class="amt">2700</td></tr>
+            <tr><td>Service fee</td><td class="muted">package handling</td><td class="amt">200</td></tr>
+            <tr class="grand"><td>Total for 12 people</td><td class="muted">3 days / 2 nights</td><td class="amt">16 400</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="cost-avg">
+        <span>Average ~1366 HKD/person</span>
+        <span>≈ ~750 PLN / 3 days</span>
+      </div>
+      <p class="g-source" style="margin-top:-.35rem">
+        <strong>Note (tickets):</strong> the 16&nbsp;400 HKD / 12-person package stays as the organisers quoted it. The table is the organisers' quote (it also includes two items outside the current Day 1 plan); new additions such as Reed Flute, Diecai and Ruyi Bridge are <em>not priced in this table</em>. The ticket list may need updating with the organisers.
+      </p>
+
+      </details>
+
+      <div class="guilin-days">
+        <article class="g-day">
+          <div class="g-day-head">
+            <h3>Day 1 · 29 Oct · Guilin</h3>
+            <span class="pill family">Night: Guilin Atour Hotel</span>
+          </div>
+          <div class="g-day-body">
+            <div class="notice" role="alert" style="border:2px solid #b45309;background:#fff7ed;color:#1a1a1a;margin:0 0 1rem"><strong>⚠️ To confirm with the family:</strong> the family's latest plan titles 29 Oct as <strong>“Hong Kong → Guilin → Longji Rice Terraces”</strong>, but without details. The previous plan stays below (Reed Flute · Diecai · pagodas). Longji is about 2 h by road from Guilin — it can't be combined with the whole programme below.</div>
+            <ol class="steps" style="background:#faf7f1;border:1px solid #e5d6f5;border-radius:12px;margin:0 0 1.1rem;padding:.65rem .95rem .85rem">
+              <li><span class="slot">10:02</span><span class="act">Train <strong>G918</strong> West Kowloon (西九龍) → Guilin West</span></li>
+              <li><span class="slot">13:18</span><span class="act">Arrival <strong>Guilin West</strong> (桂林西) → pick-up + lunch</span></li>
+              
+              <li><span class="slot">15:00–16:30</span><span class="act"><strong>Reed Flute Cave</strong> · Reed Flute Cave (芦笛岩)</span></li>
+              <li><span class="slot">17:30–18:00</span><span class="act"><strong>Diecai Hill</strong> (叠彩山) · sunset ~17:58</span></li>
+              <li><span class="slot">18:30–19:30</span><span class="act">Dinner</span></li>
+              <li><span class="slot">19:30→</span><span class="act"><strong>Sun and Moon Pagodas</strong> + <strong>Dongxi Lane</strong> (东西巷)</span></li>
+              <li><span class="slot">Night</span><span class="act">Guilin · <strong>Guilin Atour Hotel</strong></span></li>
+            </ol>
+            <details class="g-details"><summary><strong>📷 Stops with photos</strong></summary>
+<div class="stops">
+              <div class="stop">
+                <img src="../images/reed-flute.jpg" alt="Reed Flute Cave / Guilin karst" loading="lazy">
+                <div class="stop-body">
+                  <h4>Reed Flute Cave</h4>
+                  <div class="cn">芦笛岩 · Reed Flute Cave</div>
+                  <p>15:00–16:30 · illuminated karst cave — straight after lunch from Guilin West.</p>
+                  <span class="price">ticket · price with the organisers</span>
+                </div>
+              </div>
+              <div class="stop">
+                <img src="../images/diecai.jpg" alt="Diecai Hill" loading="lazy">
+                <div class="stop-body">
+                  <h4>Diecai Hill</h4>
+                  <div class="cn">叠彩山 · Folded Brocade Hill</div>
+                  <p>17:30–18:00 · a short sunset viewpoint (~17:58). Then dinner and an evening downtown.</p>
+                  <span class="price">ticket · price with the organisers</span>
+                </div>
+              </div>
+              <div class="stop">
+                <img src="../images/pagodas.jpg" alt="Sun and Moon Pagodas" loading="lazy">
+                <div class="stop-body">
+                  <h4>Sun and Moon Pagodas + Dongxi Lane</h4>
+                  <div class="cn">日月双塔 · 东西巷</div>
+                  <p>From 19:30 · Twin Pagodas on Shan Lake and a stroll along East-West Lane.</p>
+                  <span class="price">free evening</span>
+                </div>
+              </div>
+            </div>
+            </details>
+            <p class="map-note" style="margin:.85rem 0 0">Hotel: <strong>Guilin Atour</strong> · Superior twin + breakfast.</p>
+          </div>
+        </article>
+
+        <article class="g-day">
+          <div class="g-day-head">
+            <h3>Day 2 · 30 Oct · Li River → Yangshuo</h3>
+            <span class="pill family">Night: Yangshuo Atour Hotel</span>
+          </div>
+          <div class="g-day-body">
+            <ol class="steps" style="background:#faf7f1;border:1px solid #e5d6f5;border-radius:12px;margin:0 0 1.1rem;padding:.65rem .95rem .85rem">
+              <li><span class="slot">07:30</span><span class="act">Breakfast (hotel)</span></li>
+              <li><span class="slot">08:30</span><span class="act">Leave the Guilin hotel</span></li>
+              <li><span class="slot">10:00–14:00</span><span class="act"><strong>Li River cruise</strong> ~4 h + lunch on board / in the programme</span></li>
+              <li><span class="slot">14:30–17:30</span><span class="act"><strong>Xingping</strong> — walk / free time <em>(optional)</em></span></li>
+              <li><span class="slot">18:00–19:15</span><span class="act">Dinner</span></li>
+              <li><span class="slot">20:00–21:10</span><span class="act"><strong>Impression Liu Sanjie</strong></span></li>
+              <li><span class="slot">Night</span><span class="act">Yangshuo · <strong>Yangshuo Atour Hotel</strong></span></li>
+            </ol>
+            <details class="g-details"><summary><strong>📷 Stops with photos</strong></summary>
+<div class="stops">
+              <div class="stop">
+                <img src="../images/li-river.jpg" alt="Li River cruise" loading="lazy">
+                <div class="stop-body">
+                  <h4>Li River cruise</h4>
+                  <div class="cn">漓江 · ~4 hrs</div>
+                  <p>10:00–14:00 · the classic stretch Guilin → around Xingping, sharp peaks seen from the water.</p>
+                  <span class="price">360 HKD · ~4 h</span>
+                </div>
+              </div>
+              <div class="stop">
+                <img src="../images/xingping.jpg" alt="Stary Xingping" loading="lazy">
+                <div class="stop-body">
+                  <h4>Xingping · walk / downtime</h4>
+                  <div class="cn">兴坪古镇</div>
+                  <p>14:30–17:30 · lanes, the Li riverbank, possibly the 20 ¥ banknote view. <strong>Optional</strong> — details with the organisers.</p>
+                  <span class="price">optional</span>
+                </div>
+              </div>
+              <div class="stop">
+                <img src="../images/li-river-banknote.jpg" alt="The 20-yuan banknote landscape" loading="lazy">
+                <div class="stop-body">
+                  <h4>The 20 ¥ banknote view</h4>
+                  <div class="cn">二十元人民币风景</div>
+                  <p>During the Xingping window — the same Li / Xingping landscape (if the group has time).</p>
+                  <span class="price">during the Xingping window</span>
+                </div>
+              </div>
+              <div class="stop">
+                <img src="../images/impression-liu-sanjie.jpg" alt="Impression Liu Sanjie show on the Li River, Yangshuo" loading="lazy">
+                <div class="stop-body">
+                  <h4>Impression Liu Sanjie</h4>
+                  <div class="cn">印象刘三姐</div>
+                  <p>20:00–21:10 · Zhang Yimou's show on the river in Yangshuo.</p>
+                  <span class="price">195 HKD · B2</span>
+                </div>
+              </div>
+            </div>
+            </details>
+            <p class="map-note" style="margin:.85rem 0 0">Hotel: <strong>Yangshuo Atour</strong> · Superior twin + breakfast · near Ten-Mile Gallery / Shili.</p>
+          </div>
+        </article>
+
+        <article class="g-day">
+          <div class="g-day-head">
+            <h3>Day 3 · 31 Oct · Yulong · Ruyi · Xianggong → station</h3>
+            <span class="pill family">Depart 20:00 · return train to be decided · then Alva</span>
+          </div>
+          <div class="g-day-body">
+            <ol class="steps" style="background:#faf7f1;border:1px solid #e5d6f5;border-radius:12px;margin:0 0 1.1rem;padding:.65rem .95rem .85rem">
+              <li><span class="slot">08:00</span><span class="act">Breakfast</span></li>
+              <li><span class="slot">09:00–11:00</span><span class="act"><strong>Yulong</strong> — bamboo rafts</span></li>
+              <li><span class="slot">11:00–12:30</span><span class="act"><strong>Jiuxian</strong> — walk around the village <em>(optional)</em></span></li>
+              <li><span class="slot">12:30–14:00</span><span class="act">Lunch</span></li>
+              <li><span class="slot">14:00–15:30</span><span class="act"><strong>Shili Gallery</strong> / village / bike (optional) <em>(optional)</em></span></li>
+              <li><span class="slot">15:30–16:30</span><span class="act"><strong>Ruyi Bridge</strong> — walk</span></li>
+              <li><span class="slot">16:45–18:15</span><span class="act"><strong>Xianggong Mountain</strong></span></li>
+              <li><span class="slot">18:30–19:30</span><span class="act">Dinner / collect luggage</span></li>
+              <li><span class="slot">20:00</span><span class="act">Depart Yangshuo → station (van)</span></li>
+              <li><span class="slot">?</span><span class="act"><strong>Return train: to be decided</strong> (number and times — from the organisers) → Hong Kong West Kowloon</span></li>
+              <li><span class="slot">after arrival</span><span class="act">West Kowloon → <strong>Alva</strong> (Sha Tin): taxi ~30–40 min, ~HK$200–260; or MTR Austin → Nam Cheong (Tuen Ma) → Tai Wai → Shek Mun ~45–55 min. <strong>Late check-in</strong> — let the hotel know.</span></li>
+            </ol>
+            <details class="g-details"><summary><strong>📷 Stops with photos</strong></summary>
+<div class="stops">
+              <div class="stop">
+                <img src="../images/bamboo-raft.jpg" alt="Tratwa bambusowa Yulong" loading="lazy">
+                <div class="stop-body">
+                  <h4>Yulong bamboo rafts</h4>
+                  <div class="cn">遇龙河 · 4-person rafts</div>
+                  <p>09:00–11:00 · Yulong rafting — calmer than the big Li cruise. Three rafts of four people.</p>
+                  <span class="price">280 HKD / raft · 3 rafts</span>
+                </div>
+              </div>
+              <div class="stop">
+                <img src="../images/jiuxian.jpg" alt="Jiuxian village" loading="lazy">
+                <div class="stop-body">
+                  <h4>Jiuxian · village area</h4>
+                  <div class="cn">旧县 · Jiuxian</div>
+                  <p>11:00–12:30 · walk around the village (optional) — details with the organisers.</p>
+                  <span class="price">optional</span>
+                </div>
+              </div>
+              <div class="stop">
+                <img src="../images/li-river.jpg" alt="Karst landscape by the river (illustrating Shili / Ten-Mile Gallery)" loading="lazy">
+                <div class="stop-body">
+                  <h4>Shili Gallery / village / bike (optional)</h4>
+                  <div class="cn">十里画廊</div>
+                  <p>14:00–15:30 · karst valley — van / optional bike between stops.</p>
+                  <span class="price">optional · included in the van</span>
+                </div>
+              </div>
+              <div class="stop">
+                                <div class="stop-body">
+                  <h4>Ruyi Bridge</h4>
+                  <div class="cn">如意桥 · Ruyi Bridge</div>
+                  <p>15:30–16:30 · walk over the bridge / views of the river and peaks.</p>
+                  <span class="price">ticket · price with the organisers</span>
+                </div>
+              </div>
+              <div class="stop">
+                <img src="../images/xianggong-real.jpg" alt="View from Xianggong over karst peaks on the Li River" loading="lazy">
+                <div class="stop-body">
+                  <h4>Xianggong Mountain</h4>
+                  <div class="cn">相公山</div>
+                  <p>16:45–18:15 · viewpoint over the Li River bends. Then dinner, luggage, depart 20:00.</p>
+                  <span class="price">60 HKD</span>
+                </div>
+              </div>
+            </div>
+            </details>
+          </div>
+        </article>
+      </div>
+    </section>
+
+
+    <section id="wesele">
+      <div class="section-head"><div><span class="tag" style="background:var(--wedding-soft);color:#5c4400">1 November · Sunday</span>
+      <h2>6 · Cousin's wedding · 1 Nov</h2><p>Regal Riverside, Sha Tin · reception 17:00 · dinner 20:00 · Alva hotel 31 Oct–2 Nov (close by).</p></div></div>
+      
+      <div class="option-card" id="msza" style="margin-bottom:1rem">
+        <h3>1 Nov (Sunday, All Saints' Day) — a quiet morning + English Mass</h3>
+        <p>The family has no plan for this morning. Aim: Mass → light sightseeing / lunch → rest at Alva from ~14:00 → get ready → <strong>Regal Riverside by 17:00</strong> (taxi from Alva ~5–10 min~).</p>
+        <div class="choice-block"><h4>A) Sha Tin · St Benedict’s Church (聖本篤堂) — English Mass <strong>12:00</strong> (closest)</h4>
+        <ol class="steps"><li><span class="slot">~9:15</span><span class="act">Taxi from Alva ~10 min~ to Pai Tau / MTR Sha Tin</span></li><li><span class="slot">9:30–11:00</span><span class="act"><strong>Ten Thousand Buddhas Monastery</strong> (about 400 steps — in the morning, before the heat) or the Hong Kong Heritage Museum (Sha Tin)</span></li><li><span class="slot">~11:15</span><span class="act">Walk along the Shing Mun River / taxi ~10 min~ to the church (7 Kong Pui St, Sha Tin Wai)</span></li><li><span class="slot">12:00–13:00</span><span class="act">English Mass</span></li><li><span class="slot">~13:15</span><span class="act">Lunch nearby (New Town Plaza) · taxi to Alva ~10 min~</span></li><li><span class="slot">~14:00</span><span class="act">Rest at Alva · 16:30 leave for Regal Riverside</span></li></ol>
+        <p class="climb-links">Source: <a href="https://stbenedict.catholic.org.hk/" target="_blank" rel="noopener">stbenedict.catholic.org.hk</a> (“English Sunday Mass: 12:00 noon”) · <a href="https://www.google.com/maps/search/?api=1&amp;query=22.3790,114.1890" target="_blank" rel="noopener">📍 church~</a></p></div>
+        <div class="choice-block"><h4>B) Central · Cathedral of the Immaculate Conception (16 Caine Rd) — English Mass <strong>9:30</strong></h4>
+        <ol class="steps"><li><span class="slot">~8:30</span><span class="act">Alva → MTR Shek Mun (Tuen Ma) → Tai Wai, East Rail → Admiralty, Island line → Central + Mid-Levels Escalator to Caine Rd · ~50–60 min~ (taxi ~35–40 min~, ~HK$250–300~)</span></li><li><span class="slot">9:30–10:30</span><span class="act">Mass at the cathedral</span></li><li><span class="slot">~10:45–12:30</span><span class="act">Hong Kong Zoological &amp; Botanical Gardens (~10 min walk~) / Hong Kong Park · lunch in Central</span></li><li><span class="slot">~12:45</span><span class="act">Back by MTR ~50 min~ or taxi</span></li><li><span class="slot">~14:00</span><span class="act">Rest at Alva</span></li></ol>
+        <p class="climb-links">Source: <a href="https://cathedral.catholic.org.hk/wp/eng-community-new/" target="_blank" rel="noopener">cathedral.catholic.org.hk</a> (“Sunday Mass 9:30am” English) · <a href="https://www.google.com/maps/search/?api=1&amp;query=22.2808,114.1530" target="_blank" rel="noopener">📍 cathedral</a></p></div>
+        <div class="choice-block"><h4>C) Tsim Sha Tsui · Rosary Church (125 Chatham Rd South) — English Mass <strong>8:45</strong></h4>
+        <ol class="steps"><li><span class="slot">~8:05</span><span class="act">Alva → MTR Shek Mun → East Tsim Sha Tsui (Tuen Ma, no change) ~30 min~ + ~10 min walk</span></li><li><span class="slot">8:45–9:45</span><span class="act">Mass (the oldest Catholic church in Kowloon, 1905)</span></li><li><span class="slot">~10:00–12:30</span><span class="act">Kowloon Park · TST promenade / Avenue of Stars · lunch</span></li><li><span class="slot">~12:45</span><span class="act">MTR East TST → Shek Mun ~30 min~</span></li><li><span class="slot">~13:30</span><span class="act">Rest at Alva</span></li></ol>
+        <p class="climb-links">Source: <a href="https://rosarychurch.catholic.org.hk/en/" target="_blank" rel="noopener">rosarychurch.catholic.org.hk</a> (Sunday English: 8:45, 12:30, 19:00) · <a href="https://www.google.com/maps/search/?api=1&amp;query=22.302411,114.176587" target="_blank" rel="noopener">📍 church</a></p></div>
+        <p class="map-note">Recommendation: <strong>A</strong> (least travel on the wedding day) or <strong>C</strong>, if you prefer an early start and a longer rest. In HK 1 Nov is an ordinary Sunday (not a public holiday) — times follow the Sunday schedules; check the parish website a week before. “~” = estimate.</p>
+      </div>
+<div class="wedding-card">
+        <div>
+          <div class="pin">📍 Wedding pin</div>
+          <h3>Regal Riverside Hotel</h3>
+          <p style="margin:0 0 .75rem;color:var(--muted)">
+            Tai Chung Kiu Road, Sha Tin, New Territories, Hong Kong
+          </p>
+          <ul style="margin:0;padding-left:1.2rem">
+            <li>Reception: <strong>17:00</strong></li>
+            <li>Dinner: <strong>20:00</strong></li>
+            <li>Getting there: MTR Sha Tin / City One + a short walk or taxi</li>
+            <li>Alva (Sha Tin) = short trip to Regal Riverside · easy return after dinner</li>
+            <li><strong>Hotel:</strong> Alva Hotel By Royal (1 Yuen Hong St, Sha Tin) — us + family, also in Sha Tin, close to Regal Riverside for 1 Nov</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="powrot">
+      <div class="section-head"><div>
+        <span class="tag ours">2 November · Monday</span>
+        <h2>7 · Return 2 Nov</h2>
+        <p>HKG <strong>13:30</strong> → SEA <strong>09:10</strong> (the same calendar day).</p>
+      </div></div>
+      <div class="option-card"><ol class="steps"><li><span class="slot">≈ 9:30</span><span class="act">Check out of Alva · taxi to HKG (≈ 40 min) or MTR East Rail + Airport Express (≈ 60 min)</span></li><li><span class="slot">≈ 10:30</span><span class="act">At the airport (international flight: ≥ 3 h before)</span></li><li><span class="slot">13:30</span><span class="act">Depart HKG → SEA · arrive 09:10</span></li></ol></div>
+    </section>
+
+    <h2 style="margin:2.5rem 0 .5rem">Reference sections</h2>
+
+    <section id="wielowyciagowki">
+      <div class="section-head"><div><span class="tag climb">Reference</span><h2>Multi-pitch ≈ F5–6b+</h2>
+      <p>Topo data only (hongkongclimbing.com, theCrag, MP, UKC). Lengths = sum of pitches from the topo. Bolt status: the latest dates we found — check on site.</p></div></div>
+      <div class="grade-conv-wrap"><table class="grade-table">
+        <thead><tr><th>Sector</th><th>Route</th><th>Grade</th><th>Pitches · length</th><th>Protection / status</th><th>Day</th><th>Sources</th></tr></thead>
+        <tbody><tr><td>Lion Rock · West Face</td><td><strong>Gweilo</strong></td><td>6a+ (HK) / F6a</td><td>4 · 75 m</td><td>sport, partly chopped (Oct 2020) → trad</td><td>26 Oct</td><td><a href="#gweilo" target="_blank" rel="noopener">card</a> · <a href="https://hongkongclimbing.com/routes/kowloon/lion-rock/west-face/" target="_blank" rel="noopener">hkclimbing</a> · <a href="https://www.thecrag.com/en/climbing/hong-kong/kowloon/route/15712057" target="_blank" rel="noopener">theCrag</a> · <a href="https://www.mountainproject.com/route/108402651/gweilo" target="_blank" rel="noopener">MP</a> · <a href="https://www.ukclimbing.com/logbook/crags/lion_rock_kowloon-2007/gweilo-36642" target="_blank" rel="noopener">UKC</a></td></tr><tr><td>Lion Rock · West Face</td><td><strong>Wards Groove</strong></td><td>F6b (P2 HVS 5b trad or P2 Gweilo)</td><td>4</td><td>mixed; last-pitch bolts + anchor chopped Nov 2021 → trad</td><td>26 Oct (trad only)</td><td><a href="https://hongkongclimbing.com/routes/kowloon/lion-rock/west-face/" target="_blank" rel="noopener">hkclimbing</a> · <a href="https://www.ukclimbing.com/logbook/crags/lion_rock_kowloon-2007/wards_groove-33130" target="_blank" rel="noopener">UKC</a></td></tr><tr><td>Lion Rock · West Face</td><td><strong>Unemployment Line / Feline Free</strong></td><td>F6a</td><td>pitch 2 variant</td><td>sport</td><td>26 Oct — alternatives to pitch 2 of Gweilo</td><td><a href="https://hongkongclimbing.com/routes/kowloon/lion-rock/west-face/" target="_blank" rel="noopener">hkclimbing</a></td></tr><tr><td>Kowloon Peak · Majestic Slab</td><td><strong>Social Distancing</strong></td><td>F5, F6b</td><td>2 · 67 m (34+33)</td><td>sport (wedge bolts, 2020)</td><td>26 Oct (alternative; long approach)</td><td><a href="https://hongkongclimbing.com/routes/kowloon/kowloon-peak/majestic-slab/" target="_blank" rel="noopener">hkclimbing</a></td></tr><tr><td>Lantau · Temple Crag</td><td><strong>Tin Hau</strong></td><td>F5</td><td>3–4 · ≈ 80–105 m</td><td>sport (2000; new lines alongside 2021)</td><td>27 Oct</td><td><a href="https://hongkongclimbing.com/routes/lantau/temple-crag/" target="_blank" rel="noopener">hkclimbing</a></td></tr><tr><td>Lantau · Temple Crag</td><td><strong>Jaqattack</strong></td><td>F5</td><td>3 · 60 m</td><td>sport</td><td>27 Oct</td><td><a href="https://hongkongclimbing.com/routes/lantau/temple-crag/" target="_blank" rel="noopener">hkclimbing</a></td></tr><tr><td>Lantau · Temple Crag</td><td><strong>Percunia Non Olet</strong></td><td>F5+</td><td>4 · 80 m</td><td>sport (F. Haden 2021)</td><td>27 Oct</td><td><a href="https://hongkongclimbing.com/routes/lantau/temple-crag/" target="_blank" rel="noopener">hkclimbing</a></td></tr><tr><td>Lantau · Temple Crag</td><td><strong>Via Etrusca</strong></td><td>F6a+</td><td>4 · 53 m</td><td>sport (2005)</td><td>27 Oct</td><td><a href="https://hongkongclimbing.com/routes/lantau/temple-crag/" target="_blank" rel="noopener">hkclimbing</a></td></tr><tr><td>Lantau · Temple Crag</td><td><strong>Ocean of Emotion</strong></td><td>F6a+</td><td>5 · 110 m</td><td>sport (2021)</td><td>27 Oct</td><td><a href="https://hongkongclimbing.com/routes/lantau/temple-crag/" target="_blank" rel="noopener">hkclimbing</a></td></tr><tr><td>Lantau · Temple Crag (South Face)</td><td><strong>Temple Towers</strong></td><td>F6a</td><td>3 · 80 m</td><td>sport (2018)</td><td>27 Oct</td><td><a href="https://hongkongclimbing.com/routes/lantau/temple-crag/" target="_blank" rel="noopener">hkclimbing</a></td></tr><tr><td>Tung Lung · Central Slab</td><td><strong>Dragon Power / Great Slab</strong></td><td>F6a / HS 4c</td><td>2</td><td>mixed / trad</td><td>Not 26–28 Oct (kaito weekends only)</td><td><a href="https://hongkongclimbing.com/routes/tung-lung-chau/central-slab/" target="_blank" rel="noopener">hkclimbing</a></td></tr></tbody></table></div>
+      <p class="map-note"><strong>Getting to Temple Crag:</strong> Dorsett → Central (MTR ≈ 35 min) → Pier 6 ferry to Mui Wo (≈ 35–55 min) → bus / taxi to Pui O → Chi Ma Wan Rd ≈ 700 m past Ham Tin (Shap Leung Kau Tsuen) → trail ≈ 30 min. Total ≈ 2–2.5 h. Walk off from the top or abseil with a 60 m rope. <strong>Lamma:</strong> we found no verified, maintained multi-pitch routes (Mount Stenhouse = old routes from past guidebooks).</p>
+    </section>
+
+    <section id="sprzet">
+      <div class="section-head"><div><span class="tag climb">Reference</span><h2>Gear</h2><p>Common to all climbing days 26–28 Oct.</p></div></div>
+      <aside class="climb-gear" aria-label="Gear and notes">
+          <h3>⚙️ Gear and notes</h3>
+          <ul>
+            <li><strong>Grades:</strong> French ≈ 5.10 / 6a–6b+</li>
+            <li><strong>Single-pitch</strong> (Beacon Hill, Monkey, Central, Sok Kwu): usually 12–30 m · rope <strong>60 m</strong> · <strong>12–15 quickdraws</strong> · helmet</li><li><strong>Multi-pitch</strong> (Gweilo, Temple Crag): <strong>15–17 quickdraws</strong>, slings, 2 belay devices, headlamp; for Gweilo add trad — see <a href="#gweilo">Gweilo card</a></li>
+            <li><strong>Water:</strong> 1.5–2 L · late October ≈ <strong>25–28°C</strong></li>
+            <li>Check <em>Hong Kong Observatory</em> the evening before climbing (tail of the typhoon season)</li>
+            <li><strong>Getting there:</strong> Octopus + taxi with the rope bag — details in the “Getting around” boxes for each day</li>
+          </ul>
+        </aside>
+    </section>
+    <section id="mapa">
+      <div class="section-head">
+        <div>
+          <span class="tag ours">OpenStreetMap + Leaflet</span>
+          <h2>Map · Guilin + Hong Kong</h2>
+          <p>Hover a marker — day and variant; click — grades / what to see, how to get there and links (topo, Google Maps). Legend in the bottom-left corner.</p>
+        </div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.75rem">
+        <button type="button" id="map-focus-all" class="tab-btn active" style="font-size:.85rem;padding:.45rem .85rem">Full map</button>
+        <button type="button" id="map-focus-hk" class="tab-btn" style="font-size:.85rem;padding:.45rem .85rem">Zoom · Hong Kong</button>
+        <button type="button" id="map-focus-guilin" class="tab-btn" style="font-size:.85rem;padding:.45rem .85rem">Zoom · Guilin / Yangshuo</button>
+      </div>
+      <div id="map" class="map-box" role="img" aria-label="Map of Guilin and Hong Kong"></div>
+      <p class="map-note">Pan and zoom. Click a marker for details. OSM map · no API key.</p>
+
+      
+    </section>
+
+    <section id="hotele">
+      <div class="hotel-banner">
+        <h2>Hotels (us + family)</h2>
+        <p>Confirmed, <strong>shared bookings</strong> — Krystian and his wife and the family in the same hotels.</p>
+      </div>
+      <div class="hotel-grid">
+        <article class="hotel-card">
+          <h3>🏨 Dorsett Kai Tak</h3>
+          <p class="addr">43 Shing Kai Road, Kowloon City District, Hong Kong<br>
+            Map coordinates ≈ <strong>22.3268, 114.1955</strong> (Kai Tak / Kowloon City)<br>
+            <strong>Climbing base 26–28 Oct</strong> (Beacon Hill · Monkey / Central · Devil’s Peak)</p>
+          <ul>
+            <li><strong>Stay:</strong> 25–29 October 2026 (from the arrival evening, 25 Oct)</li>
+            <li>Check-in 25 Oct evening · check-out 29 Oct morning before Guilin</li>
+            <li>29–31 Oct: trip to China (Guilin) with family — no HK hotel in this window</li>
+          </ul>
+        </article>
+        <article class="hotel-card">
+          <h3>🏨 Alva Hotel By Royal</h3>
+          <p class="addr">1 Yuen Hong Street, Sha Tin District, Hong Kong<br>
+            Map coordinates ≈ <strong>22.3865, 114.2088</strong></p>
+          <ul>
+            <li><strong>Stay (Krystian and his wife):</strong> 31 October – 2 November 2026</li>
+            <li>Check-in after returning from Guilin (31 Oct) · check-out 2 Nov morning before the flight</li>
+            <li><strong>Close to the wedding:</strong> also Sha Tin — short trip to Regal Riverside (1 Nov)</li>
+            <li>The family may stay at Alva longer (until 11 Nov)</li>
+          </ul>
+        </article>
+      </div>
+      <p class="hotel-note">
+        <strong>Flow:</strong> Dorsett Kai Tak (25–29 Oct, us + family) → Guilin with family (29–31 Oct) → Alva Sha Tin (Krystian and his wife 31 Oct – 2 Nov; the family may stay until 11 Nov). Alva is in the same district as the wedding at Regal Riverside — convenient for 1 Nov.
+      </p>
+    </section>
+
+<section id="skala" class="grade-conv">
+  <h2>Grade scale — YDS ↔ French</h2>
+  <p class="grade-conv-lead">Approximate conversion (sport). HK often mixes both scales; for your lines aim around <strong>5.10a–5.10d ≈ 6a–6b+</strong>.</p>
+  <div class="grade-conv-wrap">
+  <table class="grade-table">
+    <thead>
+      <tr>
+        <th>YDS (USA)</th>
+        <th>French</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>5.8</td><td>5a–5b</td><td>easy warm-up</td></tr>
+      <tr><td>5.9</td><td>5c</td><td>warm-up / volume</td></tr>
+      <tr class="grade-target"><td>5.10a</td><td>6a</td><td>warm-ups: One Eyed Snake, Cat Ladder, Cheeky Monkey · multi-pitch: Tin Hau, Jaqattack (F5), Percunia (F5+)</td></tr>
+      <tr class="grade-target"><td>5.10b</td><td>6a+</td><td>Gweilo (6a+), Via Etrusca, Ocean of Emotion, Pretty Girl</td></tr>
+      <tr class="grade-target"><td>5.10c</td><td>6b</td><td>Blue Cross (5.10b/c), Impavidi Destini, Battle of the Bulge</td></tr>
+      <tr class="grade-target"><td>5.10d</td><td>6b+</td><td>Spitting Cobra, Hellish, Peel Street</td></tr>
+      <tr><td>5.11a</td><td>6c</td><td>above your “core” 5.10</td></tr>
+      <tr><td>5.11b</td><td>6c+</td><td></td></tr>
+      <tr><td>5.11c</td><td>7a</td><td></td></tr>
+      <tr><td>5.11d</td><td>7a+</td><td></td></tr>
+      <tr><td>5.12a</td><td>7b</td><td></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="grade-conv-note">It isn't 1:1 — local grades can be “stiff” or “soft”. Treat the table as a compass, not law.</p>
+</section>
+
+    <footer>
+      <p>Hong Kong 2026 · Krystian &amp; wife · Guilin 29–31 Oct confirmed · hotels shared with family (Dorsett + Alva) · days 26–28 Oct: Climbing / Hybrid / With family.</p>
+      <p>Photos: Wikimedia Commons (incl. “Lion Rock from HKBU” CC BY-SA 4.0; “Yangshuo-Impression Sanjie Liu-26-2012-gje” CC BY-SA 4.0; “Xianggong Mountain of Guilin DSC09890” CC BY-SA 4.0) · map: © OpenStreetMap contributors · Leaflet</p>
+    </footer>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script>
+    // Variant tabs — scoped per day
+    document.querySelectorAll('.variant-tabs').forEach(box => {
+      box.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          box.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+          box.querySelectorAll('.option-panel').forEach(p => p.classList.remove('active'));
+          btn.classList.add('active'); btn.setAttribute('aria-selected','true');
+          document.getElementById(btn.dataset.target).classList.add('active');
+        });
+      });
+    });
+
+    // Leaflet map — show both regions with fitBounds
+    const map = L.map('map', { scrollWheelZoom: false });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: '&copy; OpenStreetMap'
+    }).addTo(map);
+
+    const familyIcon = L.divIcon({
+      className: '',
+      html: '<div style="background:#6b3fa0;width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4)"></div>',
+      iconSize: [14, 14], iconAnchor: [7, 7]
+    });
+    const climbIcon = L.divIcon({
+      className: '',
+      html: '<div style="background:#1b7a3d;width:20px;height:20px;border-radius:6px 6px 6px 2px;border:2px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;font-size:11px;line-height:1;transform:rotate(-8deg)">🧗</div>',
+      iconSize: [20, 20], iconAnchor: [10, 10]
+    });
+    const climbFerryIcon = L.divIcon({
+      className: '',
+      html: '<div style="background:#d97706;width:14px;height:14px;border-radius:3px;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4)"></div>',
+      iconSize: [14, 14], iconAnchor: [7, 7]
+    });
+    const flightIcon = L.divIcon({
+      className: '',
+      html: '<div style="background:#1e4d8c;width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4)"></div>',
+      iconSize: [14, 14], iconAnchor: [7, 7]
+    });
+    const weddingIcon = L.divIcon({
+      className: '',
+      html: '<div style="background:#b8860b;width:16px;height:16px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;font-size:9px">💍</div>',
+      iconSize: [16, 16], iconAnchor: [8, 8]
+    });
+
+    const hotelIcon = L.divIcon({
+      className: '',
+      html: '<div style="background:#c2185b;width:18px;height:18px;border-radius:4px;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;font-size:10px;line-height:1">🏨</div>',
+      iconSize: [18, 18], iconAnchor: [9, 9]
+    });
+
+    const guilinIcon = L.divIcon({ className: '', html: '<div style="background:#4a148c;width:14px;height:14px;transform:rotate(45deg);border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.5)"></div>', iconSize: [14,14], iconAnchor: [7,7] });
+    const rodzinaIcon = L.divIcon({ className: '', html: '<div style="background:#8e24aa;width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.5)"></div>', iconSize: [14,14], iconAnchor: [7,7] });
+    const G = 'https://www.google.com/maps/search/?api=1&query=';
+    const H = 'https://hongkongclimbing.com/routes/';
+    // [lat, lng, icon, title, when/variant, what (grade / see), access, link, linkLabel]
+    function popup(t, when, what, acc, link, label) {
+      return `<div class="map-popup"><h4>${t}</h4><p><strong>${when}</strong></p>` +
+        (what && what.trim() && what.trim()!=='—' ? `<p>${what}</p>` : '') + (acc && acc.trim() && acc.trim()!=='—' ? `<p>🚕 ${acc}</p>` : '') +
+        `<p>${link ? `<a href="${link}" target="_blank" rel="noopener">${label || 'topo'}</a> · ` : ''}<a href="__GM__" target="_blank" rel="noopener">Google Maps</a></p></div>`;
+    }
+    const markers = [];
+    const stops = [
+      // Guilin
+      [25.2670,110.3010,guilinIcon,'Sun and Moon Pagodas (日月双塔)','29 Oct · Guilin D1 evening','Pagodas on Shan Lake, lit up in the evening','van with the organisers',''],
+      [25.2360,110.3280,guilinIcon,'Dongxi Lane (东西巷)','29 Oct · Guilin D1 evening','Old lanes, food','walk from the pagodas',''],
+      [24.9167,110.5167,guilinIcon,'Xingping · Li cruise (兴坪·漓江)','30 Oct · Guilin D2','Cruise ~4 h + old Xingping','van',''],
+      [24.9376,110.5194,guilinIcon,'The 20 ¥ banknote view','30 Oct · Guilin D2','Viewpoint','walk from Xingping',''],
+      [24.7780,110.4960,guilinIcon,'Yangshuo · Impression Liu Sanjie','30 Oct · 20:00','Show on the river · B2 195 HKD','van',''],
+      [24.7600,110.4780,guilinIcon,'Ten-Mile Gallery (十里画廊)','30–31 Oct · near the Atour hotel','Karst valley','bike / van',''],
+      [24.7450,110.4700,guilinIcon,'Yulong (遇龙河)','31 Oct · Guilin D3','Bamboo rafts, 4-person','van',''],
+      [24.9000,110.5500,guilinIcon,'Xianggong (相公山)','31 Oct · Guilin D3 afternoon','View over the Li bends · 60 HKD','van, then station 20:00',''],
+      // Loty / hotele / wesele
+      [22.3089,113.9148,flightIcon,'HKG Airport','25 Oct arrive 16:45 · 2 Nov depart 13:30','','taxi ~40–50 min, ~HK$300–380 · or Airport Express + taxi ~60–70 min','#d25','25 Oct'],
+      [22.3268,114.1955,hotelIcon,'Dorsett Kai Tak · us + family','25–29 Oct · base','43 Shing Kai Rd · MTR Kai Tak ~5 min','','#hotele','Hotels'],
+      [22.3865,114.2088,hotelIcon,'Alva Hotel By Royal · us + family','31 Oct – 2 Nov','1 Yuen Hong St, Sha Tin','taxi from Dorsett ≈ 20 min','#hotele','Hotels'],
+      [22.3790,114.1890,rodzinaIcon,'St Benedict’s Church · Sha Tin','1 Nov · English Mass 12:00 (option A)','Catholic church · near Ten Thousand Buddhas / Heritage Museum','taxi from Alva ~10 min','#msza','1 Nov'],
+      [22.2808,114.1530,rodzinaIcon,'Cathedral of the Immaculate Conception','1 Nov · English Mass 9:30 (option B)','Cathedral · 16 Caine Rd · next to the Zoological &amp; Botanical Gardens','MTR ~50–60 min from Alva','#msza','1 Nov'],
+      [22.302411,114.176587,rodzinaIcon,'Rosary Church · TST','1 Nov · English Mass 8:45 (option C)','Oldest church in Kowloon (1905)','MTR Shek Mun → East TST ~30 min','#msza','1 Nov'],
+      [22.3875,114.1850,rodzinaIcon,'Ten Thousand Buddhas Monastery','1 Nov morning (option A)','Monastery, ~400 steps','taxi from Alva ~10 min','#msza','1 Nov'],
+      [22.3825,114.1956,weddingIcon,'Regal Riverside · wedding','1 Nov · 17:00 reception · 20:00 dinner','Tai Chung Kiu Rd, Sha Tin','taxi from Alva ≈ 5–10 min','#wesele','Wedding'],
+      // Skała
+      [22.3495,114.1728,climbIcon,'Beacon Hill · Main Wall','26 Oct · Climbing A / Hybrid','Sport 5.10a–5.10d (12–20 m)','taxi from Dorsett 15–20 min + 10 min walk',H+'kowloon/beacon-hill/','topo'],
+      [22.35224,114.18466,climbIcon,'Gweilo · Lion Rock West Face','26 Oct · Climbing B / Hybrid (best day)','6a+ · 4 pitches · 75 m · bolts partly chopped (2020) → trad + own anchor','taxi from Dorsett 15–20 min + 30–40 min approach','#gweilo','Gweilo card'],
+      [22.2845,114.1995,climbIcon,'Monkey Buttress · Braemar Hill','27 Oct Climbing A · 28 Oct Hybrid H3','6a–6b+','MTR to Tin Hau ≈ 35 min + GMB 25 + 5 min',H+'hong-kong/monkey-buttress/','topo'],
+      [22.2795,114.1490,climbIcon,'Central Crags · Po Shan Rd','27 Oct Climbing B / Hybrid H1 · 28 Oct H2','6a–6b+ · Soho / Mid-Levels / Bird’s Nest','taxi from Dorsett 30–40 min + 15–20 min',H+'hong-kong/central-crags/','topo'],
+      [22.2938,114.2418,climbIcon,'Devil’s Peak','27 Oct · backup','Shorter day, harbour views','taxi from Dorsett ≈ 20 min',H+'kowloon/devils-peak-2/','topo'],
+      [22.2050,114.1360,climbIcon,'Sok Kwu Buttress · Lamma','28 Oct · Climbing B / Hybrid H1','Granite above the path, a short walk from the pier','MTR to Central + Pier 4 ferry → Sok Kwu Wan ≈ 40 min',H+'lamma/sok-kwu-buttress/','topo'],
+      [22.2301,113.9818,climbIcon,'Temple Crag · Lantau (trail to the wall)','27 Oct · Climbing C / Hybrid H2','Multi-pitch slabs F5–6a+ (Tin Hau, Percunia, Via Etrusca, Ocean of Emotion)','ferry Central → Mui Wo + bus to Pui O + approach',H+'lantau/temple-crag/','topo'],
+      [22.2545,114.2895,climbIcon,'Tung Lung Chau · Technical Wall','Not on 26–28 Oct — kaito weekends only','5.10a–6b+','kaito from Sam Ka Tsuen (Sat/Sun)',H+'tung-lung-chau/','topo'],
+      [22.2865,114.2375,climbFerryIcon,'Sam Ka Tsuen · pier','Kaito to Tung Lung · weekend','Coral Sea 2368 8885 / Blue Sea 2337 6568','taxi from Dorsett ≈ 15 min','',''],
+      // Rodzina HK
+      [22.3405,114.2051,rodzinaIcon,'Chi Lin Nunnery (志蓮淨苑)','26 Oct · With family / Hybrid (≈ 15:00)','Nunnery + Nan Lian Garden','MTR Diamond Hill · taxi from Dorsett 10 min','#d26','26 Oct'],
+      [22.3424,114.1937,rodzinaIcon,'Wong Tai Sin Temple (黃大仙祠)','26 Oct · With family / Hybrid','Temple, incense','MTR Wong Tai Sin · descent from Lion Rock 40–50 min','#d26','26 Oct'],
+      [22.2950,114.1720,rodzinaIcon,'TST · Avenue of Stars','26 Oct · 20:00 Symphony of Lights','Promenade, light show','MTR ≈ 25 min from Dorsett','#d26','26 Oct'],
+      [22.2540,113.9050,rodzinaIcon,'Ngong Ping · Big Buddha','27 Oct · With family (cable car 10:00 or later)','Tian Tan Buddha · Po Lin · Wisdom Path','MTR Tung Chung ≈ 50 min + Ngong Ping 360','#d27','27 Oct'],
+      [22.2550,113.8620,rodzinaIcon,'Tai O','27 Oct · afternoon · meeting point (Hybrid)','Stilt houses, boat, egg waffles','bus 11 from Tung Chung ≈ 50 min / bus 21 from Ngong Ping','#d27','27 Oct'],
+      [22.2840,114.1502,rodzinaIcon,'Man Mo Temple · Tai Kwun · PMQ','28 Oct · morning','Temple, former police station, design','MTR Sheung Wan / Central ≈ 35 min','#d28','28 Oct'],
+      [22.2266,114.1121,rodzinaIcon,'Lamma · Yung Shue Wan','28 Oct · afternoon','Start of the 2–3 h walk to Sok Kwu Wan','ferry Central Pier 4 ≈ 30 min','#d28','28 Oct'],
+      [22.2730,114.1830,rodzinaIcon,'Happy Valley Racecourse','28 Oct · 18:30–20:30 (Wednesday)','Evening races','tram / MTR Causeway Bay','#d28','28 Oct'],
+    ];
+    stops.forEach(([lat,lng,icon,t,when,what,acc,link,label]) => {
+      const html = popup(t, when, what, acc, link, label).replace('__GM__', G + lat + ',' + lng);
+      markers.push(L.marker([lat,lng], { icon, title: t }).addTo(map).bindPopup(html).bindTooltip(t.split(' (')[0].split(' · ')[0], { direction: 'top', offset: [0,-8] }));
+    });
+    const legend = L.control({ position: 'bottomleft' });
+    legend.onAdd = () => { const d = L.DomUtil.create('div'); d.style.cssText='background:#fff;color:#111;padding:6px 9px;border-radius:8px;font-size:12px;line-height:1.6;box-shadow:0 1px 5px rgba(0,0,0,.35)';
+      d.innerHTML = '<b>Legend</b><br><span style="color:#1b7a3d">■</span> crag · <span style="color:#d97706">■</span> ferry<br><span style="color:#8e24aa">●</span> with family (HK) · <span style="color:#4a148c">◆</span> Guilin<br><span style="color:#c2185b">■</span> hotel · <span style="color:#b8860b">●</span> wedding · <span style="color:#1e4d8c">●</span> flight'; return d; };
+    legend.addTo(map);
+
+    const group = L.featureGroup(markers);
+    map.fitBounds(group.getBounds().pad(0.18));
+
+    // Enable scroll zoom after click
+    map.on('click', () => map.scrollWheelZoom.enable());
+  
+    // Map focus buttons
+    const focusBtns = {
+      'map-focus-all': () => map.fitBounds(group.getBounds().pad(0.18)),
+      'map-focus-hk': () => map.flyTo([22.32, 114.20], 11),
+      'map-focus-guilin': () => map.flyTo([24.95, 110.45], 9),
+    };
+    Object.keys(focusBtns).forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.addEventListener('click', () => {
+        document.querySelectorAll('#mapa .tab-btn').forEach(b => b.classList.remove('active'));
+        el.classList.add('active');
+        focusBtns[id]();
+      });
+    });
+</script>
+</body>
+</html>
